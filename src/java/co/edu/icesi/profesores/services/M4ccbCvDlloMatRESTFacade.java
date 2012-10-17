@@ -12,6 +12,7 @@ import co.edu.icesi.profesores.entities.M4ccbCvDlloMat;
 import co.edu.icesi.profesores.entities.M4ccbCvDlloMatPK;
 import java.net.URI;
 import java.util.List;
+import javax.persistence.Persistence;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 
@@ -19,11 +20,11 @@ import javax.ws.rs.core.Response;
  *
  * @author 1130619373
  */
-@Path("co.edu.icesi.profesores.entities.m4ccbcvdllomat")
+@Path("dllomat")
 public class M4ccbCvDlloMatRESTFacade {
 
     private EntityManagerFactory getEntityManagerFactory() throws NamingException {
-        return (EntityManagerFactory) new InitialContext().lookup("java:comp/env/persistence-factory");
+        return Persistence.createEntityManagerFactory("profesoresPU");
     }
 
     private M4ccbCvDlloMatJpaController getJpaController() {
@@ -37,57 +38,18 @@ public class M4ccbCvDlloMatRESTFacade {
     public M4ccbCvDlloMatRESTFacade() {
     }
 
-    @POST
-    @Consumes({"application/xml", "application/json"})
-    public Response create(M4ccbCvDlloMat entity) {
-        try {
-            getJpaController().create(entity);
-            return Response.created(URI.create(entity.getM4ccbCvDlloMatPK().getIdOrganization() + "," + entity.getM4ccbCvDlloMatPK().getCcbOrDesMat() + "," + entity.getM4ccbCvDlloMatPK().getStdIdHr().toString())).build();
-        } catch (Exception ex) {
-            return Response.notModified(ex.getMessage()).build();
-        }
-    }
-
-    @PUT
-    @Consumes({"application/xml", "application/json"})
-    public Response edit(M4ccbCvDlloMat entity) {
-        try {
-            getJpaController().edit(entity);
-            return Response.ok().build();
-        } catch (Exception ex) {
-            return Response.notModified(ex.getMessage()).build();
-        }
-    }
-
-    @DELETE
-    @Path("{id}")
-    public Response remove(@PathParam("id") M4ccbCvDlloMatPK id) {
-        try {
-            getJpaController().destroy(id);
-            return Response.ok().build();
-        } catch (Exception ex) {
-            return Response.notModified(ex.getMessage()).build();
-        }
-    }
-
     @GET
-    @Path("{id}")
+    @Path("{id}/professorid")
     @Produces({"application/xml", "application/json"})
-    public M4ccbCvDlloMat find(@PathParam("id") M4ccbCvDlloMatPK id) {
-        return getJpaController().findM4ccbCvDlloMat(id);
+    public M4ccbCvDlloMat find(@PathParam("id") int id, @PathParam("professorid") String professorId) {
+        M4ccbCvDlloMatPK pk= new M4ccbCvDlloMatPK("0000", ((Integer)(id)).shortValue(), professorId);
+        return getJpaController().findM4ccbCvDlloMat(pk);
     }
 
     @GET
     @Produces({"application/xml", "application/json"})
     public List<M4ccbCvDlloMat> findAll() {
         return getJpaController().findM4ccbCvDlloMatEntities();
-    }
-
-    @GET
-    @Path("{max}/{first}")
-    @Produces({"application/xml", "application/json"})
-    public List<M4ccbCvDlloMat> findRange(@PathParam("max") Integer max, @PathParam("first") Integer first) {
-        return getJpaController().findM4ccbCvDlloMatEntities(max, first);
     }
 
     @GET

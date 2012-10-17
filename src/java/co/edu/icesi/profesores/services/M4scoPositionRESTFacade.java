@@ -12,6 +12,7 @@ import co.edu.icesi.profesores.entities.M4scoPosition;
 import co.edu.icesi.profesores.entities.M4scoPositionPK;
 import java.net.URI;
 import java.util.List;
+import javax.persistence.Persistence;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 
@@ -19,11 +20,11 @@ import javax.ws.rs.core.Response;
  *
  * @author 1130619373
  */
-@Path("co.edu.icesi.profesores.entities.m4scoposition")
+@Path("m4scoposition")
 public class M4scoPositionRESTFacade {
 
     private EntityManagerFactory getEntityManagerFactory() throws NamingException {
-        return (EntityManagerFactory) new InitialContext().lookup("java:comp/env/persistence-factory");
+        return Persistence.createEntityManagerFactory("profesoresPU");
     }
 
     private M4scoPositionJpaController getJpaController() {
@@ -37,44 +38,12 @@ public class M4scoPositionRESTFacade {
     public M4scoPositionRESTFacade() {
     }
 
-    @POST
-    @Consumes({"application/xml", "application/json"})
-    public Response create(M4scoPosition entity) {
-        try {
-            getJpaController().create(entity);
-            return Response.created(URI.create(entity.getM4scoPositionPK().getIdOrganization() + "," + entity.getM4scoPositionPK().getScoIdPosition().toString())).build();
-        } catch (Exception ex) {
-            return Response.notModified(ex.getMessage()).build();
-        }
-    }
-
-    @PUT
-    @Consumes({"application/xml", "application/json"})
-    public Response edit(M4scoPosition entity) {
-        try {
-            getJpaController().edit(entity);
-            return Response.ok().build();
-        } catch (Exception ex) {
-            return Response.notModified(ex.getMessage()).build();
-        }
-    }
-
-    @DELETE
-    @Path("{id}")
-    public Response remove(@PathParam("id") M4scoPositionPK id) {
-        try {
-            getJpaController().destroy(id);
-            return Response.ok().build();
-        } catch (Exception ex) {
-            return Response.notModified(ex.getMessage()).build();
-        }
-    }
-
     @GET
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
-    public M4scoPosition find(@PathParam("id") M4scoPositionPK id) {
-        return getJpaController().findM4scoPosition(id);
+    public M4scoPosition find(@PathParam("id") String id) {
+        M4scoPositionPK pk=new M4scoPositionPK("0000", id);
+        return getJpaController().findM4scoPosition(pk);
     }
 
     @GET

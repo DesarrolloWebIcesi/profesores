@@ -12,6 +12,7 @@ import co.edu.icesi.profesores.entities.M4scoHHrPos;
 import co.edu.icesi.profesores.entities.M4scoHHrPosPK;
 import java.net.URI;
 import java.util.List;
+import javax.persistence.Persistence;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 
@@ -19,11 +20,11 @@ import javax.ws.rs.core.Response;
  *
  * @author 1130619373
  */
-@Path("co.edu.icesi.profesores.entities.m4scohhrpos")
+@Path("m4scohhrpos")
 public class M4scoHHrPosRESTFacade {
 
     private EntityManagerFactory getEntityManagerFactory() throws NamingException {
-        return (EntityManagerFactory) new InitialContext().lookup("java:comp/env/persistence-factory");
+        return Persistence.createEntityManagerFactory("profesoresPU");
     }
 
     private M4scoHHrPosJpaController getJpaController() {
@@ -37,57 +38,18 @@ public class M4scoHHrPosRESTFacade {
     public M4scoHHrPosRESTFacade() {
     }
 
-    @POST
-    @Consumes({"application/xml", "application/json"})
-    public Response create(M4scoHHrPos entity) {
-        try {
-            getJpaController().create(entity);
-            return Response.created(URI.create(entity.getM4scoHHrPosPK().getIdOrganization() + "," + entity.getM4scoHHrPosPK().getScoIdHr() + "," + entity.getM4scoHHrPosPK().getScoOrHrRole())).build();
-        } catch (Exception ex) {
-            return Response.notModified(ex.getMessage()).build();
-        }
-    }
-
-    @PUT
-    @Consumes({"application/xml", "application/json"})
-    public Response edit(M4scoHHrPos entity) {
-        try {
-            getJpaController().edit(entity);
-            return Response.ok().build();
-        } catch (Exception ex) {
-            return Response.notModified(ex.getMessage()).build();
-        }
-    }
-
-    @DELETE
-    @Path("{id}")
-    public Response remove(@PathParam("id") M4scoHHrPosPK id) {
-        try {
-            getJpaController().destroy(id);
-            return Response.ok().build();
-        } catch (Exception ex) {
-            return Response.notModified(ex.getMessage()).build();
-        }
-    }
-
     @GET
-    @Path("{id}")
+    @Path("{id}/{personid}")
     @Produces({"application/xml", "application/json"})
-    public M4scoHHrPos find(@PathParam("id") M4scoHHrPosPK id) {
-        return getJpaController().findM4scoHHrPos(id);
+    public M4scoHHrPos find(@PathParam("id") int id, @PathParam("personid") String personId) {
+        M4scoHHrPosPK pk = new M4scoHHrPosPK("0000",personId, ((Integer)(id)).shortValue());
+        return getJpaController().findM4scoHHrPos(pk);
     }
 
     @GET
     @Produces({"application/xml", "application/json"})
     public List<M4scoHHrPos> findAll() {
         return getJpaController().findM4scoHHrPosEntities();
-    }
-
-    @GET
-    @Path("{max}/{first}")
-    @Produces({"application/xml", "application/json"})
-    public List<M4scoHHrPos> findRange(@PathParam("max") Integer max, @PathParam("first") Integer first) {
-        return getJpaController().findM4scoHHrPosEntities(max, first);
     }
 
     @GET

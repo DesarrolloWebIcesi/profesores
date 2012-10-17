@@ -12,6 +12,7 @@ import co.edu.icesi.profesores.entities.M4ccbCvArtPub;
 import co.edu.icesi.profesores.entities.M4ccbCvArtPubPK;
 import java.net.URI;
 import java.util.List;
+import javax.persistence.Persistence;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 
@@ -19,11 +20,12 @@ import javax.ws.rs.core.Response;
  *
  * @author 1130619373
  */
-@Path("co.edu.icesi.profesores.entities.m4ccbcvartpub")
+@Path("artpub")
 public class M4ccbCvArtPubRESTFacade {
 
     private EntityManagerFactory getEntityManagerFactory() throws NamingException {
-        return (EntityManagerFactory) new InitialContext().lookup("java:comp/env/persistence-factory");
+        //return (EntityManagerFactory) new InitialContext().lookup("java:comp/env/persistence-factory");
+        return Persistence.createEntityManagerFactory("profesoresPU");
     }
 
     private M4ccbCvArtPubJpaController getJpaController() {
