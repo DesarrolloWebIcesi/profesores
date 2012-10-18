@@ -26,6 +26,7 @@ public class M4ccbCvArtPubRESTFacade {
     private EntityManagerFactory getEntityManagerFactory() throws NamingException {
         //return (EntityManagerFactory) new InitialContext().lookup("java:comp/env/persistence-factory");
         return Persistence.createEntityManagerFactory("profesoresPU");
+        
     }
 
     private M4ccbCvArtPubJpaController getJpaController() {
