@@ -4,8 +4,6 @@
  */
 package co.edu.icesi.profesores.controllers;
 
-import co.edu.icesi.profesores.controllers.exceptions.NonexistentEntityException;
-import co.edu.icesi.profesores.controllers.exceptions.PreexistingEntityException;
 import co.edu.icesi.profesores.entities.StdHrPrevJobs;
 import co.edu.icesi.profesores.entities.StdHrPrevJobsPK;
 import java.io.Serializable;
@@ -13,7 +11,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
-import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
@@ -30,72 +27,6 @@ public class StdHrPrevJobsJpaController implements Serializable {
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
-    }
-
-    public void create(StdHrPrevJobs stdHrPrevJobs) throws PreexistingEntityException, Exception {
-        if (stdHrPrevJobs.getStdHrPrevJobsPK() == null) {
-            stdHrPrevJobs.setStdHrPrevJobsPK(new StdHrPrevJobsPK());
-        }
-        EntityManager em = null;
-        try {
-            em = getEntityManager();
-            em.getTransaction().begin();
-            em.persist(stdHrPrevJobs);
-            em.getTransaction().commit();
-        } catch (Exception ex) {
-            if (findStdHrPrevJobs(stdHrPrevJobs.getStdHrPrevJobsPK()) != null) {
-                throw new PreexistingEntityException("StdHrPrevJobs " + stdHrPrevJobs + " already exists.", ex);
-            }
-            throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
-    }
-
-    public void edit(StdHrPrevJobs stdHrPrevJobs) throws NonexistentEntityException, Exception {
-        EntityManager em = null;
-        try {
-            em = getEntityManager();
-            em.getTransaction().begin();
-            stdHrPrevJobs = em.merge(stdHrPrevJobs);
-            em.getTransaction().commit();
-        } catch (Exception ex) {
-            String msg = ex.getLocalizedMessage();
-            if (msg == null || msg.length() == 0) {
-                StdHrPrevJobsPK id = stdHrPrevJobs.getStdHrPrevJobsPK();
-                if (findStdHrPrevJobs(id) == null) {
-                    throw new NonexistentEntityException("The stdHrPrevJobs with id " + id + " no longer exists.");
-                }
-            }
-            throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
-    }
-
-    public void destroy(StdHrPrevJobsPK id) throws NonexistentEntityException {
-        EntityManager em = null;
-        try {
-            em = getEntityManager();
-            em.getTransaction().begin();
-            StdHrPrevJobs stdHrPrevJobs;
-            try {
-                stdHrPrevJobs = em.getReference(StdHrPrevJobs.class, id);
-                stdHrPrevJobs.getStdHrPrevJobsPK();
-            } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The stdHrPrevJobs with id " + id + " no longer exists.", enfe);
-            }
-            em.remove(stdHrPrevJobs);
-            em.getTransaction().commit();
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
     }
 
     public List<StdHrPrevJobs> findStdHrPrevJobsEntities() {

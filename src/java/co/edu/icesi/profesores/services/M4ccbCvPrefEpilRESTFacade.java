@@ -5,16 +5,13 @@
 package co.edu.icesi.profesores.services;
 
 import co.edu.icesi.profesores.controllers.M4ccbCvPrefEpilJpaController;
-import javax.naming.NamingException;
-import javax.persistence.EntityManagerFactory;
-import javax.naming.InitialContext;
 import co.edu.icesi.profesores.entities.M4ccbCvPrefEpil;
 import co.edu.icesi.profesores.entities.M4ccbCvPrefEpilPK;
-import java.net.URI;
 import java.util.List;
+import javax.naming.NamingException;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Response;
 
 /**
  *

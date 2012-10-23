@@ -4,8 +4,6 @@
  */
 package co.edu.icesi.profesores.controllers;
 
-import co.edu.icesi.profesores.controllers.exceptions.NonexistentEntityException;
-import co.edu.icesi.profesores.controllers.exceptions.PreexistingEntityException;
 import co.edu.icesi.profesores.entities.M4ccbCvDocTrab;
 import co.edu.icesi.profesores.entities.M4ccbCvDocTrabPK;
 import java.io.Serializable;
@@ -13,7 +11,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
-import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
@@ -31,73 +28,7 @@ public class M4ccbCvDocTrabJpaController implements Serializable {
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
-
-    public void create(M4ccbCvDocTrab m4ccbCvDocTrab) throws PreexistingEntityException, Exception {
-        if (m4ccbCvDocTrab.getM4ccbCvDocTrabPK() == null) {
-            m4ccbCvDocTrab.setM4ccbCvDocTrabPK(new M4ccbCvDocTrabPK());
-        }
-        EntityManager em = null;
-        try {
-            em = getEntityManager();
-            em.getTransaction().begin();
-            em.persist(m4ccbCvDocTrab);
-            em.getTransaction().commit();
-        } catch (Exception ex) {
-            if (findM4ccbCvDocTrab(m4ccbCvDocTrab.getM4ccbCvDocTrabPK()) != null) {
-                throw new PreexistingEntityException("M4ccbCvDocTrab " + m4ccbCvDocTrab + " already exists.", ex);
-            }
-            throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
-    }
-
-    public void edit(M4ccbCvDocTrab m4ccbCvDocTrab) throws NonexistentEntityException, Exception {
-        EntityManager em = null;
-        try {
-            em = getEntityManager();
-            em.getTransaction().begin();
-            m4ccbCvDocTrab = em.merge(m4ccbCvDocTrab);
-            em.getTransaction().commit();
-        } catch (Exception ex) {
-            String msg = ex.getLocalizedMessage();
-            if (msg == null || msg.length() == 0) {
-                M4ccbCvDocTrabPK id = m4ccbCvDocTrab.getM4ccbCvDocTrabPK();
-                if (findM4ccbCvDocTrab(id) == null) {
-                    throw new NonexistentEntityException("The m4ccbCvDocTrab with id " + id + " no longer exists.");
-                }
-            }
-            throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
-    }
-
-    public void destroy(M4ccbCvDocTrabPK id) throws NonexistentEntityException {
-        EntityManager em = null;
-        try {
-            em = getEntityManager();
-            em.getTransaction().begin();
-            M4ccbCvDocTrab m4ccbCvDocTrab;
-            try {
-                m4ccbCvDocTrab = em.getReference(M4ccbCvDocTrab.class, id);
-                m4ccbCvDocTrab.getM4ccbCvDocTrabPK();
-            } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The m4ccbCvDocTrab with id " + id + " no longer exists.", enfe);
-            }
-            em.remove(m4ccbCvDocTrab);
-            em.getTransaction().commit();
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
-    }
-
+  
     public List<M4ccbCvDocTrab> findM4ccbCvDocTrabEntities() {
         return findM4ccbCvDocTrabEntities(true, -1, -1);
     }

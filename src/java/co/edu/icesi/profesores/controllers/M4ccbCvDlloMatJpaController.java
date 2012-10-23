@@ -4,8 +4,6 @@
  */
 package co.edu.icesi.profesores.controllers;
 
-import co.edu.icesi.profesores.controllers.exceptions.NonexistentEntityException;
-import co.edu.icesi.profesores.controllers.exceptions.PreexistingEntityException;
 import co.edu.icesi.profesores.entities.M4ccbCvDlloMat;
 import co.edu.icesi.profesores.entities.M4ccbCvDlloMatPK;
 import java.io.Serializable;
@@ -13,7 +11,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
-import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
@@ -31,73 +28,7 @@ public class M4ccbCvDlloMatJpaController implements Serializable {
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
-
-    public void create(M4ccbCvDlloMat m4ccbCvDlloMat) throws PreexistingEntityException, Exception {
-        if (m4ccbCvDlloMat.getM4ccbCvDlloMatPK() == null) {
-            m4ccbCvDlloMat.setM4ccbCvDlloMatPK(new M4ccbCvDlloMatPK());
-        }
-        EntityManager em = null;
-        try {
-            em = getEntityManager();
-            em.getTransaction().begin();
-            em.persist(m4ccbCvDlloMat);
-            em.getTransaction().commit();
-        } catch (Exception ex) {
-            if (findM4ccbCvDlloMat(m4ccbCvDlloMat.getM4ccbCvDlloMatPK()) != null) {
-                throw new PreexistingEntityException("M4ccbCvDlloMat " + m4ccbCvDlloMat + " already exists.", ex);
-            }
-            throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
-    }
-
-    public void edit(M4ccbCvDlloMat m4ccbCvDlloMat) throws NonexistentEntityException, Exception {
-        EntityManager em = null;
-        try {
-            em = getEntityManager();
-            em.getTransaction().begin();
-            m4ccbCvDlloMat = em.merge(m4ccbCvDlloMat);
-            em.getTransaction().commit();
-        } catch (Exception ex) {
-            String msg = ex.getLocalizedMessage();
-            if (msg == null || msg.length() == 0) {
-                M4ccbCvDlloMatPK id = m4ccbCvDlloMat.getM4ccbCvDlloMatPK();
-                if (findM4ccbCvDlloMat(id) == null) {
-                    throw new NonexistentEntityException("The m4ccbCvDlloMat with id " + id + " no longer exists.");
-                }
-            }
-            throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
-    }
-
-    public void destroy(M4ccbCvDlloMatPK id) throws NonexistentEntityException {
-        EntityManager em = null;
-        try {
-            em = getEntityManager();
-            em.getTransaction().begin();
-            M4ccbCvDlloMat m4ccbCvDlloMat;
-            try {
-                m4ccbCvDlloMat = em.getReference(M4ccbCvDlloMat.class, id);
-                m4ccbCvDlloMat.getM4ccbCvDlloMatPK();
-            } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The m4ccbCvDlloMat with id " + id + " no longer exists.", enfe);
-            }
-            em.remove(m4ccbCvDlloMat);
-            em.getTransaction().commit();
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
-    }
-
+  
     public List<M4ccbCvDlloMat> findM4ccbCvDlloMatEntities() {
         return findM4ccbCvDlloMatEntities(true, -1, -1);
     }

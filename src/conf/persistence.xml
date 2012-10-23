@@ -19,7 +19,8 @@
     <class>co.edu.icesi.profesores.entities.M4ccbCvArtPub</class>
     <class>co.edu.icesi.profesores.entities.M4ccbCvDlloMat</class>
     <class>co.edu.icesi.profesores.entities.VrrhCursosProf</class>
-    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <class>co.edu.icesi.profesores.entities.VrrhProCursoAs</class>
+<exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@192.168.220.120:1521:ddelfi"/>
       <property name="javax.persistence.jdbc.password" value="Passw0rd"/>

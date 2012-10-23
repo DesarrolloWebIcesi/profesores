@@ -5,16 +5,13 @@
 package co.edu.icesi.profesores.services;
 
 import co.edu.icesi.profesores.controllers.M4ccbCvCapLibJpaController;
-import javax.naming.NamingException;
-import javax.persistence.EntityManagerFactory;
-import javax.naming.InitialContext;
 import co.edu.icesi.profesores.entities.M4ccbCvCapLib;
 import co.edu.icesi.profesores.entities.M4ccbCvCapLibPK;
-import java.net.URI;
 import java.util.List;
+import javax.naming.NamingException;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Response;
 
 /**
  *

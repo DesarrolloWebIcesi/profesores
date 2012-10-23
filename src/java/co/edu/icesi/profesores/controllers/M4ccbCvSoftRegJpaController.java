@@ -4,8 +4,6 @@
  */
 package co.edu.icesi.profesores.controllers;
 
-import co.edu.icesi.profesores.controllers.exceptions.NonexistentEntityException;
-import co.edu.icesi.profesores.controllers.exceptions.PreexistingEntityException;
 import co.edu.icesi.profesores.entities.M4ccbCvSoftReg;
 import co.edu.icesi.profesores.entities.M4ccbCvSoftRegPK;
 import java.io.Serializable;
@@ -13,7 +11,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
-import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
@@ -30,73 +27,7 @@ public class M4ccbCvSoftRegJpaController implements Serializable {
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
-    }
-
-    public void create(M4ccbCvSoftReg m4ccbCvSoftReg) throws PreexistingEntityException, Exception {
-        if (m4ccbCvSoftReg.getM4ccbCvSoftRegPK() == null) {
-            m4ccbCvSoftReg.setM4ccbCvSoftRegPK(new M4ccbCvSoftRegPK());
-        }
-        EntityManager em = null;
-        try {
-            em = getEntityManager();
-            em.getTransaction().begin();
-            em.persist(m4ccbCvSoftReg);
-            em.getTransaction().commit();
-        } catch (Exception ex) {
-            if (findM4ccbCvSoftReg(m4ccbCvSoftReg.getM4ccbCvSoftRegPK()) != null) {
-                throw new PreexistingEntityException("M4ccbCvSoftReg " + m4ccbCvSoftReg + " already exists.", ex);
-            }
-            throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
-    }
-
-    public void edit(M4ccbCvSoftReg m4ccbCvSoftReg) throws NonexistentEntityException, Exception {
-        EntityManager em = null;
-        try {
-            em = getEntityManager();
-            em.getTransaction().begin();
-            m4ccbCvSoftReg = em.merge(m4ccbCvSoftReg);
-            em.getTransaction().commit();
-        } catch (Exception ex) {
-            String msg = ex.getLocalizedMessage();
-            if (msg == null || msg.length() == 0) {
-                M4ccbCvSoftRegPK id = m4ccbCvSoftReg.getM4ccbCvSoftRegPK();
-                if (findM4ccbCvSoftReg(id) == null) {
-                    throw new NonexistentEntityException("The m4ccbCvSoftReg with id " + id + " no longer exists.");
-                }
-            }
-            throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
-    }
-
-    public void destroy(M4ccbCvSoftRegPK id) throws NonexistentEntityException {
-        EntityManager em = null;
-        try {
-            em = getEntityManager();
-            em.getTransaction().begin();
-            M4ccbCvSoftReg m4ccbCvSoftReg;
-            try {
-                m4ccbCvSoftReg = em.getReference(M4ccbCvSoftReg.class, id);
-                m4ccbCvSoftReg.getM4ccbCvSoftRegPK();
-            } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The m4ccbCvSoftReg with id " + id + " no longer exists.", enfe);
-            }
-            em.remove(m4ccbCvSoftReg);
-            em.getTransaction().commit();
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
-    }
+    }  
 
     public List<M4ccbCvSoftReg> findM4ccbCvSoftRegEntities() {
         return findM4ccbCvSoftRegEntities(true, -1, -1);

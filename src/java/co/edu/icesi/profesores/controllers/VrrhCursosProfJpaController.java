@@ -4,22 +4,17 @@
  */
 package co.edu.icesi.profesores.controllers;
 
-import co.edu.icesi.profesores.controllers.exceptions.NonexistentEntityException;
-import co.edu.icesi.profesores.controllers.exceptions.PreexistingEntityException;
 import co.edu.icesi.profesores.entities.VrrhCursosProf;
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
-import javax.persistence.EntityNotFoundException;
 import javax.persistence.NoResultException;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 
 /**
  *

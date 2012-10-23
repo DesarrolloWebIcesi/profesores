@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListStdPersonTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListStdPersonEmpty}" rendered="#{stdPersonController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{stdPersonController.items.rowCount > 0}">
+                    <h:outputText value="#{stdPersonController.pagination.pageFirstItem + 1}..#{stdPersonController.pagination.pageLastItem + 1}/#{stdPersonController.pagination.itemsCount}"/>&nbsp;
+                    
+                    <h:outputText value="#{curriculumVitaeController.person.scoGbName}"/>&nbsp;
+                    <h:dataTable value="#{curriculumVitaeController.m4ccbCvArtPub}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">                       
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Nombre"/>
+                            </f:facet>
+                            <h:outputText value="#{item.ccbNomProd}"/>
+                        </h:column> 
+                     </h:dataTable>
+                    <h:commandLink action="#{stdPersonController.previous}" value="#{bundle.Previous} #{stdPersonController.pagination.pageSize}" rendered="#{stdPersonController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{stdPersonController.next}" value="#{bundle.Next} #{stdPersonController.pagination.pageSize}" rendered="#{stdPersonController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{stdPersonController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">                       
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Nombre"/>
+                            </f:facet>
+                            <h:outputText value="#{item.stdNFirstName} #{item.stdNUsualName} #{item.stdNFamName1} #{item.stdNMaidenName}"/>
+                        </h:column>                       
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListStdPersonTitle_stdSsn}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.stdSsn}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListStdPersonTitle_scoPhoto}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.scoPhoto}"/>
+                        </h:column>                        
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{stdPersonController.prepareView}" value="#{bundle.ListStdPersonViewLink}"/>
+                            
+                        </h:column>
+                    </h:dataTable>
+                     
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{stdPersonController.prepareCreate}" value="#{bundle.ListStdPersonCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListStdPersonIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -4,16 +4,16 @@
  */
 package co.edu.icesi.profesores.controllers;
 
-import co.edu.icesi.profesores.controllers.exceptions.NonexistentEntityException;
-import co.edu.icesi.profesores.controllers.exceptions.PreexistingEntityException;
 import co.edu.icesi.profesores.entities.StdPerson;
 import co.edu.icesi.profesores.entities.StdPersonPK;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
-import javax.persistence.EntityNotFoundException;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
@@ -30,72 +30,6 @@ public class StdPersonJpaController implements Serializable {
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
-    }
-
-    public void create(StdPerson stdPerson) throws PreexistingEntityException, Exception {
-        if (stdPerson.getStdPersonPK() == null) {
-            stdPerson.setStdPersonPK(new StdPersonPK());
-        }
-        EntityManager em = null;
-        try {
-            em = getEntityManager();
-            em.getTransaction().begin();
-            em.persist(stdPerson);
-            em.getTransaction().commit();
-        } catch (Exception ex) {
-            if (findStdPerson(stdPerson.getStdPersonPK()) != null) {
-                throw new PreexistingEntityException("StdPerson " + stdPerson + " already exists.", ex);
-            }
-            throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
-    }
-
-    public void edit(StdPerson stdPerson) throws NonexistentEntityException, Exception {
-        EntityManager em = null;
-        try {
-            em = getEntityManager();
-            em.getTransaction().begin();
-            stdPerson = em.merge(stdPerson);
-            em.getTransaction().commit();
-        } catch (Exception ex) {
-            String msg = ex.getLocalizedMessage();
-            if (msg == null || msg.length() == 0) {
-                StdPersonPK id = stdPerson.getStdPersonPK();
-                if (findStdPerson(id) == null) {
-                    throw new NonexistentEntityException("The stdPerson with id " + id + " no longer exists.");
-                }
-            }
-            throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
-    }
-
-    public void destroy(StdPersonPK id) throws NonexistentEntityException {
-        EntityManager em = null;
-        try {
-            em = getEntityManager();
-            em.getTransaction().begin();
-            StdPerson stdPerson;
-            try {
-                stdPerson = em.getReference(StdPerson.class, id);
-                stdPerson.getStdPersonPK();
-            } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The stdPerson with id " + id + " no longer exists.", enfe);
-            }
-            em.remove(stdPerson);
-            em.getTransaction().commit();
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
     }
 
     public List<StdPerson> findStdPersonEntities() {
@@ -143,5 +77,30 @@ public class StdPersonJpaController implements Serializable {
             em.close();
         }
     }
+     /**
+     * TODO: Corregir documentación Looks if there is a registry with the
+     * CCB_CARGUE_ACT equals to the activityId parameter.
+     *
+     * @return An VrrhCursosProf object that represents the database registry.
+     *          <code>null</null> otherwise.
+     * @param activityId The ActivityInsight is for the activity.
+     *
+     * @since 2012-09-14 by damanzano
+     */
     
+    public StdPerson findStdPersonByStdSsn(String profesorCedula) {
+        EntityManager em = getEntityManager();
+        try {
+            TypedQuery<StdPerson> q = em.createNamedQuery("StdPerson.findByStdSsn", StdPerson.class);
+            q.setParameter("stdSsn", profesorCedula);
+            StdPerson person = (StdPerson)q.getSingleResult();
+            return person;
+        } catch (NoResultException ex) {
+            throw ex;
+        }catch (NonUniqueResultException ex){
+            throw ex;
+    }finally {
+            em.close();
+        }
+    }
 }

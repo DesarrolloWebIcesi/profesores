@@ -4,8 +4,6 @@
  */
 package co.edu.icesi.profesores.controllers;
 
-import co.edu.icesi.profesores.controllers.exceptions.NonexistentEntityException;
-import co.edu.icesi.profesores.controllers.exceptions.PreexistingEntityException;
 import co.edu.icesi.profesores.entities.StdEmail;
 import co.edu.icesi.profesores.entities.StdEmailPK;
 import java.io.Serializable;
@@ -13,7 +11,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
-import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
@@ -30,72 +27,6 @@ public class StdEmailJpaController implements Serializable {
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
-    }
-
-    public void create(StdEmail stdEmail) throws PreexistingEntityException, Exception {
-        if (stdEmail.getStdEmailPK() == null) {
-            stdEmail.setStdEmailPK(new StdEmailPK());
-        }
-        EntityManager em = null;
-        try {
-            em = getEntityManager();
-            em.getTransaction().begin();
-            em.persist(stdEmail);
-            em.getTransaction().commit();
-        } catch (Exception ex) {
-            if (findStdEmail(stdEmail.getStdEmailPK()) != null) {
-                throw new PreexistingEntityException("StdEmail " + stdEmail + " already exists.", ex);
-            }
-            throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
-    }
-
-    public void edit(StdEmail stdEmail) throws NonexistentEntityException, Exception {
-        EntityManager em = null;
-        try {
-            em = getEntityManager();
-            em.getTransaction().begin();
-            stdEmail = em.merge(stdEmail);
-            em.getTransaction().commit();
-        } catch (Exception ex) {
-            String msg = ex.getLocalizedMessage();
-            if (msg == null || msg.length() == 0) {
-                StdEmailPK id = stdEmail.getStdEmailPK();
-                if (findStdEmail(id) == null) {
-                    throw new NonexistentEntityException("The stdEmail with id " + id + " no longer exists.");
-                }
-            }
-            throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
-    }
-
-    public void destroy(StdEmailPK id) throws NonexistentEntityException {
-        EntityManager em = null;
-        try {
-            em = getEntityManager();
-            em.getTransaction().begin();
-            StdEmail stdEmail;
-            try {
-                stdEmail = em.getReference(StdEmail.class, id);
-                stdEmail.getStdEmailPK();
-            } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The stdEmail with id " + id + " no longer exists.", enfe);
-            }
-            em.remove(stdEmail);
-            em.getTransaction().commit();
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
     }
 
     public List<StdEmail> findStdEmailEntities() {
