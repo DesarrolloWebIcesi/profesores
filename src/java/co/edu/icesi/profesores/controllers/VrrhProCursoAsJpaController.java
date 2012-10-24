@@ -31,7 +31,6 @@ public class VrrhProCursoAsJpaController implements Serializable {
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
- 
 
     public List<VrrhProCursoAs> findVrrhProCursoAsEntities() {
         return findVrrhProCursoAsEntities(true, -1, -1);
@@ -65,7 +64,8 @@ public class VrrhProCursoAsJpaController implements Serializable {
             em.close();
         }
     }
-     /**
+
+    /**
      * TODO: Corregir documentación Looks if there is a registry with the
      * CCB_CARGUE_ACT equals to the activityId parameter.
      *
@@ -130,15 +130,18 @@ public class VrrhProCursoAsJpaController implements Serializable {
         String periodoAcad = ((Integer) (calendar.get(Calendar.YEAR))).toString().substring(2, 4);
         int periodoConsecutivo = 0;
         int month = calendar.get(Calendar.MONTH);
-        if (month < 5) {
+        if (month < 3) {
             periodoAcad += "1";
-            periodoConsecutivo = 1;
-        } else if (month < 7) {
-            periodoAcad += "1";
-            periodoConsecutivo = 2;
-        } else {
+
+        } else if (month < 6) {
             periodoAcad += "2";
-            periodoConsecutivo = 2;
+
+        } else if (month < 9) {
+            periodoAcad += "3";
+
+        } else {
+            periodoAcad += "4";
+
         }
 
         return findVrrhCursosProfByProfesorPeriod(profesorCedula, periodoAcad, periodoConsecutivo);
@@ -161,21 +164,24 @@ public class VrrhProCursoAsJpaController implements Serializable {
             String periodoAcad = ((Integer) (calendar.get(Calendar.YEAR))).toString().substring(2, 4);
             int periodoConsecutivo = 0;
             int month = calendar.get(Calendar.MONTH);
-            if (month < 5) {
+            if (month < 3) {
                 periodoAcad += "1";
-                periodoConsecutivo = 1;
-            } else if (month < 7) {
-                periodoAcad += "1";
-                periodoConsecutivo = 2;
-            } else {
+
+            } else if (month < 6) {
                 periodoAcad += "2";
-                periodoConsecutivo = 2;
+
+            } else if (month < 9) {
+                periodoAcad += "3";
+
+            } else {
+                periodoAcad += "4";
+
             }
             TypedQuery<VrrhProCursoAs> q = em.createNamedQuery("VrrhProCursoAs.findByProfesorPeriodHist", VrrhProCursoAs.class);
             q.setParameter("profesorCedula", profesorCedula);
             q.setParameter("periodoAcad", periodoAcad);
             q.setParameter("periodoConsecutivo", periodoConsecutivo);
-            
+
             System.out.println(q.toString());
             System.out.println(q.getParameters().toString());
             List<VrrhProCursoAs> courses = q.getResultList();

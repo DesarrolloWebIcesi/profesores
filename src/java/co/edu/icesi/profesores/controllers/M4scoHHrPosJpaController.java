@@ -10,7 +10,10 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
@@ -74,5 +77,19 @@ public class M4scoHHrPosJpaController implements Serializable {
             em.close();
         }
     }
-    
+     public M4scoHHrPos findPersonPositionByStdSsn(String idPerson) {
+        EntityManager em = getEntityManager();
+        try {
+            TypedQuery<M4scoHHrPos> q = em.createNamedQuery("M4scoHHrPos.findByScoIdHr", M4scoHHrPos.class);
+            q.setParameter("scoIdHr", idPerson);
+            M4scoHHrPos personPosition = (M4scoHHrPos)q.getSingleResult();
+            return personPosition;
+        } catch (NoResultException ex) {
+            throw ex;
+        }catch (NonUniqueResultException ex){
+            throw ex;
+    }finally {
+            em.close();
+        }
+    }
 }

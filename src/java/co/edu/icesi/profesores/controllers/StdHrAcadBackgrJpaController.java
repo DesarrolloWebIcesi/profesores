@@ -10,7 +10,10 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
@@ -74,5 +77,19 @@ public class StdHrAcadBackgrJpaController implements Serializable {
             em.close();
         }
     }
-    
+    public List<StdHrAcadBackgr> findEmailPreferidoByStdHrId(String idPerson) {
+        EntityManager em = getEntityManager();
+        try {
+            TypedQuery<StdHrAcadBackgr> q = em.createNamedQuery("StdHrAcadBackgr.findByStdIdHr", StdHrAcadBackgr.class);
+            q.setParameter("stdIdHr", idPerson);
+            List<StdHrAcadBackgr> acadBackgr = q.getResultList();
+            return acadBackgr;
+        } catch (NoResultException ex) {
+           return null;
+        }catch (NonUniqueResultException ex){
+            return null;
+    }finally {
+            em.close();
+        }
+    }
 }

@@ -26,6 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "StdEmail.findByStdEmail", query = "SELECT s FROM StdEmail s WHERE s.stdEmail = :stdEmail"),
     @NamedQuery(name = "StdEmail.findByStdIdLocatType", query = "SELECT s FROM StdEmail s WHERE s.stdIdLocatType = :stdIdLocatType"),
     @NamedQuery(name = "StdEmail.findByCcbPreferido", query = "SELECT s FROM StdEmail s WHERE s.ccbPreferido = :ccbPreferido"),
+    @NamedQuery(name = "StdEmail.findByStdIdPersonCcbPreferido", query = "SELECT s FROM StdEmail s WHERE s.ccbPreferido = :ccbPreferido and s.stdEmailPK.stdIdPerson = :stdIdPerson"),
     @NamedQuery(name = "StdEmail.findByIdApprole", query = "SELECT s FROM StdEmail s WHERE s.idApprole = :idApprole"),
     @NamedQuery(name = "StdEmail.findByIdSecuser", query = "SELECT s FROM StdEmail s WHERE s.idSecuser = :idSecuser"),
     @NamedQuery(name = "StdEmail.findByDtLastUpdate", query = "SELECT s FROM StdEmail s WHERE s.dtLastUpdate = :dtLastUpdate")})

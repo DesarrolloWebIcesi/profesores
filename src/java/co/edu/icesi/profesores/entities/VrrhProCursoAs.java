@@ -8,9 +8,6 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -27,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "VrrhProCursoAs.findAll", query = "SELECT s FROM VrrhProCursoAs s"),
     @NamedQuery(name = "VrrhProCursoAs.findByProfesorCedula", query = "SELECT s FROM VrrhProCursoAs s WHERE s.vrrhProCursoAsPK.profesorCedula = :profesorCedula"),
     @NamedQuery(name = "VrrhProCursoAs.findByProfesorPeriod", query = "SELECT DISTINCT s FROM VrrhProCursoAs s WHERE s.vrrhProCursoAsPK.profesorCedula = :profesorCedula AND s.vrrhProCursoAsPK.periodoAcad=:periodoAcad AND s.vrrhProCursoAsPK.periodoConsecutivo=:periodoConsecutivo"),
-    @NamedQuery(name = "VrrhProCursoAs.findByProfesorPeriodHist", query = "SELECT DISTINCT s FROM VrrhProCursoAs s WHERE s.vrrhProCursoAsPK.profesorCedula = :profesorCedula AND s.vrrhProCursoAsPK.periodoAcad!=:periodoAcad AND s.vrrhProCursoAsPK.periodoConsecutivo!=:periodoConsecutivo")
+    @NamedQuery(name = "VrrhProCursoAs.findByProfesorPeriodHist", query = "SELECT DISTINCT s FROM VrrhProCursoAs s WHERE s.vrrhProCursoAsPK.profesorCedula = :profesorCedula AND s.vrrhProCursoAsPK.periodoAcad <> :periodoAcad AND s.vrrhProCursoAsPK.periodoConsecutivo = :periodoConsecutivo")
 })
 public class VrrhProCursoAs implements Serializable {
     

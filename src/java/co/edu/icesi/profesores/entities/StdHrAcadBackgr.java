@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "StdHrAcadBackgr.findAll", query = "SELECT s FROM StdHrAcadBackgr s"),
     @NamedQuery(name = "StdHrAcadBackgr.findByIdOrganization", query = "SELECT s FROM StdHrAcadBackgr s WHERE s.stdHrAcadBackgrPK.idOrganization = :idOrganization"),
-    @NamedQuery(name = "StdHrAcadBackgr.findByStdIdHr", query = "SELECT s FROM StdHrAcadBackgr s WHERE s.stdHrAcadBackgrPK.stdIdHr = :stdIdHr"),
+    @NamedQuery(name = "StdHrAcadBackgr.findByStdIdHr", query = "SELECT s FROM StdHrAcadBackgr s WHERE s.stdHrAcadBackgrPK.stdIdHr = :stdIdHr order by s.ccbMaxTituObt, s.ccbYearTerm asc"),
     @NamedQuery(name = "StdHrAcadBackgr.findByStdOrdAcdBack", query = "SELECT s FROM StdHrAcadBackgr s WHERE s.stdHrAcadBackgrPK.stdOrdAcdBack = :stdOrdAcdBack"),
     @NamedQuery(name = "StdHrAcadBackgr.findByStdDtStart", query = "SELECT s FROM StdHrAcadBackgr s WHERE s.stdDtStart = :stdDtStart"),
     @NamedQuery(name = "StdHrAcadBackgr.findByStdDtEarnedExpe", query = "SELECT s FROM StdHrAcadBackgr s WHERE s.stdDtEarnedExpe = :stdDtEarnedExpe"),
@@ -48,7 +48,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "StdHrAcadBackgr.findByStdIdGeoPlace", query = "SELECT s FROM StdHrAcadBackgr s WHERE s.stdIdGeoPlace = :stdIdGeoPlace"),
     @NamedQuery(name = "StdHrAcadBackgr.findByIdApprole", query = "SELECT s FROM StdHrAcadBackgr s WHERE s.idApprole = :idApprole"),
     @NamedQuery(name = "StdHrAcadBackgr.findByIdSecuser", query = "SELECT s FROM StdHrAcadBackgr s WHERE s.idSecuser = :idSecuser"),
-    @NamedQuery(name = "StdHrAcadBackgr.findByDtLastUpdate", query = "SELECT s FROM StdHrAcadBackgr s WHERE s.dtLastUpdate = :dtLastUpdate"),
+    @NamedQuery(name = "StdHrAcadBackgr.findByDtLastUpdate", query = "SELECT s FROM StdHrAcadBackgr s WHERE s.dtLastUpdate = :dtLastUpdate"),    
     @NamedQuery(name = "StdHrAcadBackgr.findByCcbCargueAct", query = "SELECT s FROM StdHrAcadBackgr s WHERE s.ccbCargueAct = :ccbCargueAct")})
 public class StdHrAcadBackgr implements Serializable {
     private static final long serialVersionUID = 1L;
