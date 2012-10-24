@@ -10,7 +10,9 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
@@ -71,6 +73,20 @@ public class StdHrLangTransJpaController implements Serializable {
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();
         } finally {
+            em.close();
+        }
+    }
+    
+    public List <StdHrLangTrans> findStdHrLangTransByStdIdHr(String idProfesor){
+        EntityManager em=getEntityManager();
+        try{
+            TypedQuery<StdHrLangTrans> q= em.createNamedQuery("StdHrLangTrans.findByStdIdHr", StdHrLangTrans.class);
+            q.setParameter("stdIdHr", idProfesor);
+            List <StdHrLangTrans> items = q.getResultList();
+            return items;
+        }catch(NoResultException ex){
+            throw ex;
+        }finally{
             em.close();
         }
     }

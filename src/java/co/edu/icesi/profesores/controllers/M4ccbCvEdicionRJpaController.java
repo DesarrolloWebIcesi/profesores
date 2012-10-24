@@ -14,6 +14,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.NoResultException;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
@@ -74,6 +76,20 @@ public class M4ccbCvEdicionRJpaController implements Serializable {
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();
         } finally {
+            em.close();
+        }
+    }
+    
+    public List <M4ccbCvEdicionR> findM4ccbCvEdicionRByStdIdHr(String idProfesor){
+        EntityManager em=getEntityManager();
+        try{
+            TypedQuery<M4ccbCvEdicionR> q= em.createNamedQuery("M4ccbCvEdicionR.findByStdIdHr", M4ccbCvEdicionR.class);
+            q.setParameter("stdIdHr", idProfesor);
+            List <M4ccbCvEdicionR> items = q.getResultList();
+            return items;
+        }catch(NoResultException ex){
+            throw ex;
+        }finally{
             em.close();
         }
     }

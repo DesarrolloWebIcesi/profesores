@@ -138,6 +138,8 @@ public class M4ccbCvArtPub implements Serializable {
     @Column(name = "DT_LAST_UPDATE")
     @Temporal(TemporalType.DATE)
     private Date dtLastUpdate;
+    @Transient
+    private String citation;
 
     public M4ccbCvArtPub() {
     }
@@ -446,6 +448,19 @@ public class M4ccbCvArtPub implements Serializable {
         this.dtLastUpdate = dtLastUpdate;
     }
 
+    public String getCitation() {
+        String authors="";
+        String publishedDate="";
+        String title="";
+        String publisher="";
+        String pagination="";
+        String link="";
+        
+        this.citation=authors+publishedDate+title+publisher+pagination+link;
+        
+        return citation;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;
