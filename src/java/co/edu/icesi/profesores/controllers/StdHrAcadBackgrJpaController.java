@@ -7,6 +7,7 @@ package co.edu.icesi.profesores.controllers;
 import co.edu.icesi.profesores.entities.StdHrAcadBackgr;
 import co.edu.icesi.profesores.entities.StdHrAcadBackgrPK;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -83,6 +84,11 @@ public class StdHrAcadBackgrJpaController implements Serializable {
             TypedQuery<StdHrAcadBackgr> q = em.createNamedQuery("StdHrAcadBackgr.findByStdIdHr", StdHrAcadBackgr.class);
             q.setParameter("stdIdHr", idPerson);
             List<StdHrAcadBackgr> acadBackgr = q.getResultList();
+             List<StdHrAcadBackgr> temp = new ArrayList<StdHrAcadBackgr>();
+            for (int I=(acadBackgr.size()-1);I>=0;I--){
+                temp.add(acadBackgr.get(I));
+            }
+            acadBackgr = temp;
             return acadBackgr;
         } catch (NoResultException ex) {
            return null;

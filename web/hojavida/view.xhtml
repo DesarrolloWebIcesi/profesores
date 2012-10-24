@@ -65,7 +65,7 @@
                 <h:dataTable value="#{curriculumVitaeController.vrrhCursosProfCurrent}" var="coursesPre" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">                       
                     <h:column>
 
-                        <h:outputText value="#{coursesPre.vrrhCursosProfPK.materiaCodigo}-#{coursesPre.materiaNombre}"/>
+                        <h:outputText value="#{coursesPre.vrrhCursosProfPK.materiaCodigo} - #{coursesPre.materiaNombre}"/>
 
                     </h:column> 
                 </h:dataTable>
@@ -73,7 +73,7 @@
                 <h:dataTable value="#{curriculumVitaeController.vrrhProCursoAsCurrent}" var="coursesPos" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">                       
                     <h:column>
 
-                        <h:outputText value="#{coursesPos.vrrhProCursoAsPK.materiaCodigo}-#{coursesPos.nombreMateria}"/>
+                        <h:outputText value="#{coursesPos.vrrhProCursoAsPK.materiaCodigo} - #{coursesPos.nombreMateria}"/>
 
                     </h:column> 
                 </h:dataTable>
@@ -84,7 +84,7 @@
                 <h:dataTable value="#{curriculumVitaeController.coursesPreHis}" var="coursesPreHis" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">                       
                     <h:column>
 
-                        <h:outputText value="#{coursesPreHis.vrrhCursosProfPK.materiaCodigo}-#{coursesPreHis.materiaNombre}"/>
+                        <h:outputText value="#{coursesPreHis.vrrhCursosProfPK.materiaCodigo} - #{coursesPreHis.materiaNombre}"/>
 
                     </h:column> 
                 </h:dataTable>
@@ -95,7 +95,7 @@
                 <h:dataTable value="#{curriculumVitaeController.coursesPosHis}" var="coursesPosHis" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all">                       
                     <h:column>
 
-                        <h:outputText value="#{coursesPosHis.vrrhProCursoAsPK.materiaCodigo}-#{coursesPosHis.nombreMateria}"/>
+                        <h:outputText value="#{coursesPosHis.vrrhProCursoAsPK.materiaCodigo} - #{coursesPosHis.nombreMateria}"/>
 
                     </h:column> 
                 </h:dataTable>

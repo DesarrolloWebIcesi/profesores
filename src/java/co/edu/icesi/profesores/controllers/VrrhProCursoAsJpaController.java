@@ -7,9 +7,14 @@ package co.edu.icesi.profesores.controllers;
 import co.edu.icesi.profesores.entities.VrrhProCursoAs;
 import co.edu.icesi.profesores.entities.VrrhProCursoAsPK;
 import java.io.Serializable;
+import java.util.AbstractList;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.GregorianCalendar;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
@@ -180,15 +185,20 @@ public class VrrhProCursoAsJpaController implements Serializable {
             TypedQuery<VrrhProCursoAs> q = em.createNamedQuery("VrrhProCursoAs.findByProfesorPeriodHist", VrrhProCursoAs.class);
             q.setParameter("profesorCedula", profesorCedula);
             q.setParameter("periodoAcad", periodoAcad);
-            q.setParameter("periodoConsecutivo", periodoConsecutivo);
-
+            /*q.setParameter("periodoConsecutivo", periodoConsecutivo);*/
+              
             System.out.println(q.toString());
             System.out.println(q.getParameters().toString());
-            List<VrrhProCursoAs> courses = q.getResultList();
+            System.out.println(q.getResultList().get(0));
+
+            List<VrrhProCursoAs> courses = q.getResultList();                
             return courses;
         } catch (NoResultException ex) {
             throw ex;
-        } finally {
+        } catch (NumberFormatException ex){
+            throw ex;
+        }
+        finally {
             em.close();
         }
     }

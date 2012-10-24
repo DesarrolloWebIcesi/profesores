@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "VrrhCursosProf.findByStdIdPerson", query = "SELECT s FROM VrrhCursosProf s WHERE s.stdIdPerson = :stdIdPerson"),
     @NamedQuery(name = "VrrhCursosProf.findByProfesorCedula", query = "SELECT s FROM VrrhCursosProf s WHERE s.vrrhCursosProfPK.profesorCedula = :profesorCedula"),
     @NamedQuery(name = "VrrhCursosProf.findByProfesorPeriod", query = "SELECT DISTINCT s FROM VrrhCursosProf s WHERE s.vrrhCursosProfPK.profesorCedula = :profesorCedula AND s.vrrhCursosProfPK.periodoPeriodoAcad=:periodoAcad AND s.vrrhCursosProfPK.periodoConsecutivo=:periodoConsecutivo"),
-    @NamedQuery(name = "VrrhCursosProf.findByProfesorPeriodHist", query = "SELECT DISTINCT s FROM VrrhCursosProf s WHERE s.vrrhCursosProfPK.profesorCedula = :profesorCedula AND s.vrrhCursosProfPK.periodoPeriodoAcad!=:periodoAcad AND s.vrrhCursosProfPK.periodoConsecutivo!=:periodoConsecutivo")
+    @NamedQuery(name = "VrrhCursosProf.findByProfesorPeriodHist", query = "SELECT DISTINCT s FROM VrrhCursosProf s WHERE s.vrrhCursosProfPK.profesorCedula = :profesorCedula AND s.vrrhCursosProfPK.periodoPeriodoAcad!=:periodoAcad AND s.vrrhCursosProfPK.periodoConsecutivo!=:periodoConsecutivo order by 1")
 })
 public class VrrhCursosProf implements Serializable {
 
