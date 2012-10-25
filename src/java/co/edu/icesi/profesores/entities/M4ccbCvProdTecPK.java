@@ -15,6 +15,7 @@ import javax.persistence.Embeddable;
  */
 @Embeddable
 public class M4ccbCvProdTecPK implements Serializable {
+    
     @Basic(optional = false)
     @Column(name = "ID_ORGANIZATION")
     private String idOrganization;

@@ -20,6 +20,7 @@ import javax.persistence.criteria.Root;
  */
 public class M4ccbCvPresentacJpaController implements Serializable {
 
+    
     public M4ccbCvPresentacJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }

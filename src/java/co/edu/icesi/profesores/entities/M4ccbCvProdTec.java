@@ -64,6 +64,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "M4ccbCvProdTec.findByIdSecuser", query = "SELECT m FROM M4ccbCvProdTec m WHERE m.idSecuser = :idSecuser"),
     @NamedQuery(name = "M4ccbCvProdTec.findByDtLastUpdate", query = "SELECT m FROM M4ccbCvProdTec m WHERE m.dtLastUpdate = :dtLastUpdate")})
 public class M4ccbCvProdTec implements Serializable {
+    
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected M4ccbCvProdTecPK m4ccbCvProdTecPK;
