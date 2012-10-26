@@ -1,0 +1,18 @@
+/* 
+    Document   : styles
+    Created on : 26-oct-2012, 15:10:17
+    Author     : 1130619373
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+#pageWrapper{}
+#pageContent{
+    margin: 0 auto;
+    max-width:960px;
+    width: 100%;
+}
+

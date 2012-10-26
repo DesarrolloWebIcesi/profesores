@@ -511,12 +511,12 @@ public class M4ccbCvArtPub implements Serializable {
             authors += coauthors;
         }
 
-        String title = this.ccbNomProd + ".";
+        String title = " " + this.ccbNomProd + ".";
 
         String publishedDate = "";
         String toApper = "";
         String end = "";
-        if (this.ccbIdEstPub != null && this.ccbIdEstPub.equalsIgnoreCase("")) {
+        if (this.ccbIdEstPub != null && !this.ccbIdEstPub.equalsIgnoreCase("")) {
             if (this.ccbIdEstPub.equalsIgnoreCase("EP_01")) {
                 publishedDate = " (" + Calendar.getInstance().get(Calendar.YEAR) + ").";
                 end = " Manuscript in preparation.";
@@ -532,10 +532,20 @@ public class M4ccbCvArtPub implements Serializable {
             } else if (this.ccbIdEstPub.equalsIgnoreCase("EP_06")) {
                 publishedDate = " (in press).";
                 toApper = " To appear in";
+            } else if (this.ccbIdEstPub.equalsIgnoreCase("EP_07")) {
+                if (this.ccbFechaPub != null) {
+                    Calendar cal = Calendar.getInstance();
+                    cal.setTime(this.ccbFechaPub);
+                    publishedDate = " (" + cal.get(Calendar.YEAR) + ").";
+                } else {
+                    publishedDate = " (" + Calendar.getInstance().get(Calendar.YEAR) + ").";
+                }
             } else {
                 publishedDate = " (" + Calendar.getInstance().get(Calendar.YEAR) + ").";
                 end = " Unpublished Manuscript.";
             }
+        }else{
+             publishedDate = " (" + Calendar.getInstance().get(Calendar.YEAR) + ").";
         }
 
         String publisher = "";

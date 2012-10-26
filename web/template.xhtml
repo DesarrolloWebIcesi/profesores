@@ -7,15 +7,18 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title><ui:insert name="title">Default Title</ui:insert></title>
         <h:outputStylesheet name="css/jsfcrud.css"/>
+        <h:outputStylesheet name="css/styles.css"/>
     </h:head>
 
     <h:body>
-        <h1>
-            <ui:insert name="title">Default Title</ui:insert>
-        </h1>
-        <section>
-            <ui:insert name="body">Default Body</ui:insert>
-        </section>
+        <div id="pageWrapper">
+            <h1>
+                <ui:insert name="title">Default Title</ui:insert>
+            </h1>
+            <section id="PageContent">
+                <ui:insert name="body">Default Body</ui:insert>
+            </section>
+        </div>
     </h:body>
 
 </html>
