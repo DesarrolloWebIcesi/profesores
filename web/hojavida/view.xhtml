@@ -20,7 +20,7 @@
                 <table>
                     <tr>
                         <td><h:outputText value="#{curriculumVitaeController.person.stdNFirstName} #{curriculumVitaeController.person.stdNUsualName} #{curriculumVitaeController.person.stdNFamName1} #{curriculumVitaeController.person.stdNMaidenName}"/></td>
-                        <td><img src ="#{curriculumVitaeController.person.scoPhoto}"/> </td>
+                                <td><!--<img src ="#{curriculumVitaeController.person.scoPhoto}"/>--> <img src ="94378897.jpg" height="100" width="100"/></td>
                     </tr>
                     <tr>
                         <td colspan="2"><h:outputText value="#{curriculumVitaeController.person.scoHomePage}"/></td>
@@ -29,7 +29,7 @@
                         <td colspan="2"><h:outputText value="#{curriculumVitaeController.position.scoNmPositionesp}"/></td>  
                     </tr>
                     <tr>
-                        <td colspan="2"><h:outputText value="#{curriculumVitaeController.personmail.stdEmail}"/></td>  
+                        <td colspan="2"><!--<h:outputText value="#{curriculumVitaeController.personmail.stdEmail}"/>--><h:outputText value="jcalonso@icesi.edu.co"/></td>  
                     </tr>               
                 </table>
             </section>
@@ -193,11 +193,17 @@
                         </h:column> 
                     </h:dataTable>
                 </section>
+                <section id="present">
+                  <h3><h:outputText value="#{bundle.ViewCurriculumVitaePresentatiosTitle}" rendered="#{not empty curriculumVitaeController.presentations}"></h:outputText></h3>
+                 <h:dataTable value="#{curriculumVitaeController.presentations}" var="presentations" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" rendered="#{not empty curriculumVitaeController.presentations}">                       
+                        <h:column>
+                            <h:outputText value="#{presentations.ccbNomPresnt}"/>                            
+                        </h:column> 
+                    </h:dataTable>
+                </section>
             </section>
             
-            <section id="present">
-                <!--Aqui deben ir las presentaciones -->
-            </section>
+            
         </ui:define>
     </ui:composition>
 
