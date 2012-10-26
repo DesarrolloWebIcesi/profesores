@@ -5,6 +5,7 @@
 package co.edu.icesi.profesores.entities;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -58,6 +59,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "M4ccbCvArtPub.findByIdSecuser", query = "SELECT m FROM M4ccbCvArtPub m WHERE m.idSecuser = :idSecuser"),
     @NamedQuery(name = "M4ccbCvArtPub.findByDtLastUpdate", query = "SELECT m FROM M4ccbCvArtPub m WHERE m.dtLastUpdate = :dtLastUpdate")})
 public class M4ccbCvArtPub implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected M4ccbCvArtPubPK m4ccbCvArtPubPK;
@@ -140,6 +142,12 @@ public class M4ccbCvArtPub implements Serializable {
     private Date dtLastUpdate;
     @Transient
     private String citation;
+    @ManyToOne(optional = false)
+    @JoinColumns(value = {
+        @JoinColumn(name = "STD_ID_HR", referencedColumnName = "STD_ID_PERSON", insertable = false, updatable = false),
+        @JoinColumn(name = "ID_ORGANIZATION", referencedColumnName = "ID_ORGANIZATION", insertable = false, updatable = false)
+    })
+    private StdPerson autor;
 
     public M4ccbCvArtPub() {
     }
@@ -448,19 +456,123 @@ public class M4ccbCvArtPub implements Serializable {
         this.dtLastUpdate = dtLastUpdate;
     }
 
+    public StdPerson getAutor() {
+        return autor;
+    }
+
+    public void setAutor(StdPerson autor) {
+        this.autor = autor;
+    }
+
     public String getCitation() {
-        String authors="";
-        String publishedDate="";
-        String title="";
-        String publisher="";
-        String pagination="";
-        String link="";
-        
-        this.citation=authors+publishedDate+title+publisher+pagination+link;
-        
+        String authors = "";
+        //Main author's info
+        String mainAuthor = "";
+        String mainAuthorFName = this.autor.getStdNFirstName();
+        String mainAuthorMName = this.autor.getStdNUsualName();
+        String mainAuthorLName = this.autor.getStdNMaidenName();
+        if (mainAuthorLName != null & !mainAuthorLName.equalsIgnoreCase("")) {
+            mainAuthor += mainAuthorLName + ",";
+        }
+        if (mainAuthorFName != null && !mainAuthorFName.equalsIgnoreCase("")) {
+            mainAuthor += " " + mainAuthorFName.substring(0, 1) + ".";
+        }
+        if (mainAuthorMName != null && !mainAuthorMName.equalsIgnoreCase("")) {
+            mainAuthor += " " + mainAuthorMName.substring(0, 1) + ".";
+        }
+        authors += mainAuthor;
+
+        //Coauthors' info
+        if (this.ccbCoautores != null && !this.ccbCoautores.equalsIgnoreCase("")) {
+            String coauthors = "";
+            String[] coauthorTokens = this.ccbCoautores.split("/");
+            for (int i = 0; i < coauthorTokens.length; i++) {
+
+                String coauthor = "";
+                if (i < 6 || (i > 6 && i == coauthorTokens.length - 1)) {
+                    String[] coauthorParts = coauthorTokens[i].split(";");
+
+                    if (coauthorParts.length == 3) {
+                        String[] coauthorFNameParts = coauthorParts[0].split(" ");
+                        String coauthorLName = coauthorParts[1];
+
+                        coauthor += coauthorLName + ",";
+                        for (int j = 0; j > coauthorFNameParts.length; j++) {
+                            if (coauthorFNameParts[j] != null && !coauthorFNameParts[j].equalsIgnoreCase("")) {
+                                coauthor += " " + coauthorFNameParts[j].substring(0, 1) + ".";
+                            }
+                        }
+                    }
+                } else if (i == 6) {
+                    coauthor += " ...";
+                }
+                coauthors += " " + coauthor;
+            }
+            authors += coauthors;
+        }
+
+        String title = this.ccbNomProd + ".";
+
+        String publishedDate = "";
+        String toApper = "";
+        String end = "";
+        if (this.ccbIdEstPub != null && this.ccbIdEstPub.equalsIgnoreCase("")) {
+            if (this.ccbIdEstPub.equalsIgnoreCase("EP_01")) {
+                publishedDate = " (" + Calendar.getInstance().get(Calendar.YEAR) + ").";
+                end = " Manuscript in preparation.";
+            } else if (this.ccbIdEstPub.equalsIgnoreCase("EP_03") || this.ccbIdEstPub.equalsIgnoreCase("EP_04")) {
+                if (this.ccbFechaRevision != null) {
+                    Calendar cal = Calendar.getInstance();
+                    cal.setTime(this.ccbFechaRevision);
+                    publishedDate = " (" + cal.get(Calendar.YEAR) + ").";
+                } else {
+                    publishedDate = " (" + Calendar.getInstance().get(Calendar.YEAR) + ").";
+                }
+                end = " Manuscript submitted for publication.";
+            } else if (this.ccbIdEstPub.equalsIgnoreCase("EP_06")) {
+                publishedDate = " (in press).";
+                toApper = " To appear in";
+            } else {
+                publishedDate = " (" + Calendar.getInstance().get(Calendar.YEAR) + ").";
+                end = " Unpublished Manuscript.";
+            }
+        }
+
+        String publisher = "";
+        String pagination = "";
+        if (this.ccbNomRevper != null && !this.ccbNomRevper.equalsIgnoreCase("")) {
+            publisher += "<i>" + toApper + " " + this.ccbNomRevper + "</i>";
+            String vol = "";
+            String num = "";
+            if (this.ccbVolumen != null && !this.ccbVolumen.equalsIgnoreCase("")) {
+                vol = this.ccbVolumen;
+            }
+            if (this.ccbFasciculo != null && !this.ccbFasciculo.equalsIgnoreCase("")) {
+                num = "(" + this.ccbFasciculo + ")";
+            }
+            if (!vol.equalsIgnoreCase("") || !num.equalsIgnoreCase("")) {
+                pagination += ", " + vol + num;
+            }
+            if (this.ccbNumPag != null && !this.ccbNumPag.equalsIgnoreCase("")) {
+                pagination += "," + this.ccbNumPag;
+            }
+            if (!pagination.equalsIgnoreCase("")) {
+                pagination += ".";
+            } else {
+                publisher += ".";
+            }
+        }
+
+        String link = "";
+        if (this.ccbUrl != null && !this.ccbUrl.equalsIgnoreCase("")) {
+            link = this.ccbUrl;
+        }
+
+        this.citation = authors + publishedDate + title + publisher + pagination + link;
+
         return citation;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -485,5 +597,4 @@ public class M4ccbCvArtPub implements Serializable {
     public String toString() {
         return "co.edu.icesi.profesores.entities.M4ccbCvArtPub[ m4ccbCvArtPubPK=" + m4ccbCvArtPubPK + " ]";
     }
-    
 }

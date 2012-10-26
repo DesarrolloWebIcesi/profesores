@@ -20,7 +20,7 @@ import javax.ws.rs.Produces;
  *
  * @author 14620701
  */
-@Path("co.edu.icesi.profesores.entities.m4ccbcvprodtec")
+@Path("prodtec")
 public class M4ccbCvProdTecRESTFacade {
 
     private EntityManagerFactory getEntityManagerFactory() throws NamingException {
@@ -39,23 +39,17 @@ public class M4ccbCvProdTecRESTFacade {
     }  
 
     @GET
-    @Path("{id}")
+    @Path("{id}/{professorid}")
     @Produces({"application/xml", "application/json"})
-    public M4ccbCvProdTec find(@PathParam("id") M4ccbCvProdTecPK id) {
-        return getJpaController().findM4ccbCvProdTec(id);
+    public M4ccbCvProdTec find(@PathParam("id") int id, @PathParam("professorid") String professorId) {
+        M4ccbCvProdTecPK pk=new M4ccbCvProdTecPK("0000", ((Integer)(id)).shortValue(), professorId);
+        return getJpaController().findM4ccbCvProdTec(pk);
     }
 
     @GET
     @Produces({"application/xml", "application/json"})
     public List<M4ccbCvProdTec> findAll() {
         return getJpaController().findM4ccbCvProdTecEntities();
-    }
-
-    @GET
-    @Path("{max}/{first}")
-    @Produces({"application/xml", "application/json"})
-    public List<M4ccbCvProdTec> findRange(@PathParam("max") Integer max, @PathParam("first") Integer first) {
-        return getJpaController().findM4ccbCvProdTecEntities(max, first);
     }
 
     @GET
