@@ -10,7 +10,9 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
@@ -76,5 +78,17 @@ public class M4ccbCvPresentacJpaController implements Serializable {
             em.close();
         }
     }
-    
+     public List <M4ccbCvPresentac> findM4ccbCvPresentationByStdIdHr(String idProfesor){
+        EntityManager em=getEntityManager();
+        try{
+            TypedQuery<M4ccbCvPresentac> q= em.createNamedQuery("M4ccbCvPresentac.findByStdIdHr", M4ccbCvPresentac.class);
+            q.setParameter("stdIdHr", idProfesor);
+            List <M4ccbCvPresentac> items = q.getResultList();
+            return items;
+        }catch(NoResultException ex){
+            throw ex;
+        }finally{
+            em.close();
+        }
+    }
 }

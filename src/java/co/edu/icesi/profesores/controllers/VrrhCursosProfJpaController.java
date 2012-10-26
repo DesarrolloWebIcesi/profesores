@@ -164,7 +164,16 @@ public class VrrhCursosProfJpaController implements Serializable {
 
             System.out.println(q.toString());
             System.out.println(q.getParameters().toString());
-            List<VrrhCursosProf> courses = q.getResultList();           
+            List<VrrhCursosProf> courses = q.getResultList();  
+            String nombre = null;
+            for (int i=0;i<courses.size();i++){
+                nombre = courses.get(i).getMateriaNombre();
+                for(int c=i+1;c<courses.size();c++){
+                    if (nombre.equalsIgnoreCase(courses.get(c).getMateriaNombre())){
+                        courses.remove(c);
+                    }
+                }
+            }
             return courses;
         } catch (NoResultException ex) {
             throw ex;

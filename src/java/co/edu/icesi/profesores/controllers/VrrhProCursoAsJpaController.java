@@ -186,12 +186,21 @@ public class VrrhProCursoAsJpaController implements Serializable {
             q.setParameter("profesorCedula", profesorCedula);
             q.setParameter("periodoAcad", periodoAcad);
             /*q.setParameter("periodoConsecutivo", periodoConsecutivo);*/
-              
+             
             System.out.println(q.toString());
             System.out.println(q.getParameters().toString());
             System.out.println(q.getResultList().get(0));
 
-            List<VrrhProCursoAs> courses = q.getResultList();                
+            List<VrrhProCursoAs> courses = q.getResultList(); 
+            String nombre = null;
+            for (int i=0;i<courses.size();i++){
+                nombre = courses.get(i).getNombreMateria();
+                for(int c=i+1;c<courses.size();c++){
+                    if (nombre.equalsIgnoreCase(courses.get(c).getNombreMateria())){
+                        courses.remove(c);
+                    }
+                }
+            }
             return courses;
         } catch (NoResultException ex) {
             throw ex;

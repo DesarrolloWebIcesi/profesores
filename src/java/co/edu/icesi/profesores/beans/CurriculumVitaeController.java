@@ -41,6 +41,7 @@ public class CurriculumVitaeController implements Serializable {
     private List<M4ccbCvSoftReg> registeredSoftware;
     private List<M4ccbCvTrabTecn> technicalWorks;
     private List<StdHrLangTrans> translations;
+    private List<M4ccbCvPresentac> presentations;
     
     /**
      * Creates a new instance of CurriculumVitaeController
@@ -75,6 +76,7 @@ public class CurriculumVitaeController implements Serializable {
         M4ccbCvSoftRegJpaController registeredSoftwareController = new M4ccbCvSoftRegJpaController(emf);
         M4ccbCvTrabTecnJpaController technicalWorksController = new M4ccbCvTrabTecnJpaController(emf);
         StdHrLangTransJpaController translationsController = new StdHrLangTransJpaController(emf);
+        M4ccbCvPresentacJpaController presentationController = new M4ccbCvPresentacJpaController(emf);
         /*Fin declaraciones controladoras*/
 
         this.person = personController.findStdPersonByStdSsn(profesorId);
@@ -99,7 +101,9 @@ public class CurriculumVitaeController implements Serializable {
         this.technicalWorks=technicalWorksController.findM4ccbCvTrabTecnByStdIdHr(stdIdPerson);
         this.translations=translationsController.findStdHrLangTransByStdIdHr(stdIdPerson);
         this.workingPapers=workingPapersController.findM4ccbCvDocTrabByStdIdHr(stdIdPerson);
-    }
+        this.presentations = presentationController.findM4ccbCvPresentationByStdIdHr(stdIdPerson);
+        System.out.println(presentations.get(1).getCcbNomPresnt()); 
+   }
 
     public StdPerson getPerson() {
         return person;
@@ -251,6 +255,14 @@ public class CurriculumVitaeController implements Serializable {
 
     public void setTranslations(List<StdHrLangTrans> translations) {
         this.translations = translations;
+    }
+
+    public List<M4ccbCvPresentac> getPresentations() {
+        return presentations;
+    }
+
+    public void setPresentations(List<M4ccbCvPresentac> presentations) {
+        this.presentations = presentations;
     }
     
 }
