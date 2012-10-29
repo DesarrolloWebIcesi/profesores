@@ -575,7 +575,7 @@ public class M4ccbCvArtPub implements Serializable {
 
         String link = "";
         if (this.ccbUrl != null && !this.ccbUrl.equalsIgnoreCase("")) {
-            link = this.ccbUrl;
+            link = " "+this.ccbUrl;
         }
 
         this.citation = authors + publishedDate + title + publisher + pagination + link;

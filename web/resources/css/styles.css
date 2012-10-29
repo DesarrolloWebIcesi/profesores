@@ -9,10 +9,29 @@
 root { 
     display: block;
 }
-#pageWrapper{}
-#pageContent{
+
+h3:before{
+    content: "+"
+}
+
+section table{
+    width: 100%;
+}
+#pageWrapper{
     margin: 0 auto;
     max-width:960px;
     width: 100%;
+}
+#pageContent{}
+
+#photo{
+    display: inline-block;
+    margin:0 2.5%;
+    width: 15%
+}
+#info{
+    display: inline-block;
+    margin: 0 5%;
+    width: 60%;
 }
 
