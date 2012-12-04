@@ -78,7 +78,7 @@ public class StdHrAcadBackgrJpaController implements Serializable {
             em.close();
         }
     }
-    public List<StdHrAcadBackgr> findEmailPreferidoByStdHrId(String idPerson) {
+    public List<StdHrAcadBackgr> findStdHrAcadBackgrByStdHrId(String idPerson) {
         EntityManager em = getEntityManager();
         try {
             TypedQuery<StdHrAcadBackgr> q = em.createNamedQuery("StdHrAcadBackgr.findByStdIdHr", StdHrAcadBackgr.class);

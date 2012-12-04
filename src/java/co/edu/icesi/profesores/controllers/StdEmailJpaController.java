@@ -77,21 +77,38 @@ public class StdEmailJpaController implements Serializable {
             em.close();
         }
     }
-        public StdEmail findEmailPreferidoByStdHrId(String idPerson) {
+
+    public StdEmail findEmailPreferidoByStdHrId(String idPerson) {
         EntityManager em = getEntityManager();
         try {
             TypedQuery<StdEmail> q = em.createNamedQuery("StdEmail.findByStdIdPersonCcbPreferido", StdEmail.class);
             q.setParameter("stdIdPerson", idPerson);
             q.setParameter("ccbPreferido", "1");
-            StdEmail person = (StdEmail)q.getSingleResult();
+            StdEmail person = (StdEmail) q.getSingleResult();
             return person;
         } catch (NoResultException ex) {
-           return null;
-        }catch (NonUniqueResultException ex){
             return null;
-    }finally {
+        } catch (NonUniqueResultException ex) {
+            return null;
+        } finally {
             em.close();
         }
     }
     
+    public StdEmail findInstitutionalEmailByStdHrId(String idPerson) {
+        EntityManager em = getEntityManager();
+        try {
+            TypedQuery<StdEmail> q = em.createNamedQuery("StdEmail.findByStdIdPersonStdIdLocatType", StdEmail.class);
+            q.setParameter("stdIdPerson", idPerson);
+            q.setParameter("stdIdLocatType", "I");
+            StdEmail person = (StdEmail) q.getSingleResult();
+            return person;
+        } catch (NoResultException ex) {
+            return null;
+        } catch (NonUniqueResultException ex) {
+            return null;
+        } finally {
+            em.close();
+        }
+    }
 }

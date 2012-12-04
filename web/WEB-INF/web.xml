@@ -4,6 +4,15 @@
         <param-name>javax.faces.PROJECT_STAGE</param-name>
         <param-value>Development</param-value>
     </context-param>
+    <context-param>
+        <param-name>mailImagePath</param-name>
+  	<param-value>images/email/</param-value>
+    </context-param>
+    <context-param>
+        <param-name>photoImagePath</param-name>
+        <param-value>https://talentoicesi.icesi.edu.co/fotos</param-value>
+    </context-param>
+    
     <servlet>
         <servlet-name>ServletAdaptor</servlet-name>
         <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
@@ -23,11 +32,26 @@
         <servlet-name>ServletAdaptor</servlet-name>
         <url-pattern>/webresources/*</url-pattern>
     </servlet-mapping>
-   <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/faces/*</url-pattern>
     </servlet-mapping>
-   <session-config>
+    
+    <filter>
+        <filter-name>Pretty Filter</filter-name>
+        <filter-class>com.ocpsoft.pretty.PrettyFilter</filter-class>
+    </filter>
+
+    <filter-mapping> 
+        <filter-name>Pretty Filter</filter-name> 
+        <url-pattern>/*</url-pattern> 
+        <dispatcher>FORWARD</dispatcher> 
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>ASYNC</dispatcher> 
+        <dispatcher>ERROR</dispatcher>
+    </filter-mapping>
+    
+    <session-config>
         <session-timeout>
             30
         </session-timeout>

@@ -18,7 +18,9 @@
             <section id="personalInformation">
                 <h2><h:outputText value="#{bundle.ViewCurriculumVitaePersonalInfTitle}"></h:outputText></h2>
                 <section id="photo">
-                    <!--<img src ="#{curriculumVitaeController.person.scoPhoto}"/>--> <img src ="94378897.jpg" height="100" width="100"/>
+                    <ui:fragment rendered="#{curriculumVitaeController.photoImageExist}">
+                        <img src ="#{initParam['photoImagePath']}/#{curriculumVitaeController.person.stdPersonPK.stdIdPerson}.jpg"/> 
+                    </ui:fragment><!--<img src ="/94378897.jpg" height="100" width="100"/>-->
                 </section>
                 <section id="info">
                     <table>
@@ -32,12 +34,19 @@
                             <td><h:outputText value="#{curriculumVitaeController.position.scoNmPositionesp}"/></td>  
                         </tr>
                         <tr>
-                            <td ><!--<h:outputText value="#{curriculumVitaeController.personmail.stdEmail}"/>--><h:outputText value="jcalonso@icesi.edu.co"/></td>  
+                            <td>
+                                <!--
+                                <h:outputText value="#{curriculumVitaeController.personmail.stdEmail}"/>
+                                <h:outputText value="jcalonso@icesi.edu.co"/>
+                                -->
+                                <img src="#{request.contextPath}/#{initParam['mailImagePath']}#{curriculumVitaeController.person.stdPersonPK.stdIdPerson}.png"/>
+                            </td> 
                         </tr>               
                     </table>
                 </section>
             </section>
-
+            
+            <!--
             <section id="academicBackground">
                 <h2><h:outputText value="#{bundle.ViewCurriculumVitaeAcadBackgrTitle}"></h:outputText></h2>
                 <h:dataTable value="#{curriculumVitaeController.stdHrAcadBackgr}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all">                       
@@ -61,7 +70,7 @@
                         </table>
                     </h:column> 
                 </h:dataTable>
-            </section>
+            </section>-->
 
             <section id="currentCourses">
                 <h2><h:outputText value="#{bundle.ViewCurriculumVitaeCurrentCoursesTitle}"></h:outputText></h2>
