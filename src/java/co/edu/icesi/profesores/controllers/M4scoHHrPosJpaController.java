@@ -77,18 +77,19 @@ public class M4scoHHrPosJpaController implements Serializable {
             em.close();
         }
     }
-     public M4scoHHrPos findPersonPositionByStdSsn(String idPerson) {
+
+    public List<M4scoHHrPos> findPersonPositionByScoIdHr(String idPerson) {
         EntityManager em = getEntityManager();
         try {
             TypedQuery<M4scoHHrPos> q = em.createNamedQuery("M4scoHHrPos.findByScoIdHr", M4scoHHrPos.class);
             q.setParameter("scoIdHr", idPerson);
-            M4scoHHrPos personPosition = (M4scoHHrPos)q.getSingleResult();
-            return personPosition;
+            List<M4scoHHrPos> personPositions =  q.getResultList();
+            return personPositions;
         } catch (NoResultException ex) {
             throw ex;
-        }catch (NonUniqueResultException ex){
+        } catch (NonUniqueResultException ex) {
             throw ex;
-    }finally {
+        } finally {
             em.close();
         }
     }

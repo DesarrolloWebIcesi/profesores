@@ -8,235 +8,240 @@
 
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
-            <h:outputText value="#{bundle.ViewCurriculumVitaeTitle}"></h:outputText> - <h:outputText value="#{curriculumVitaeController.person.stdNFirstName} #{curriculumVitaeController.person.stdNUsualName} #{curriculumVitaeController.person.stdNFamName1} #{curriculumVitaeController.person.stdNMaidenName}"/>
+            <h:outputText value="#{curriculumVitaeController.person.stdNFirstName} #{curriculumVitaeController.person.stdNUsualName} #{curriculumVitaeController.person.stdNFamName1} #{curriculumVitaeController.person.stdNMaidenName}"/>
         </ui:define>
         <ui:define name="body">            
             <h:panelGroup id="messagePanel" layout="block">
                 <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
             </h:panelGroup>
 
-            <section id="personalInformation">
-                <h2><h:outputText value="#{bundle.ViewCurriculumVitaePersonalInfTitle}"></h:outputText></h2>
+            <section id="personalInformation">                
                 <section id="photo">
                     <ui:fragment rendered="#{curriculumVitaeController.photoImageExist}">
-                        <img src ="#{initParam['photoImagePath']}/#{curriculumVitaeController.person.stdPersonPK.stdIdPerson}.jpg"/> 
+                        <img src ="#{initParam['photoImagePath']}#{curriculumVitaeController.person.stdPersonPK.stdIdPerson}.jpg"/> 
+                    </ui:fragment><!--<img src ="/94378897.jpg" height="100" width="100"/>-->
+                    <ui:fragment rendered="#{not curriculumVitaeController.photoImageExist}">
+                        <img src ="#{request.contextPath}/images/no-image.png" width="100%"/> 
                     </ui:fragment><!--<img src ="/94378897.jpg" height="100" width="100"/>-->
                 </section>
                 <section id="info">
+                    <ui:fragment rendered="#{not empty curriculumVitaeController.positionDescriptions}">
+                        <section class="positions">
+                            <h:dataTable value="#{curriculumVitaeController.positionDescriptions}" var="item" border="0" cellpadding="2" cellspacing="0">
+                                <h:column>
+                                    <h:outputText value="#{item.scoNmPositionesp}"/>
+                                </h:column>
+                            </h:dataTable>
+                        </section>
+                    </ui:fragment>
                     <table>
                         <tr>
-                            <td><h:outputText value="#{curriculumVitaeController.person.stdNFirstName} #{curriculumVitaeController.person.stdNUsualName} #{curriculumVitaeController.person.stdNFamName1} #{curriculumVitaeController.person.stdNMaidenName}"/></td>
-                        </tr>
-                        <tr>
                             <td><h:outputText value="#{curriculumVitaeController.person.scoHomePage}"/></td>
-                        </tr>                   
+                        </tr>                  
                         <tr>
-                            <td><h:outputText value="#{curriculumVitaeController.position.scoNmPositionesp}"/></td>  
-                        </tr>
-                        <tr>
-                            <td>
-                                <!--
-                                <h:outputText value="#{curriculumVitaeController.personmail.stdEmail}"/>
-                                <h:outputText value="jcalonso@icesi.edu.co"/>
-                                -->
+                            <td>                              
                                 <img src="#{request.contextPath}/#{initParam['mailImagePath']}#{curriculumVitaeController.person.stdPersonPK.stdIdPerson}.png"/>
                             </td> 
                         </tr>               
                     </table>
                 </section>
             </section>
-            
-            <!--
-            <section id="academicBackground">
-                <h2><h:outputText value="#{bundle.ViewCurriculumVitaeAcadBackgrTitle}"></h:outputText></h2>
-                <h:dataTable value="#{curriculumVitaeController.stdHrAcadBackgr}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all">                       
-                    <h:column>
-                        <table>
-                            <tr>
-                                <td>
-                                    <h:outputText value="#{item.stdIdDiploma}, #{item.stdDescEduCenter}, #{item.ccbYearTerm}"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <h:outputText value="Supporting Areas of Emphasis: #{item.ccbOtroTitul}"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <h:outputText value="Dissertation Title: #{item.ccbTituTrab}"/>
-                                </td>
-                            </tr>
-                        </table>
-                    </h:column> 
-                </h:dataTable>
-            </section>-->
 
-            <section id="currentCourses">
-                <h2><h:outputText value="#{bundle.ViewCurriculumVitaeCurrentCoursesTitle}"></h:outputText></h2>
-                <h3><h:outputText value="#{bundle.ViewCurriculumVitaeUndergraduatedCurrentCoursesTitle}"></h:outputText></h3>
-                <h:dataTable value="#{curriculumVitaeController.vrrhCursosProfCurrent}" var="coursesPre" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all">                       
-                    <h:column>
+            <ui:fragment rendered="#{not empty curriculumVitaeController.stdHrAcadBackgr}">
+                <section id="academicBackground">
+                    <h2><h:outputText value="#{bundle.ViewCurriculumVitaeAcadBackgrTitle}"></h:outputText></h2>
+                    <h:dataTable value="#{curriculumVitaeController.stdHrAcadBackgr}" var="item" border="0" cellpadding="2" cellspacing="0">                       
+                        <h:column>
+                            <article class="acadBackground">
+                                <span class="acadBackground-degree"><h:outputText value="#{item.stdLuEduDiploma.stdNDiplomaesp}"/></span><span class="acadBackground-major"> #{item.ccbOtroEspec}<h:outputText value=" #{item.ccbOtroEspec}"/></span> - <span class="acadBackground-center"><h:outputText value="#{item.stdDescEduCenter}, #{item.ccbYearTerm}"/></span>
+                                <span class="acadBackground-subject"><h:outputText value="Áreas de enfasis: #{item.ccbOtroTForm}"/></span>
+                                <span class="acadBackground-thesis"><h:outputText value="Tesis: #{item.ccbTituTrab}"/></span>
 
-                        <h:outputText value="#{coursesPre.vrrhCursosProfPK.materiaCodigo} - #{coursesPre.materiaNombre}"/>
+                            </article>                        
+                        </h:column> 
+                    </h:dataTable>
+                </section>
+            </ui:fragment>
 
-                    </h:column> 
-                </h:dataTable>
-                <h3><h:outputText value="#{bundle.ViewCurriculumVitaePostgraduatedCurrentCoursesTitle}"></h:outputText></h3>
-                <h:dataTable value="#{curriculumVitaeController.vrrhProCursoAsCurrent}" var="coursesPos" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all">                       
-                    <h:column>
-
-                        <h:outputText value="#{coursesPos.vrrhProCursoAsPK.materiaCodigo} - #{coursesPos.nombreMateria}"/>
-
-                    </h:column> 
-                </h:dataTable>
-            </section>
-
-            <section id="undergraduatedCoursesHist">
-                <h2><h:outputText value="#{bundle.ViewCurriculumVitaeUndergraduatedCoursesHistTitle}"></h:outputText></h2>
-                <h:dataTable value="#{curriculumVitaeController.coursesPreHis}" var="coursesPreHis" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all">                       
-                    <h:column>
-
-                        <h:outputText value="#{coursesPreHis.vrrhCursosProfPK.materiaCodigo} - #{coursesPreHis.materiaNombre}"/>
-
-                    </h:column> 
-                </h:dataTable>
-            </section>
-
-            <section id="postgraduatedCoursesHist">
-                <h2><h:outputText value="#{bundle.ViewCurriculumVitaePostgraduatedCoursesHistTitle}"></h:outputText></h2>
-                <h:dataTable value="#{curriculumVitaeController.coursesPosHis}" var="coursesPosHis" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all">                       
-                    <h:column>
-
-                        <h:outputText value="#{coursesPosHis.vrrhProCursoAsPK.materiaCodigo} - #{coursesPosHis.nombreMateria}"/>
-
-                    </h:column> 
-                </h:dataTable>
-            </section>
-
-            <section id="intellectualContributions">
-                <h2><h:outputText value="#{bundle.ViewCurriculumVitaeIntellContTitle}"></h:outputText></h2>
-
-                <h:panelGroup layout="block" rendered="#{not empty curriculumVitaeController.journalArticles}">
-                    <section id="journalArticles">
-                        <h3><h:outputText value="#{bundle.ViewCurriculumVitaArticlesTitle}" rendered="#{not empty curriculumVitaeController.journalArticles}"></h:outputText></h3>
-                        <h:dataTable value="#{curriculumVitaeController.journalArticles}" var="journalArticles" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" rendered="#{not empty curriculumVitaeController.journalArticles}">                       
+            <ui:fragment rendered="#{(not empty curriculumVitaeController.vrrhCursosProfCurrent) or (not empty curriculumVitaeController.vrrhProCursoAsCurrent)}">
+                <section id="currentCourses">
+                    <h2><h:outputText value="#{bundle.ViewCurriculumVitaeCurrentCoursesTitle}"></h:outputText></h2>
+                    <ui:fragment rendered="#{not empty curriculumVitaeController.vrrhCursosProfCurrent}">
+                        <h3><h:outputText value="#{bundle.ViewCurriculumVitaeUndergraduatedCurrentCoursesTitle}"></h:outputText></h3>
+                        <h:dataTable value="#{curriculumVitaeController.vrrhCursosProfCurrent}" var="coursesPre" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all">                       
                             <h:column>
-                                <h:outputText value="#{journalArticles.citation}" escape="false"/>                            
+
+                                <h:outputText value="#{coursesPre.vrrhCursosProfPK.materiaCodigo} - #{coursesPre.materiaNombre}"/>
+
                             </h:column> 
                         </h:dataTable>
-                    </section>
-                </h:panelGroup>
+                    </ui:fragment>
 
-                <h:panelGroup layout="block" rendered="#{not empty curriculumVitaeController.books}">
-                    <section id="books">
-                        <h3><h:outputText value="#{bundle.ViewCurriculumVitaeBooksTitle}" rendered="#{not empty curriculumVitaeController.books}"></h:outputText></h3>
-                        <h:dataTable value="#{curriculumVitaeController.books}" var="books" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" rendered="#{not empty curriculumVitaeController.books}">                       
+                    <ui:fragment rendered="#{not empty curriculumVitaeController.vrrhProCursoAsCurrent}">
+                        <h3><h:outputText value="#{bundle.ViewCurriculumVitaePostgraduatedCurrentCoursesTitle}"></h:outputText></h3>
+                        <h:dataTable value="#{curriculumVitaeController.vrrhProCursoAsCurrent}" var="coursesPos" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all">                       
                             <h:column>
-                                <h:outputText value="#{books.ccbNomProd}"/>                            
+
+                                <h:outputText value="#{coursesPos.vrrhProCursoAsPK.materiaCodigo} - #{coursesPos.nombreMateria}"/>
+
                             </h:column> 
                         </h:dataTable>
-                    </section>
-                </h:panelGroup>
+                    </ui:fragment>
+                </section>
+            </ui:fragment>
 
-                <h:panelGroup layout="block" rendered="#{not empty curriculumVitaeController.books}">
-                    <section id="bookChapters">
-                        <h3><h:outputText value="#{bundle.ViewCurriculumVitaeBookChaptersTitle}" rendered="#{not empty curriculumVitaeController.bookChapters}"></h:outputText></h3>
-                        <h:dataTable value="#{curriculumVitaeController.bookChapters}" var="bookChapters" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" rendered="#{not empty curriculumVitaeController.bookChapters}">                       
-                            <h:column>
-                                <h:outputText value="#{bookChapters.ccbNomProd}"/>                            
-                            </h:column> 
-                        </h:dataTable>
-                    </section>
-                </h:panelGroup>
+            <ui:fragment rendered="#{not empty curriculumVitaeController.coursesPreHis}">
+                <section id="undergraduatedCoursesHist">
+                    <h2><h:outputText value="#{bundle.ViewCurriculumVitaeUndergraduatedCoursesHistTitle}"></h:outputText></h2>
+                    <h:dataTable value="#{curriculumVitaeController.coursesPreHis}" var="coursesPreHis" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all">                       
+                        <h:column>
 
-                <h:panelGroup layout="block" rendered="#{not empty curriculumVitaeController.registeredSoftware}">
-                    <section id="registeredSoftware">
-                        <h3><h:outputText value="#{bundle.ViewCurriculumVitaeRegisteredSoftwareTitle}" rendered="#{not empty curriculumVitaeController.registeredSoftware}"></h:outputText></h3>
-                        <h:dataTable value="#{curriculumVitaeController.registeredSoftware}" var="registeredSoftware" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" rendered="#{not empty curriculumVitaeController.registeredSoftware}">                       
-                            <h:column>
-                                <h:outputText value="#{registeredSoftware.ccbNomProd}"/>                            
-                            </h:column> 
-                        </h:dataTable>
-                    </section>
-                </h:panelGroup>
+                            <h:outputText value="#{coursesPreHis.vrrhCursosProfPK.materiaCodigo} - #{coursesPreHis.materiaNombre}"/>
 
-                <h:panelGroup layout="block" rendered="#{not empty curriculumVitaeController.revisions}">
-                    <section id="revisions">
-                        <h3><h:outputText value="#{bundle.ViewCurriculumVitaeRevisionsTitle}" rendered="#{not empty curriculumVitaeController.revisions}"></h:outputText></h3>
-                        <h:dataTable value="#{curriculumVitaeController.revisions}" var="revisions" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" rendered="#{not empty curriculumVitaeController.revisions}">                       
-                            <h:column>
-                                <h:outputText value="#{revisions.ccbNomProd}"/>                            
-                            </h:column> 
-                        </h:dataTable>
-                    </section>
-                </h:panelGroup>
+                        </h:column> 
+                    </h:dataTable>
+                </section>
+            </ui:fragment>
 
-                <h:panelGroup layout="block" rendered="#{not empty curriculumVitaeController.technicalWorks}">
-                    <section id="technicalWorks">
-                        <h3><h:outputText value="#{bundle.ViewCurriculumVitaeTechnicalWorksTitle}" rendered="#{not empty curriculumVitaeController.technicalWorks}"></h:outputText></h3>
-                        <h:dataTable value="#{curriculumVitaeController.technicalWorks}" var="technicalWorks" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" rendered="#{not empty curriculumVitaeController.technicalWorks}">                       
-                            <h:column>
-                                <h:outputText value="#{technicalWorks.ccbNomProd}"/>                            
-                            </h:column> 
-                        </h:dataTable>
-                    </section>
-                </h:panelGroup>
+            <ui:fragment rendered="#{not empty curriculumVitaeController.coursesPosHis}">
+                <section id="postgraduatedCoursesHist">
+                    <h2><h:outputText value="#{bundle.ViewCurriculumVitaePostgraduatedCoursesHistTitle}"></h:outputText></h2>
+                    <h:dataTable value="#{curriculumVitaeController.coursesPosHis}" var="coursesPosHis" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all">                       
+                        <h:column>
 
-                <h:panelGroup layout="block" rendered="#{not empty curriculumVitaeController.technicalWorks}">
-                    <section id="workingPapers">
-                        <h3><h:outputText value="#{bundle.ViewCurriculumVitaeWorkingPapersTitle}" rendered="#{not empty curriculumVitaeController.workingPapers}"></h:outputText></h3>
-                        <h:dataTable value="#{curriculumVitaeController.workingPapers}" var="workingPapers" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" rendered="#{not empty curriculumVitaeController.workingPapers}">                       
-                            <h:column>
-                                <h:outputText value="#{workingPapers.ccbNomProd}"/>                            
-                            </h:column> 
-                        </h:dataTable>
-                    </section>
-                </h:panelGroup>
+                            <h:outputText value="#{coursesPosHis.vrrhProCursoAsPK.materiaCodigo} - #{coursesPosHis.nombreMateria}"/>
 
-                <h:panelGroup layout="block" rendered="#{not empty curriculumVitaeController.didacticMaterial}">
-                    <section id="didacticMaterial">
-                        <h3><h:outputText value="#{bundle.ViewCurriculumVitaeDidacticMaterialTitle}" rendered="#{not empty curriculumVitaeController.didacticMaterial}"></h:outputText></h3>
-                        <h:dataTable value="#{curriculumVitaeController.didacticMaterial}" var="didacticMaterial" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" rendered="#{not empty curriculumVitaeController.didacticMaterial}">                       
-                            <h:column>
-                                <h:outputText value="#{didacticMaterial.ccbNomProd}"/>                            
-                            </h:column> 
-                        </h:dataTable>
-                    </section>
-                </h:panelGroup>
+                        </h:column> 
+                    </h:dataTable>
+                </section>
+            </ui:fragment>
 
-                <h:panelGroup layout="block" rendered="#{not empty curriculumVitaeController.epiloges}">
-                    <section id="epiloges">
-                        <h3><h:outputText value="#{bundle.ViewCurriculumVitaeEpilogesTitle}" rendered="#{not empty curriculumVitaeController.epiloges}"></h:outputText></h3>
-                        <h:dataTable value="#{curriculumVitaeController.epiloges}" var="epiloges" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" rendered="#{not empty curriculumVitaeController.epiloges}">                       
-                            <h:column>
-                                <h:outputText value="#{epiloges.ccbNomProd}"/>                            
-                            </h:column> 
-                        </h:dataTable>
-                    </section>
-                </h:panelGroup>
+            <ui:fragment rendered="#{curriculumVitaeController.intellContExist}">
+                <section id="intellectualContributions">
+                    <h2><h:outputText value="#{bundle.ViewCurriculumVitaeIntellContTitle}"></h:outputText></h2>
 
-                <h:panelGroup layout="block" rendered="#{not empty curriculumVitaeController.translations}">
-                    <section id="translations">
-                        <h3><h:outputText value="#{bundle.ViewCurriculumVitaeTranslationsTitle}" rendered="#{not empty curriculumVitaeController.translations}"></h:outputText></h3>
-                        <h:dataTable value="#{curriculumVitaeController.translations}" var="translations" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" rendered="#{not empty curriculumVitaeController.translations}">                       
-                            <h:column>
-                                <h:outputText value="#{translations.ccbNomProd}"/>                            
-                            </h:column> 
-                        </h:dataTable>
-                    </section>
-                </h:panelGroup>
+                    <h:panelGroup layout="block" rendered="#{not empty curriculumVitaeController.journalArticles}">
+                        <section id="journalArticles">
+                            <h3><h:outputText value="#{bundle.ViewCurriculumVitaArticlesTitle}" rendered="#{not empty curriculumVitaeController.journalArticles}"></h:outputText></h3>
+                            <h:dataTable value="#{curriculumVitaeController.journalArticles}" var="journalArticles" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" rendered="#{not empty curriculumVitaeController.journalArticles}">                       
+                                <h:column>
+                                    <h:outputText value="#{journalArticles.citation}" escape="false"/>                            
+                                </h:column> 
+                            </h:dataTable>
+                        </section>
+                    </h:panelGroup>
 
-            </section>
-            
-            <section id="present">
-                <h2><h:outputText value="#{bundle.ViewCurriculumVitaePresentatiosTitle}" rendered="#{not empty curriculumVitaeController.presentations}"></h:outputText></h2>
-                <h:dataTable value="#{curriculumVitaeController.presentations}" var="presentations" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" rendered="#{not empty curriculumVitaeController.presentations}">                       
-                    <h:column>
-                        <h:outputText value="#{presentations.ccbNomPresnt}"/>                            
-                    </h:column> 
-                </h:dataTable>
-            </section>
+                    <h:panelGroup layout="block" rendered="#{not empty curriculumVitaeController.books}">
+                        <section id="books">
+                            <h3><h:outputText value="#{bundle.ViewCurriculumVitaeBooksTitle}" rendered="#{not empty curriculumVitaeController.books}"></h:outputText></h3>
+                            <h:dataTable value="#{curriculumVitaeController.books}" var="books" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" rendered="#{not empty curriculumVitaeController.books}">                       
+                                <h:column>
+                                    <h:outputText value="#{books.ccbNomProd}"/>                            
+                                </h:column> 
+                            </h:dataTable>
+                        </section>
+                    </h:panelGroup>
+
+                    <h:panelGroup layout="block" rendered="#{not empty curriculumVitaeController.books}">
+                        <section id="bookChapters">
+                            <h3><h:outputText value="#{bundle.ViewCurriculumVitaeBookChaptersTitle}" rendered="#{not empty curriculumVitaeController.bookChapters}"></h:outputText></h3>
+                            <h:dataTable value="#{curriculumVitaeController.bookChapters}" var="bookChapters" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" rendered="#{not empty curriculumVitaeController.bookChapters}">                       
+                                <h:column>
+                                    <h:outputText value="#{bookChapters.ccbNomProd}"/>                            
+                                </h:column> 
+                            </h:dataTable>
+                        </section>
+                    </h:panelGroup>
+
+                    <h:panelGroup layout="block" rendered="#{not empty curriculumVitaeController.registeredSoftware}">
+                        <section id="registeredSoftware">
+                            <h3><h:outputText value="#{bundle.ViewCurriculumVitaeRegisteredSoftwareTitle}" rendered="#{not empty curriculumVitaeController.registeredSoftware}"></h:outputText></h3>
+                            <h:dataTable value="#{curriculumVitaeController.registeredSoftware}" var="registeredSoftware" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" rendered="#{not empty curriculumVitaeController.registeredSoftware}">                       
+                                <h:column>
+                                    <h:outputText value="#{registeredSoftware.ccbNomProd}"/>                            
+                                </h:column> 
+                            </h:dataTable>
+                        </section>
+                    </h:panelGroup>
+
+                    <h:panelGroup layout="block" rendered="#{not empty curriculumVitaeController.revisions}">
+                        <section id="revisions">
+                            <h3><h:outputText value="#{bundle.ViewCurriculumVitaeRevisionsTitle}" rendered="#{not empty curriculumVitaeController.revisions}"></h:outputText></h3>
+                            <h:dataTable value="#{curriculumVitaeController.revisions}" var="revisions" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" rendered="#{not empty curriculumVitaeController.revisions}">                       
+                                <h:column>
+                                    <h:outputText value="#{revisions.ccbNomProd}"/>                            
+                                </h:column> 
+                            </h:dataTable>
+                        </section>
+                    </h:panelGroup>
+
+                    <h:panelGroup layout="block" rendered="#{not empty curriculumVitaeController.technicalWorks}">
+                        <section id="technicalWorks">
+                            <h3><h:outputText value="#{bundle.ViewCurriculumVitaeTechnicalWorksTitle}" rendered="#{not empty curriculumVitaeController.technicalWorks}"></h:outputText></h3>
+                            <h:dataTable value="#{curriculumVitaeController.technicalWorks}" var="technicalWorks" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" rendered="#{not empty curriculumVitaeController.technicalWorks}">                       
+                                <h:column>
+                                    <h:outputText value="#{technicalWorks.ccbNomProd}"/>                            
+                                </h:column> 
+                            </h:dataTable>
+                        </section>
+                    </h:panelGroup>
+
+                    <h:panelGroup layout="block" rendered="#{not empty curriculumVitaeController.technicalWorks}">
+                        <section id="workingPapers">
+                            <h3><h:outputText value="#{bundle.ViewCurriculumVitaeWorkingPapersTitle}" rendered="#{not empty curriculumVitaeController.workingPapers}"></h:outputText></h3>
+                            <h:dataTable value="#{curriculumVitaeController.workingPapers}" var="workingPapers" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" rendered="#{not empty curriculumVitaeController.workingPapers}">                       
+                                <h:column>
+                                    <h:outputText value="#{workingPapers.ccbNomProd}"/>                            
+                                </h:column> 
+                            </h:dataTable>
+                        </section>
+                    </h:panelGroup>
+
+                    <h:panelGroup layout="block" rendered="#{not empty curriculumVitaeController.didacticMaterial}">
+                        <section id="didacticMaterial">
+                            <h3><h:outputText value="#{bundle.ViewCurriculumVitaeDidacticMaterialTitle}" rendered="#{not empty curriculumVitaeController.didacticMaterial}"></h:outputText></h3>
+                            <h:dataTable value="#{curriculumVitaeController.didacticMaterial}" var="didacticMaterial" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" rendered="#{not empty curriculumVitaeController.didacticMaterial}">                       
+                                <h:column>
+                                    <h:outputText value="#{didacticMaterial.ccbNomProd}"/>                            
+                                </h:column> 
+                            </h:dataTable>
+                        </section>
+                    </h:panelGroup>
+
+                    <h:panelGroup layout="block" rendered="#{not empty curriculumVitaeController.epiloges}">
+                        <section id="epiloges">
+                            <h3><h:outputText value="#{bundle.ViewCurriculumVitaeEpilogesTitle}" rendered="#{not empty curriculumVitaeController.epiloges}"></h:outputText></h3>
+                            <h:dataTable value="#{curriculumVitaeController.epiloges}" var="epiloges" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" rendered="#{not empty curriculumVitaeController.epiloges}">                       
+                                <h:column>
+                                    <h:outputText value="#{epiloges.ccbNomProd}"/>                            
+                                </h:column> 
+                            </h:dataTable>
+                        </section>
+                    </h:panelGroup>
+
+                    <h:panelGroup layout="block" rendered="#{not empty curriculumVitaeController.translations}">
+                        <section id="translations">
+                            <h3><h:outputText value="#{bundle.ViewCurriculumVitaeTranslationsTitle}" rendered="#{not empty curriculumVitaeController.translations}"></h:outputText></h3>
+                            <h:dataTable value="#{curriculumVitaeController.translations}" var="translations" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" rendered="#{not empty curriculumVitaeController.translations}">                       
+                                <h:column>
+                                    <h:outputText value="#{translations.ccbNomProd}"/>                            
+                                </h:column> 
+                            </h:dataTable>
+                        </section>
+                    </h:panelGroup>
+
+                    <h:panelGroup layout="block" rendered="#{not empty curriculumVitaeController.presentations}">
+                        <section id="present">
+                            <h3><h:outputText value="#{bundle.ViewCurriculumVitaePresentatiosTitle}" rendered="#{not empty curriculumVitaeController.presentations}"></h:outputText></h3>
+                            <h:dataTable value="#{curriculumVitaeController.presentations}" var="presentations" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" rendered="#{not empty curriculumVitaeController.presentations}">                       
+                                <h:column>
+                                    <h:outputText value="#{presentations.ccbNomPresnt}"/>                            
+                                </h:column> 
+                            </h:dataTable>
+                        </section>
+                    </h:panelGroup>
+                </section>
+            </ui:fragment>
 
         </ui:define>
     </ui:composition>

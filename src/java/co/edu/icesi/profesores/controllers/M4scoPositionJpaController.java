@@ -4,9 +4,11 @@
  */
 package co.edu.icesi.profesores.controllers;
 
+import co.edu.icesi.profesores.entities.M4scoHHrPos;
 import co.edu.icesi.profesores.entities.M4scoPosition;
 import co.edu.icesi.profesores.entities.M4scoPositionPK;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -77,7 +79,7 @@ public class M4scoPositionJpaController implements Serializable {
             em.close();
         }
     }
-       public M4scoPosition findPositionById(String idPosition) {
+    public M4scoPosition findPositionById(String idPosition) {
         EntityManager em = getEntityManager();
         try {
             TypedQuery<M4scoPosition> q = em.createNamedQuery("M4scoPosition.findByScoIdPosition", M4scoPosition.class);
@@ -91,6 +93,18 @@ public class M4scoPositionJpaController implements Serializable {
     }finally {
             em.close();
         }
+    }
+    
+    /** 
+     * Return the array of descriptions for the given positions' array
+     */
+    public List<M4scoPosition> findPositionByM4scoHHrPos(List<M4scoHHrPos> positions){
+        List<M4scoPosition> descriptions=new ArrayList<M4scoPosition>();
+        for(int i=0;i<positions.size();i++){
+            M4scoPosition description=findPositionById(positions.get(i).getScoIdPosition());
+            descriptions.add(description);
+        }
+        return descriptions;
     }
     
 }

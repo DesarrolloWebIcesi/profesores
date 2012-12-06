@@ -10,7 +10,7 @@
     </context-param>
     <context-param>
         <param-name>photoImagePath</param-name>
-        <param-value>https://talentoicesi.icesi.edu.co/fotos</param-value>
+        <param-value>https://talentoicesi.icesi.edu.co/fotos/</param-value>
     </context-param>
     
     <servlet>

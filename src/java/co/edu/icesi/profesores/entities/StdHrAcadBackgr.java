@@ -11,7 +11,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author 1130619373
+ * @author David Andrés Manzano Herrera - damanzano
+ * 
+ * @since 2012-12-04 damanzano
+ * Al the code lines relato to  the field CCB_CARGUE_ACT were commented, because they are not necesary for
+ * display purposes and were generating runtime errors. The erros have presented
+ * because in development enviroment the table STD_HR_ACAD_BACKGR loss the CCB_CARGUE_ACT
+ * field in a backup process.
  */
 @Entity
 @Table(name = "STD_HR_ACAD_BACKGR")
@@ -49,7 +55,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "StdHrAcadBackgr.findByIdApprole", query = "SELECT s FROM StdHrAcadBackgr s WHERE s.idApprole = :idApprole"),
     @NamedQuery(name = "StdHrAcadBackgr.findByIdSecuser", query = "SELECT s FROM StdHrAcadBackgr s WHERE s.idSecuser = :idSecuser"),
     @NamedQuery(name = "StdHrAcadBackgr.findByDtLastUpdate", query = "SELECT s FROM StdHrAcadBackgr s WHERE s.dtLastUpdate = :dtLastUpdate"),    
-    @NamedQuery(name = "StdHrAcadBackgr.findByCcbCargueAct", query = "SELECT s FROM StdHrAcadBackgr s WHERE s.ccbCargueAct = :ccbCargueAct")})
+    /*@NamedQuery(name = "StdHrAcadBackgr.findByCcbCargueAct", query = "SELECT s FROM StdHrAcadBackgr s WHERE s.ccbCargueAct = :ccbCargueAct")*/})
 public class StdHrAcadBackgr implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
@@ -113,8 +119,22 @@ public class StdHrAcadBackgr implements Serializable {
     @Column(name = "DT_LAST_UPDATE")
     @Temporal(TemporalType.DATE)
     private Date dtLastUpdate;
-    @Column(name = "CCB_CARGUE_ACT")
-    private String ccbCargueAct;
+    /** 
+     * @since 2012-12-04 damanzano
+     * the following attribustes were commented, because they are not necesary for
+     * display purposes and were generating runtime errors. The erros have presented
+     * because in development enviroment the table STD_HR_ACAD_BACKGR loss the CCB_CARGUE_ACT
+     * field in a backup process.
+     */
+//    @Column(name = "CCB_CARGUE_ACT")
+//    private String ccbCargueAct;
+    
+    @ManyToOne(optional = false)
+    @JoinColumns({
+        @JoinColumn(name = "ID_ORGANIZATION", referencedColumnName = "ID_ORGANIZATION", updatable=false),
+        @JoinColumn(name = "STD_ID_DIPLOMA", referencedColumnName = "STD_ID_DIPLOMA", updatable=false)
+    })
+    private StdLuEduDiploma StdLuEduDiploma;
 
     public StdHrAcadBackgr() {
     }
@@ -359,12 +379,20 @@ public class StdHrAcadBackgr implements Serializable {
         this.dtLastUpdate = dtLastUpdate;
     }
 
-    public String getCcbCargueAct() {
-        return ccbCargueAct;
-    }
+//    public String getCcbCargueAct() {
+//        return ccbCargueAct;
+//    }
+//
+//    public void setCcbCargueAct(String ccbCargueAct) {
+//        this.ccbCargueAct = ccbCargueAct;
+//    }
 
-    public void setCcbCargueAct(String ccbCargueAct) {
-        this.ccbCargueAct = ccbCargueAct;
+    public co.edu.icesi.profesores.entities.StdLuEduDiploma getStdLuEduDiploma() {
+        return StdLuEduDiploma;
+    }
+   
+    public void setStdLuEduDiploma(co.edu.icesi.profesores.entities.StdLuEduDiploma StdLuEduDiploma) {
+        this.StdLuEduDiploma = StdLuEduDiploma;
     }
 
     @Override

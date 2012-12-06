@@ -17,7 +17,6 @@ import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
-import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -28,15 +27,19 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  *
- * @author 14620701
+ * @author Juan Manuel Lozano Sardi - jlozano
+ *
+ * @since 2012-12-04 damanzano All the funcionalities not related to the
+ * iteration 1 of Hoja de vida Profesores web's project were commented in
+ * loadProfessorData() method.
  */
 @ManagedBean(name = "curriculumvitae")
 @SessionScoped
 public class CurriculumVitaeController implements Serializable {
 
     private StdPerson person;
-    private M4scoHHrPos positionperson;
-    private M4scoPosition position;
+    private List<M4scoHHrPos> personPositions;
+    private List<M4scoPosition> positionDescriptions;
     private StdEmail personmail;
     private List<StdHrAcadBackgr> stdHrAcadBackgr;
     private List<VrrhCursosProf> vrrhCursosProfCurrent;
@@ -56,7 +59,9 @@ public class CurriculumVitaeController implements Serializable {
     private List<M4ccbCvPresentac> presentations;
     private String professorWebId;
     private boolean photoImageExist;
- 
+    private boolean intellContExist;
+    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("profesoresPU");
+
     /**
      * Creates a new instance of CurriculumVitaeController
      */
@@ -68,13 +73,14 @@ public class CurriculumVitaeController implements Serializable {
              */
             loadProfessorData("94378897");
         } else {
-            /**
-             * TODO: professorWebId tendrá valores como jcalonso, rcastro,
-             * damanzano estos valores debe reemplzarse por la cédula puesto que
-             * ese es el id que se puede utilizar ante peoplenet
-             */
-            loadProfessorData(professorWebId);
-            //loadProfessorData("94378897");
+            String professorId = getPeopleNetId(professorWebId);
+            if (professorId == null || professorId.equalsIgnoreCase("")) {
+                /**
+                 * TODO: redirect to error page
+                 */
+            } else {
+                loadProfessorData(professorId);
+            }
         }
 
     }
@@ -84,74 +90,83 @@ public class CurriculumVitaeController implements Serializable {
     }
 
     private void loadProfessorData(String profesorId) {
-        /**
-         * Declare and initialize the controllers
-         */
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("profesoresPU");
+        //verify if the person is a professor;
         StdPersonJpaController personController = new StdPersonJpaController(emf);
-        M4scoHHrPosJpaController personPositionController = new M4scoHHrPosJpaController(emf);
-        M4scoPositionJpaController positionController = new M4scoPositionJpaController(emf);
-        StdEmailJpaController emailController = new StdEmailJpaController(emf);
-        StdHrAcadBackgrJpaController acadController = new StdHrAcadBackgrJpaController(emf);
-        VrrhCursosProfJpaController coursesPreController = new VrrhCursosProfJpaController(emf);
-        VrrhProCursoAsJpaController coursesPosController = new VrrhProCursoAsJpaController(emf);
+        this.person = personController.findStdPersonByStdIdPerson(profesorId);
+        if (!this.person.getCcbProfesor().equalsIgnoreCase("1")) {
+            /**
+             * TODO: redirect to error page
+             */
+        } else {
+            /**
+             * Declare and initialize the controllers
+             */
+            M4scoHHrPosJpaController personPositionController = new M4scoHHrPosJpaController(emf);
+            M4scoPositionJpaController positionDescriptionsController = new M4scoPositionJpaController(emf);
+            StdEmailJpaController emailController = new StdEmailJpaController(emf);
+            StdHrAcadBackgrJpaController acadController = new StdHrAcadBackgrJpaController(emf);
 
-        /**
-         * The following controllers that manage the publications issues, so
-         * they are not necesary for the first iteration.
-         */
-//        M4ccbCvArtPubJpaController journalArticlesController = new M4ccbCvArtPubJpaController(emf);
-//        M4ccbCvCapLibJpaController bookChpaterController =new M4ccbCvCapLibJpaController(emf);
-//        M4ccbCvDlloMatJpaController didacticMaterialController = new M4ccbCvDlloMatJpaController(emf);
-//        M4ccbCvDocTrabJpaController workingPapersController = new M4ccbCvDocTrabJpaController(emf);
-//        M4ccbCvEdicionRJpaController revisionsController= new M4ccbCvEdicionRJpaController(emf);
-//        M4ccbCvLibroJpaController booksController = new M4ccbCvLibroJpaController(emf);
-//        M4ccbCvPrefEpilJpaController epilogesController = new M4ccbCvPrefEpilJpaController(emf);
-//        M4ccbCvSoftRegJpaController registeredSoftwareController = new M4ccbCvSoftRegJpaController(emf);
-//        M4ccbCvTrabTecnJpaController technicalWorksController = new M4ccbCvTrabTecnJpaController(emf);
-//        StdHrLangTransJpaController translationsController = new StdHrLangTransJpaController(emf);
-//        M4ccbCvPresentacJpaController presentationController = new M4ccbCvPresentacJpaController(emf);
+            /**
+             * The following controllers that manage the publications issues, so
+             * they are not necesary for the first iteration.
+             */
+//            VrrhCursosProfJpaController coursesPreController = new VrrhCursosProfJpaController(emf);
+//            VrrhProCursoAsJpaController coursesPosController = new VrrhProCursoAsJpaController(emf);
+//            M4ccbCvArtPubJpaController journalArticlesController = new M4ccbCvArtPubJpaController(emf);
+//            M4ccbCvCapLibJpaController bookChpaterController = new M4ccbCvCapLibJpaController(emf);
+//            M4ccbCvDlloMatJpaController didacticMaterialController = new M4ccbCvDlloMatJpaController(emf);
+//            M4ccbCvDocTrabJpaController workingPapersController = new M4ccbCvDocTrabJpaController(emf);
+//            M4ccbCvEdicionRJpaController revisionsController = new M4ccbCvEdicionRJpaController(emf);
+//            M4ccbCvLibroJpaController booksController = new M4ccbCvLibroJpaController(emf);
+//            M4ccbCvPrefEpilJpaController epilogesController = new M4ccbCvPrefEpilJpaController(emf);
+//            M4ccbCvSoftRegJpaController registeredSoftwareController = new M4ccbCvSoftRegJpaController(emf);
+//            M4ccbCvTrabTecnJpaController technicalWorksController = new M4ccbCvTrabTecnJpaController(emf);
+//            StdHrLangTransJpaController translationsController = new StdHrLangTransJpaController(emf);
+//            M4ccbCvPresentacJpaController presentationController = new M4ccbCvPresentacJpaController(emf);
         /*Fin declaraciones controladoras*/
-        this.person = personController.findStdPersonByStdSsn(profesorId);
-        String stdIdPerson = person.getStdPersonPK().getStdIdPerson();
-        this.positionperson = personPositionController.findPersonPositionByStdSsn(stdIdPerson);
-        this.position = positionController.findPositionById(positionperson.getScoIdPosition());
-        this.personmail = emailController.findInstitutionalEmailByStdHrId(stdIdPerson);
-        generateEmailImage();
-        //this.stdHrAcadBackgr = acadController.findStdHrAcadBackgrByStdHrId(stdIdPerson);
+            /**
+             * The person must be obtained by STD_ID_PERSON field
+             */
+            //this.person = personController.findStdPersonByStdSsn(profesorId);
+            String stdIdPerson = person.getStdPersonPK().getStdIdPerson();
+            this.personPositions = personPositionController.findPersonPositionByScoIdHr(stdIdPerson);
+            this.positionDescriptions = positionDescriptionsController.findPositionByM4scoHHrPos(personPositions);
+            this.personmail = emailController.findInstitutionalEmailByStdHrId(stdIdPerson);
+            generateEmailImage();
+            this.stdHrAcadBackgr = acadController.findStdHrAcadBackgrByStdHrId(stdIdPerson);
 
-        this.vrrhCursosProfCurrent = coursesPreController.findVrrhCursosProfByProfesorPeriodCurrent(profesorId);
-        this.vrrhProCursoAsCurrent = coursesPosController.findVrrhCursosProfByProfesorPeriodCurrent(profesorId);
-        this.coursesPreHis = coursesPreController.findVrrhCursosProfByProfesorPeriodHist(profesorId);
-        this.coursesPosHis = coursesPosController.findVrrhCursosProfByProfesorPeriodHist(profesorId);
-
-        /**
-         * The following lines manage the publications issues, so they are not
-         * necesary for the first iteration.
-         */
-//        this.bookChapters=bookChpaterController.findM4ccbCvCapLibByStdIdHr(stdIdPerson);
-//        this.books=booksController.findM4ccbCvLibroByStdIdHr(stdIdPerson);
-//        this.didacticMaterial=didacticMaterialController.findM4ccbCvDlloMatByStdIdHr(stdIdPerson);
-//        this.epiloges=epilogesController.findM4ccbCvPrefEpilByStdIdHr(stdIdPerson);
-//        this.journalArticles=journalArticlesController.findM4ccbCvArtPubfindByStdIdHr(stdIdPerson);
-//        this.registeredSoftware=registeredSoftwareController.findM4ccbCvSoftRegByStdIdHr(stdIdPerson);
-//        this.revisions=revisionsController.findM4ccbCvEdicionRByStdIdHr(stdIdPerson);
-//        this.technicalWorks=technicalWorksController.findM4ccbCvTrabTecnByStdIdHr(stdIdPerson);
-//        this.translations=translationsController.findStdHrLangTransByStdIdHr(stdIdPerson);
-//        this.workingPapers=workingPapersController.findM4ccbCvDocTrabByStdIdHr(stdIdPerson);
-//        this.presentations = presentationController.findM4ccbCvPresentationByStdIdHr(stdIdPerson);
+            /**
+             * The following lines manage the publications issues, so they are
+             * not necesary for the first iteration.
+             */
+//            this.vrrhCursosProfCurrent = coursesPreController.findVrrhCursosProfByProfesorPeriodCurrent(profesorId);
+//            this.vrrhProCursoAsCurrent = coursesPosController.findVrrhCursosProfByProfesorPeriodCurrent(profesorId);
+//            this.coursesPreHis = coursesPreController.findVrrhCursosProfByProfesorPeriodHist(profesorId);
+//            this.coursesPosHis = coursesPosController.findVrrhCursosProfByProfesorPeriodHist(profesorId);
+//            this.bookChapters = bookChpaterController.findM4ccbCvCapLibByStdIdHr(stdIdPerson);
+//            this.books = booksController.findM4ccbCvLibroByStdIdHr(stdIdPerson);
+//            this.didacticMaterial = didacticMaterialController.findM4ccbCvDlloMatByStdIdHr(stdIdPerson);
+//            this.epiloges = epilogesController.findM4ccbCvPrefEpilByStdIdHr(stdIdPerson);
+//            this.journalArticles = journalArticlesController.findM4ccbCvArtPubfindByStdIdHr(stdIdPerson);
+//            this.registeredSoftware = registeredSoftwareController.findM4ccbCvSoftRegByStdIdHr(stdIdPerson);
+//            this.revisions = revisionsController.findM4ccbCvEdicionRByStdIdHr(stdIdPerson);
+//            this.technicalWorks = technicalWorksController.findM4ccbCvTrabTecnByStdIdHr(stdIdPerson);
+//            this.translations = translationsController.findStdHrLangTransByStdIdHr(stdIdPerson);
+//            this.workingPapers = workingPapersController.findM4ccbCvDocTrabByStdIdHr(stdIdPerson);
+//            this.presentations = presentationController.findM4ccbCvPresentationByStdIdHr(stdIdPerson);
+        }
     }
 
     public StdPerson getPerson() {
         return person;
     }
 
-    public M4scoHHrPos getPositionperson() {
-        return positionperson;
+    public List<M4scoHHrPos> getPersonPositions() {
+        return personPositions;
     }
 
-    public M4scoPosition getPosition() {
-        return position;
+    public List<M4scoPosition> getPositionDescriptions() {
+        return positionDescriptions;
     }
 
     public StdEmail getPersonmail() {
@@ -227,6 +242,80 @@ public class CurriculumVitaeController implements Serializable {
     }
 
     /**
+     * This method verify wheather the user's photo file exist in PeopleNet
+     * photo repository
+     */
+    public boolean isPhotoImageExist() {
+        String URLName = FacesContext.getCurrentInstance().getExternalContext()
+                .getInitParameter("photoImagePath") + this.person.getStdPersonPK().getStdIdPerson() + ".jpg";
+        try {
+            HttpURLConnection.setFollowRedirects(false);
+            // note : you may also need
+            //        HttpURLConnection.setInstanceFollowRedirects(false)
+            HttpURLConnection con =
+                    (HttpURLConnection) new URL(URLName).openConnection();
+            con.setRequestMethod("HEAD");
+            this.photoImageExist = (con.getResponseCode() == HttpURLConnection.HTTP_OK);
+            return this.photoImageExist;
+        } catch (Exception e) {
+            e.printStackTrace();
+            this.photoImageExist = false;
+            return this.photoImageExist;
+        }
+    }
+
+    public boolean isIntellContExist() {
+        intellContExist = false;
+
+        if (this.bookChapters != null && !this.bookChapters.isEmpty()) {
+            intellContExist = true;
+            return intellContExist;
+        }
+        if (this.books != null && !this.books.isEmpty()) {
+            intellContExist = true;
+            return intellContExist;
+        }
+        if (this.didacticMaterial != null && !this.didacticMaterial.isEmpty()) {
+            intellContExist = true;
+            return intellContExist;
+        }
+        if (this.epiloges != null && !this.epiloges.isEmpty()) {
+            intellContExist = true;
+            return intellContExist;
+        }
+        if (this.journalArticles != null && !this.journalArticles.isEmpty()) {
+            intellContExist = true;
+            return intellContExist;
+        }
+        if (this.presentations != null && !this.presentations.isEmpty()) {
+            intellContExist = true;
+            return intellContExist;
+        }
+        if (this.registeredSoftware != null && !this.registeredSoftware.isEmpty()) {
+            intellContExist = true;
+            return intellContExist;
+        }
+        if (this.revisions != null && !this.revisions.isEmpty()) {
+            intellContExist = true;
+            return intellContExist;
+        }
+        if (this.technicalWorks != null && !this.technicalWorks.isEmpty()) {
+            intellContExist = true;
+            return intellContExist;
+        }
+        if (this.translations != null && !this.translations.isEmpty()) {
+            intellContExist = true;
+            return intellContExist;
+        }
+        if (this.workingPapers != null && !this.workingPapers.isEmpty()) {
+            intellContExist = true;
+            return intellContExist;
+        }
+
+        return intellContExist;
+    }
+
+    /**
      * Generates the professor's email image representatation.
      */
     public void generateEmailImage() {
@@ -236,16 +325,16 @@ public class CurriculumVitaeController implements Serializable {
             File f = new File(rootDeploymentPath + mailImagePath + this.person.getStdPersonPK().getStdIdPerson() + ".png");
 
             /**
-             * TODO: Ensure there is a fallback for people without a difened email
+             * TODO: Ensure there is a fallback for people without a difened
+             * email
              */
-            
             BufferedImage img = new BufferedImage(600, 20,
                     BufferedImage.TRANSLUCENT);
             Graphics2D g2d = img.createGraphics();
             g2d.setColor(new Color(255, 255, 255, 0));
             g2d.fill(new Rectangle(600, 20));
             g2d.setColor(new Color(51, 102, 153, 255));
-            g2d.setFont(new Font("Verdana", Font.PLAIN, 10));
+            g2d.setFont(new Font("Arial", Font.PLAIN, 13));
             g2d.drawString(this.personmail.getStdEmail(), 15, 15);
             g2d.dispose();
             ImageIO.write(img, "png", f);
@@ -256,25 +345,17 @@ public class CurriculumVitaeController implements Serializable {
     }
 
     /**
-     * This method verify wheather the user's photo file exist in PeopleNet
-     * photo repository
+     * Get the professor's PeopleNet id from the professor's web id
+     *
+     * @param professorWebId The web identifier for the professor.
+     * @return The PeopleNet Id for the professor <code>null</code> if there is
+     * any professor with the web id passed as param.
      */
-    public boolean isPhotoImageExist() {
-        String URLName=FacesContext.getCurrentInstance().getExternalContext()
-                .getInitParameter("photoImagePath")+"/"+this.person.getStdPersonPK().getStdIdPerson()+".jpg";
-        try {
-            HttpURLConnection.setFollowRedirects(false);
-            // note : you may also need
-            //        HttpURLConnection.setInstanceFollowRedirects(false)
-            HttpURLConnection con =
-                    (HttpURLConnection) new URL(URLName).openConnection();
-            con.setRequestMethod("HEAD");
-            this.photoImageExist=(con.getResponseCode() == HttpURLConnection.HTTP_OK);
-            return this.photoImageExist;
-        } catch (Exception e) {
-            e.printStackTrace();
-            this.photoImageExist=false;
-            return this.photoImageExist;
-        }
+    public String getPeopleNetId(String professorWebId) {
+        String professorId = null;
+        M4ccbConsPersonasJpaController constantsController = new M4ccbConsPersonasJpaController(emf);
+        M4ccbConsPersonas professorConstants = constantsController.findM4ccbConsPersonasByCcbIdWeb(professorWebId);
+        professorId = professorConstants.getM4ccbConsPersonasPK().getCcbIdPerson();
+        return professorId;
     }
 }

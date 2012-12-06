@@ -77,22 +77,46 @@ public class StdPersonJpaController implements Serializable {
             em.close();
         }
     }
-     /**
-     * TODO: Corregir documentación Looks if there is a registry with the
-     * CCB_CARGUE_ACT equals to the activityId parameter.
-     *
-     * @return An VrrhCursosProf object that represents the database registry.
-     *          <code>null</null> otherwise.
-     * @param activityId The ActivityInsight is for the activity.
-     *
-     * @since 2012-09-14 by damanzano
-     */
     
+    /** 
+     * Look for a the person with the document id passed as param.
+     * 
+     * @return A StdPerson Object representing the person the document id passed as param.
+     * @param peopleNetId The PeopleNet identifier for the person.
+     * @throws NoResultException if there is any registry tha match the param
+     *         NonUniqueResultException if there are more than one registry.
+     * @since 2012-12-05 damanzano
+     */
     public StdPerson findStdPersonByStdSsn(String profesorCedula) {
         EntityManager em = getEntityManager();
         try {
             TypedQuery<StdPerson> q = em.createNamedQuery("StdPerson.findByStdSsn", StdPerson.class);
             q.setParameter("stdSsn", profesorCedula);
+            StdPerson person = (StdPerson)q.getSingleResult();
+            return person;
+        } catch (NoResultException ex) {
+            throw ex;
+        }catch (NonUniqueResultException ex){
+            throw ex;
+    }finally {
+            em.close();
+        }
+    }
+    
+    /** 
+     * Look for a the person with the PeopleNet id passed as param.
+     * 
+     * @return A StdPerson Object representing the person with peoplenet's id passed as param.
+     * @param peopleNetId The PeopleNet identifier for the person.
+     * @throws NoResultException if there is any registry tha match the param
+     *         NonUniqueResultException if there are more than one registry.
+     * @since 2012-12-05 damanzano
+     */
+    public StdPerson findStdPersonByStdIdPerson(String peopleNetId) {
+        EntityManager em = getEntityManager();
+        try {
+            TypedQuery<StdPerson> q = em.createNamedQuery("StdPerson.findByStdIdPerson", StdPerson.class);
+            q.setParameter("stdIdPerson", peopleNetId);
             StdPerson person = (StdPerson)q.getSingleResult();
             return person;
         } catch (NoResultException ex) {

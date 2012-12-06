@@ -1,7 +1,7 @@
 /* 
     Document   : styles
     Created on : 26-oct-2012, 15:10:17
-    Author     : 1130619373
+    Author     : David Andrés Manzano Herrera
     Description:
         Purpose of the stylesheet follows.
 */
@@ -29,9 +29,26 @@ section table{
     margin:0 2.5%;
     width: 15%
 }
+#photo img{
+    width: 100%;
+}
+
 #info{
     display: inline-block;
     margin: 0 5%;
     width: 60%;
+}
+
+.acadBackground-degree{
+    font-weight: bold;
+}
+.acadBackground-center{}
+.acadBackground-subject{
+    display: block;
+    width: 100%;
+}
+.acadBackground-thesis{
+    display: block;
+    width: 100%;
 }
 
