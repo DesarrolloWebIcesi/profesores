@@ -102,7 +102,7 @@ public class StdLuEduDiploma implements Serializable {
     }
 
     public String getStdNDiplomaesp() {
-        return stdNDiplomaesp.toLowerCase();
+        return stdNDiplomaesp;
     }
 
     public void setStdNDiplomaesp(String stdNDiplomaesp) {

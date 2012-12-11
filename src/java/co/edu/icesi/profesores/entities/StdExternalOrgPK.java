@@ -14,20 +14,20 @@ import javax.persistence.Embeddable;
  * @author 1130619373
  */
 @Embeddable
-public class StdWorkUnitPK implements Serializable {
+public class StdExternalOrgPK implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID_ORGANIZATION")
     private String idOrganization;
     @Basic(optional = false)
-    @Column(name = "STD_ID_WORK_UNIT")
-    private String stdIdWorkUnit;
+    @Column(name = "STD_ID_EXTERN_ORG")
+    private String stdIdExternOrg;
 
-    public StdWorkUnitPK() {
+    public StdExternalOrgPK() {
     }
 
-    public StdWorkUnitPK(String idOrganization, String stdIdWorkUnit) {
+    public StdExternalOrgPK(String idOrganization, String stdIdExternOrg) {
         this.idOrganization = idOrganization;
-        this.stdIdWorkUnit = stdIdWorkUnit;
+        this.stdIdExternOrg = stdIdExternOrg;
     }
 
     public String getIdOrganization() {
@@ -38,33 +38,33 @@ public class StdWorkUnitPK implements Serializable {
         this.idOrganization = idOrganization;
     }
 
-    public String getStdIdWorkUnit() {
-        return stdIdWorkUnit;
+    public String getStdIdExternOrg() {
+        return stdIdExternOrg;
     }
 
-    public void setStdIdWorkUnit(String stdIdWorkUnit) {
-        this.stdIdWorkUnit = stdIdWorkUnit;
+    public void setStdIdExternOrg(String stdIdExternOrg) {
+        this.stdIdExternOrg = stdIdExternOrg;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
         hash += (idOrganization != null ? idOrganization.hashCode() : 0);
-        hash += (stdIdWorkUnit != null ? stdIdWorkUnit.hashCode() : 0);
+        hash += (stdIdExternOrg != null ? stdIdExternOrg.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof StdWorkUnitPK)) {
+        if (!(object instanceof StdExternalOrgPK)) {
             return false;
         }
-        StdWorkUnitPK other = (StdWorkUnitPK) object;
+        StdExternalOrgPK other = (StdExternalOrgPK) object;
         if ((this.idOrganization == null && other.idOrganization != null) || (this.idOrganization != null && !this.idOrganization.equals(other.idOrganization))) {
             return false;
         }
-        if ((this.stdIdWorkUnit == null && other.stdIdWorkUnit != null) || (this.stdIdWorkUnit != null && !this.stdIdWorkUnit.equals(other.stdIdWorkUnit))) {
+        if ((this.stdIdExternOrg == null && other.stdIdExternOrg != null) || (this.stdIdExternOrg != null && !this.stdIdExternOrg.equals(other.stdIdExternOrg))) {
             return false;
         }
         return true;
@@ -72,7 +72,7 @@ public class StdWorkUnitPK implements Serializable {
 
     @Override
     public String toString() {
-        return "co.edu.icesi.profesores.entities.StdWorkUnitPK[ idOrganization=" + idOrganization + ", stdIdWorkUnit=" + stdIdWorkUnit + " ]";
+        return "co.edu.icesi.profesores.entities.StdExternalOrgPK[ idOrganization=" + idOrganization + ", stdIdExternOrg=" + stdIdExternOrg + " ]";
     }
     
 }

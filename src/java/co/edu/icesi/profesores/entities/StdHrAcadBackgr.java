@@ -4,6 +4,7 @@
  */
 package co.edu.icesi.profesores.entities;
 
+import co.edu.icesi.utils.StringUtils;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
@@ -54,7 +55,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "StdHrAcadBackgr.findByStdIdGeoPlace", query = "SELECT s FROM StdHrAcadBackgr s WHERE s.stdIdGeoPlace = :stdIdGeoPlace"),
     @NamedQuery(name = "StdHrAcadBackgr.findByIdApprole", query = "SELECT s FROM StdHrAcadBackgr s WHERE s.idApprole = :idApprole"),
     @NamedQuery(name = "StdHrAcadBackgr.findByIdSecuser", query = "SELECT s FROM StdHrAcadBackgr s WHERE s.idSecuser = :idSecuser"),
-    @NamedQuery(name = "StdHrAcadBackgr.findByDtLastUpdate", query = "SELECT s FROM StdHrAcadBackgr s WHERE s.dtLastUpdate = :dtLastUpdate"),    
+    @NamedQuery(name = "StdHrAcadBackgr.findByDtLastUpdate", query = "SELECT s FROM StdHrAcadBackgr s WHERE s.dtLastUpdate = :dtLastUpdate")    
     /*@NamedQuery(name = "StdHrAcadBackgr.findByCcbCargueAct", query = "SELECT s FROM StdHrAcadBackgr s WHERE s.ccbCargueAct = :ccbCargueAct")*/})
 public class StdHrAcadBackgr implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -131,10 +132,17 @@ public class StdHrAcadBackgr implements Serializable {
     
     @ManyToOne(optional = false)
     @JoinColumns({
-        @JoinColumn(name = "ID_ORGANIZATION", referencedColumnName = "ID_ORGANIZATION", updatable=false),
-        @JoinColumn(name = "STD_ID_DIPLOMA", referencedColumnName = "STD_ID_DIPLOMA", updatable=false)
+        @JoinColumn(name = "ID_ORGANIZATION", referencedColumnName = "ID_ORGANIZATION", updatable=false, insertable=false),
+        @JoinColumn(name = "STD_ID_DIPLOMA", referencedColumnName = "STD_ID_DIPLOMA", updatable=false, insertable=false)
     })
-    private StdLuEduDiploma StdLuEduDiploma;
+    private StdLuEduDiploma stdLuEduDiploma;
+    
+    @ManyToOne(optional = false)
+    @JoinColumns({
+        @JoinColumn(name = "ID_ORGANIZATION", referencedColumnName = "ID_ORGANIZATION", updatable=false, insertable=false),
+        @JoinColumn(name = "STD_ID_EDU_CENTER", referencedColumnName = "STD_ID_EXTERN_ORG", updatable=false, insertable=false)
+    })
+    private StdExternalOrg stdExternalOrg;
 
     public StdHrAcadBackgr() {
     }
@@ -268,7 +276,7 @@ public class StdHrAcadBackgr implements Serializable {
     }
 
     public String getCcbOtroEspec() {
-        return ccbOtroEspec;
+        return StringUtils.capitlize(ccbOtroEspec);
     }
 
     public void setCcbOtroEspec(String ccbOtroEspec) {
@@ -387,14 +395,22 @@ public class StdHrAcadBackgr implements Serializable {
 //        this.ccbCargueAct = ccbCargueAct;
 //    }
 
-    public co.edu.icesi.profesores.entities.StdLuEduDiploma getStdLuEduDiploma() {
-        return StdLuEduDiploma;
+    public StdLuEduDiploma getStdLuEduDiploma() {
+        return stdLuEduDiploma;
     }
    
-    public void setStdLuEduDiploma(co.edu.icesi.profesores.entities.StdLuEduDiploma StdLuEduDiploma) {
-        this.StdLuEduDiploma = StdLuEduDiploma;
+    public void setStdLuEduDiploma(StdLuEduDiploma stdLuEduDiploma) {
+        this.stdLuEduDiploma = stdLuEduDiploma;
     }
 
+    public StdExternalOrg getStdExternalOrg() {
+        return stdExternalOrg;
+    }
+
+    public void setStdExternalOrg(StdExternalOrg stdExternalOrg) {
+        this.stdExternalOrg = stdExternalOrg;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

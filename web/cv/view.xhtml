@@ -25,6 +25,7 @@
                     </ui:fragment><!--<img src ="/94378897.jpg" height="100" width="100"/>-->
                 </section>
                 <section id="info">
+                    <!--
                     <ui:fragment rendered="#{not empty curriculumVitaeController.positionDescriptions}">
                         <section class="positions">
                             <h:dataTable value="#{curriculumVitaeController.positionDescriptions}" var="item" border="0" cellpadding="2" cellspacing="0">
@@ -34,16 +35,20 @@
                             </h:dataTable>
                         </section>
                     </ui:fragment>
-                    <table>
-                        <tr>
-                            <td><h:outputText value="#{curriculumVitaeController.person.scoHomePage}"/></td>
-                        </tr>                  
-                        <tr>
-                            <td>                              
-                                <img src="#{request.contextPath}/#{initParam['mailImagePath']}#{curriculumVitaeController.person.stdPersonPK.stdIdPerson}.png"/>
-                            </td> 
-                        </tr>               
-                    </table>
+                    -->
+                    <ui:fragment rendered="#{not empty curriculumVitaeController.roles}">
+                        <section class="roles">
+                            <h:dataTable value="#{curriculumVitaeController.roles}" var="item" border="0" cellpadding="2" cellspacing="0">
+                                <h:column>
+                                    <h:outputText value="#{item.nombreFamiliaInterna}" class="work-unit-role"/>
+                                    <h:outputText value="#{item.descPadreUnidadOrga}" class="work-unit-parent"/>
+                                    <h:outputText value="#{item.descUnidadOrga}" class="work-unit"/>
+                                </h:column>
+                            </h:dataTable>
+                        </section>
+                    </ui:fragment>
+                    <h:outputText value="#{curriculumVitaeController.person.scoHomePage}" class="personal-web-page"/>
+                    <img src="#{request.contextPath}/#{initParam['mailImagePath']}#{curriculumVitaeController.person.stdPersonPK.stdIdPerson}.png"/>
                 </section>
             </section>
 
@@ -53,9 +58,35 @@
                     <h:dataTable value="#{curriculumVitaeController.stdHrAcadBackgr}" var="item" border="0" cellpadding="2" cellspacing="0">                       
                         <h:column>
                             <article class="acadBackground">
-                                <span class="acadBackground-degree"><h:outputText value="#{item.stdLuEduDiploma.stdNDiplomaesp}"/></span><span class="acadBackground-major"> #{item.ccbOtroEspec}<h:outputText value=" #{item.ccbOtroEspec}"/></span> - <span class="acadBackground-center"><h:outputText value="#{item.stdDescEduCenter}, #{item.ccbYearTerm}"/></span>
-                                <span class="acadBackground-subject"><h:outputText value="Áreas de enfasis: #{item.ccbOtroTForm}"/></span>
-                                <span class="acadBackground-thesis"><h:outputText value="Tesis: #{item.ccbTituTrab}"/></span>
+                                <span class="acadBackground-degree"><h:outputText value="#{item.stdLuEduDiploma.stdNDiplomaesp}"/></span>
+                                
+                                <ui:fragment rendered="${(empty item.stdIdEduSp) or (item.stdIdEduSp eq '999')}">
+                                    <span class="acadBackground-major"><h:outputText value=" #{item.ccbOtroEspec} - "/></span>
+                                </ui:fragment>
+                                <ui:fragment rendered="${(not empty item.stdIdEduSp) and (not item.stdIdEduSp eq '999')}">
+                                    <!-- TODO: Put the correct value -->
+                                    <span class="acadBackground-major"><h:outputText value=" #{item.ccbOtroEspec} - "/></span>
+                                </ui:fragment>
+                                
+                                
+                                <ui:fragment rendered="${(empty item.stdIdEduCenter) or (item.stdIdEduCenter eq '000')}">
+                                    <span class="acadBackground-center"><h:outputText value="#{item.stdDescEduCenter}, "/></span>
+                                </ui:fragment>
+                                <ui:fragment rendered="${(not empty item.stdIdEduCenter) and (not (item.stdIdEduCenter eq '000'))}">
+                                    <span class="acadBackground-center"><h:outputText value="#{item.stdExternalOrg.stdNExtOrgesp}, "/></span>
+                                </ui:fragment>
+                                
+                                <ui:fragment rendered="${not empty item.ccbYearTerm}">
+                                    <span class="acadBackground-year"><h:outputText value="#{item.ccbYearTerm}"/></span>
+                                </ui:fragment>
+                                
+                                <ui:fragment rendered="${not empty item.ccbOtroTForm}">
+                                    <span class="acadBackground-subject"><h:outputText value="Áreas de enfasis: #{item.ccbOtroTForm}"/></span>
+                                </ui:fragment>
+                                
+                                <ui:fragment rendered="${not empty item.ccbTituTrab}">
+                                    <span class="acadBackground-thesis"><h:outputText value="Tesis: #{item.ccbTituTrab}"/></span>
+                                </ui:fragment>
 
                             </article>                        
                         </h:column> 

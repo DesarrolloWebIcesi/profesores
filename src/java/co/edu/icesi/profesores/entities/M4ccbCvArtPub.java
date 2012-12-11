@@ -464,6 +464,13 @@ public class M4ccbCvArtPub implements Serializable {
         this.autor = autor;
     }
 
+    /** 
+     * Generate the citation format for the article
+     * 
+     * @return The APA citation format of the article.
+     * @since 2012-12-07 damanzano
+     * Fixed some variables' typos
+     */
     public String getCitation() {
         String authors = "";
         //Main author's info
@@ -514,7 +521,7 @@ public class M4ccbCvArtPub implements Serializable {
         String title = " " + this.ccbNomProd + ".";
 
         String publishedDate = "";
-        String toApper = "";
+        String toAppear = "";
         String end = "";
         if (this.ccbIdEstPub != null && !this.ccbIdEstPub.equalsIgnoreCase("")) {
             if (this.ccbIdEstPub.equalsIgnoreCase("EP_01")) {
@@ -531,7 +538,7 @@ public class M4ccbCvArtPub implements Serializable {
                 end = " Manuscript submitted for publication.";
             } else if (this.ccbIdEstPub.equalsIgnoreCase("EP_06")) {
                 publishedDate = " (in press).";
-                toApper = " To appear in";
+                toAppear = " To appear in";
             } else if (this.ccbIdEstPub.equalsIgnoreCase("EP_07")) {
                 if (this.ccbFechaPub != null) {
                     Calendar cal = Calendar.getInstance();
@@ -551,7 +558,7 @@ public class M4ccbCvArtPub implements Serializable {
         String publisher = "";
         String pagination = "";
         if (this.ccbNomRevper != null && !this.ccbNomRevper.equalsIgnoreCase("")) {
-            publisher += "<i>" + toApper + " " + this.ccbNomRevper + "</i>";
+            publisher += "<i>" + toAppear + " " + this.ccbNomRevper + "</i>";
             String vol = "";
             String num = "";
             if (this.ccbVolumen != null && !this.ccbVolumen.equalsIgnoreCase("")) {

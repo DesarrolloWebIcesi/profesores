@@ -18,9 +18,17 @@ section table{
     width: 100%;
 }
 #pageWrapper{
+    -moz-box-shadow:    3px 3px 5px 6px #ccc;
+    -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+    box-shadow:         3px 3px 5px 6px #ccc;
     margin: 0 auto;
     max-width:960px;
     width: 100%;
+}
+
+#pageBody{
+    margin: 0 5px;
+    overflow: hidden;
 }
 #pageContent{}
 
@@ -36,6 +44,7 @@ section table{
 #info{
     display: inline-block;
     margin: 0 5%;
+    vertical-align: top;
     width: 60%;
 }
 
@@ -43,12 +52,8 @@ section table{
     font-weight: bold;
 }
 .acadBackground-center{}
-.acadBackground-subject{
-    display: block;
-    width: 100%;
-}
-.acadBackground-thesis{
-    display: block;
-    width: 100%;
-}
 
+.acadBackground-subject, .acadBackground-thesis, .work-unit-role, .work-unit, .work-unit-parent{
+    display: block;
+    width: 100%;
+}

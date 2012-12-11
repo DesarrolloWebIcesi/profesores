@@ -12,11 +12,14 @@
 
     <h:body>
         <div id="pageWrapper">
-            <h1>
-                <ui:insert name="title">Default Title</ui:insert>
-            </h1>
-            <section id="PageContent">
-                <ui:insert name="body">Default Body</ui:insert>
+            <header id="pageHeader"></header>
+            <section id="pageBody">
+                <h1>
+                    <ui:insert name="title">Default Title</ui:insert>
+                </h1>
+                <section id="PageContent">
+                    <ui:insert name="body">Default Body</ui:insert>
+                </section>
             </section>
         </div>
     </h:body>

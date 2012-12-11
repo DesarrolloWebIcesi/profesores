@@ -17,6 +17,8 @@ import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -57,6 +59,7 @@ public class CurriculumVitaeController implements Serializable {
     private List<M4ccbCvTrabTecn> technicalWorks;
     private List<StdHrLangTrans> translations;
     private List<M4ccbCvPresentac> presentations;
+    private List<VrrhRepPersonRol> roles;
     private String professorWebId;
     private boolean photoImageExist;
     private boolean intellContExist;
@@ -68,16 +71,22 @@ public class CurriculumVitaeController implements Serializable {
     public CurriculumVitaeController() {
         professorWebId = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("professorWebId");
         if (professorWebId == null || professorWebId.equalsIgnoreCase("")) {
-            /**
-             * TODO: redirect to error page
-             */
-            loadProfessorData("94378897");
-        } else {
-            String professorId = getPeopleNetId(professorWebId);
-            if (professorId == null || professorId.equalsIgnoreCase("")) {
+            try {
                 /**
                  * TODO: redirect to error page
                  */
+                FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath()+"/errors/webid-error.xhtml");
+            } catch (IOException ex) {
+                Logger.getLogger(CurriculumVitaeController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            String professorId = getPeopleNetId(professorWebId);
+            if (professorId == null || professorId.equalsIgnoreCase("")) {
+                try {
+                    FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath()+"/errors/webid-error.xhtml");
+                } catch (IOException ex) {
+                    Logger.getLogger(CurriculumVitaeController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             } else {
                 loadProfessorData(professorId);
             }
@@ -103,6 +112,7 @@ public class CurriculumVitaeController implements Serializable {
              */
             M4scoHHrPosJpaController personPositionController = new M4scoHHrPosJpaController(emf);
             M4scoPositionJpaController positionDescriptionsController = new M4scoPositionJpaController(emf);
+            VrrhRepPersonRolJpaController rolesController = new VrrhRepPersonRolJpaController(emf);
             StdEmailJpaController emailController = new StdEmailJpaController(emf);
             StdHrAcadBackgrJpaController acadController = new StdHrAcadBackgrJpaController(emf);
 
@@ -131,6 +141,7 @@ public class CurriculumVitaeController implements Serializable {
             String stdIdPerson = person.getStdPersonPK().getStdIdPerson();
             this.personPositions = personPositionController.findPersonPositionByScoIdHr(stdIdPerson);
             this.positionDescriptions = positionDescriptionsController.findPositionByM4scoHHrPos(personPositions);
+            this.roles = rolesController.findVrrhRepPersonRolByStdIdPerson(stdIdPerson);
             this.personmail = emailController.findInstitutionalEmailByStdHrId(stdIdPerson);
             generateEmailImage();
             this.stdHrAcadBackgr = acadController.findStdHrAcadBackgrByStdHrId(stdIdPerson);
@@ -241,6 +252,10 @@ public class CurriculumVitaeController implements Serializable {
         return professorWebId;
     }
 
+    public List<VrrhRepPersonRol> getRoles() {
+        return roles;
+    }
+    
     /**
      * This method verify wheather the user's photo file exist in PeopleNet
      * photo repository
@@ -264,6 +279,9 @@ public class CurriculumVitaeController implements Serializable {
         }
     }
 
+    /** 
+     * Verify if exist a least 1 registry in the intelleactual contribution tables.
+     */
     public boolean isIntellContExist() {
         intellContExist = false;
 
@@ -324,10 +342,6 @@ public class CurriculumVitaeController implements Serializable {
             String mailImagePath = FacesContext.getCurrentInstance().getExternalContext().getInitParameter("mailImagePath");
             File f = new File(rootDeploymentPath + mailImagePath + this.person.getStdPersonPK().getStdIdPerson() + ".png");
 
-            /**
-             * TODO: Ensure there is a fallback for people without a difened
-             * email
-             */
             BufferedImage img = new BufferedImage(600, 20,
                     BufferedImage.TRANSLUCENT);
             Graphics2D g2d = img.createGraphics();
@@ -335,7 +349,7 @@ public class CurriculumVitaeController implements Serializable {
             g2d.fill(new Rectangle(600, 20));
             g2d.setColor(new Color(51, 102, 153, 255));
             g2d.setFont(new Font("Arial", Font.PLAIN, 13));
-            g2d.drawString(this.personmail.getStdEmail(), 15, 15);
+            g2d.drawString(this.personmail.getStdEmail(), 1, 15);
             g2d.dispose();
             ImageIO.write(img, "png", f);
             /*}*/
@@ -348,14 +362,15 @@ public class CurriculumVitaeController implements Serializable {
      * Get the professor's PeopleNet id from the professor's web id
      *
      * @param professorWebId The web identifier for the professor.
-     * @return The PeopleNet Id for the professor <code>null</code> if there is
-     * any professor with the web id passed as param.
+     * @return  The PeopleNet Id for the professor 
+     *          <code>null</code> if there is any professor with the web id passed as param.
      */
-    public String getPeopleNetId(String professorWebId) {
-        String professorId = null;
+    public String getPeopleNetId(String professorWebId) {        
         M4ccbConsPersonasJpaController constantsController = new M4ccbConsPersonasJpaController(emf);
         M4ccbConsPersonas professorConstants = constantsController.findM4ccbConsPersonasByCcbIdWeb(professorWebId);
-        professorId = professorConstants.getM4ccbConsPersonasPK().getCcbIdPerson();
-        return professorId;
+        if(professorConstants!=null){
+            return professorConstants.getM4ccbConsPersonasPK().getCcbIdPerson();
+        }
+        return null;
     }
 }
