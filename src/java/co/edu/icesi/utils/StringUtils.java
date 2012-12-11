@@ -12,7 +12,7 @@ public class StringUtils {
 
     public static String capitlize(String string) {
         String firstLetter = string.substring(0, 1);
-        return firstLetter.toUpperCase()+string.substring(1, string.length());
+        return firstLetter.toUpperCase()+string.substring(1, string.length()).toLowerCase();
     }
     
 }

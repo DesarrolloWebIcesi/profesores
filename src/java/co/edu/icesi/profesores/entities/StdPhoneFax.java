@@ -38,7 +38,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "StdPhoneFax.findByStdPhone", query = "SELECT s FROM StdPhoneFax s WHERE s.stdPhone = :stdPhone"),
     @NamedQuery(name = "StdPhoneFax.findByDtLastUpdate", query = "SELECT s FROM StdPhoneFax s WHERE s.dtLastUpdate = :dtLastUpdate"),
     @NamedQuery(name = "StdPhoneFax.findByIdApprole", query = "SELECT s FROM StdPhoneFax s WHERE s.idApprole = :idApprole"),
-    @NamedQuery(name = "StdPhoneFax.findByIdSecuser", query = "SELECT s FROM StdPhoneFax s WHERE s.idSecuser = :idSecuser")})
+    @NamedQuery(name = "StdPhoneFax.findByIdSecuser", query = "SELECT s FROM StdPhoneFax s WHERE s.idSecuser = :idSecuser"),
+    @NamedQuery(name = "StdPhoneFax.findInstitutionalPhoneByStdIdPerson", query = "SELECT s FROM StdPhoneFax s WHERE s.stdPhoneFaxPK.stdIdPerson = :stdIdPerson and s.stdIdLineType='001'")
+})
 public class StdPhoneFax implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId

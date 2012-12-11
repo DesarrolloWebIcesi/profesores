@@ -60,6 +60,7 @@ public class CurriculumVitaeController implements Serializable {
     private List<StdHrLangTrans> translations;
     private List<M4ccbCvPresentac> presentations;
     private List<VrrhRepPersonRol> roles;
+    private StdPhoneFax phoneExtention;
     private String professorWebId;
     private boolean photoImageExist;
     private boolean intellContExist;
@@ -114,6 +115,7 @@ public class CurriculumVitaeController implements Serializable {
             M4scoPositionJpaController positionDescriptionsController = new M4scoPositionJpaController(emf);
             VrrhRepPersonRolJpaController rolesController = new VrrhRepPersonRolJpaController(emf);
             StdEmailJpaController emailController = new StdEmailJpaController(emf);
+            StdPhoneFaxJpaController phonesController = new StdPhoneFaxJpaController(emf);
             StdHrAcadBackgrJpaController acadController = new StdHrAcadBackgrJpaController(emf);
 
             /**
@@ -144,6 +146,7 @@ public class CurriculumVitaeController implements Serializable {
             this.roles = rolesController.findVrrhRepPersonRolByStdIdPerson(stdIdPerson);
             this.personmail = emailController.findInstitutionalEmailByStdHrId(stdIdPerson);
             generateEmailImage();
+            this.phoneExtention = phonesController.findInstitutionalPhoneByStdIdPerson(stdIdPerson);
             this.stdHrAcadBackgr = acadController.findStdHrAcadBackgrByStdHrId(stdIdPerson);
 
             /**
@@ -255,7 +258,15 @@ public class CurriculumVitaeController implements Serializable {
     public List<VrrhRepPersonRol> getRoles() {
         return roles;
     }
-    
+
+    public StdPhoneFax getPhoneExtention() {
+        return phoneExtention;
+    }
+
+    public void setPhoneExtention(StdPhoneFax phoneExtention) {
+        this.phoneExtention = phoneExtention;
+    }
+
     /**
      * This method verify wheather the user's photo file exist in PeopleNet
      * photo repository

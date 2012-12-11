@@ -10,21 +10,23 @@
         <ui:define name="title">
             <h:outputText value="#{curriculumVitaeController.person.stdNFirstName} #{curriculumVitaeController.person.stdNUsualName} #{curriculumVitaeController.person.stdNFamName1} #{curriculumVitaeController.person.stdNMaidenName}"/>
         </ui:define>
+        
         <ui:define name="body">            
             <h:panelGroup id="messagePanel" layout="block">
                 <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
             </h:panelGroup>
-
+            
             <section id="personalInformation">                
                 <section id="photo">
-                    <ui:fragment rendered="#{curriculumVitaeController.photoImageExist}">
+                    <ui:fragment rendered="${curriculumVitaeController.photoImageExist}">
                         <img src ="#{initParam['photoImagePath']}#{curriculumVitaeController.person.stdPersonPK.stdIdPerson}.jpg"/> 
                     </ui:fragment><!--<img src ="/94378897.jpg" height="100" width="100"/>-->
-                    <ui:fragment rendered="#{not curriculumVitaeController.photoImageExist}">
+                    <ui:fragment rendered="${not curriculumVitaeController.photoImageExist}">
                         <img src ="#{request.contextPath}/images/no-image.png" width="100%"/> 
                     </ui:fragment><!--<img src ="/94378897.jpg" height="100" width="100"/>-->
                 </section>
                 <section id="info">
+                    <h1 class="name"><h:outputText value="#{curriculumVitaeController.person.stdNFirstName} #{curriculumVitaeController.person.stdNUsualName} #{curriculumVitaeController.person.stdNFamName1} #{curriculumVitaeController.person.stdNMaidenName}"/></h1>
                     <!--
                     <ui:fragment rendered="#{not empty curriculumVitaeController.positionDescriptions}">
                         <section class="positions">
@@ -36,7 +38,7 @@
                         </section>
                     </ui:fragment>
                     -->
-                    <ui:fragment rendered="#{not empty curriculumVitaeController.roles}">
+                    <ui:fragment rendered="${not empty curriculumVitaeController.roles}">
                         <section class="roles">
                             <h:dataTable value="#{curriculumVitaeController.roles}" var="item" border="0" cellpadding="2" cellspacing="0">
                                 <h:column>
@@ -47,14 +49,15 @@
                             </h:dataTable>
                         </section>
                     </ui:fragment>
-                    <h:outputText value="#{curriculumVitaeController.person.scoHomePage}" class="personal-web-page"/>
-                    <img src="#{request.contextPath}/#{initParam['mailImagePath']}#{curriculumVitaeController.person.stdPersonPK.stdIdPerson}.png"/>
+                    <h:outputText rendered="${not empty curriculumVitaeController.person.scoHomePage}" value="#{curriculumVitaeController.person.scoHomePage}" class="personal-web-page"/>
+                    <span class="email"><img src="#{request.contextPath}/#{initParam['mailImagePath']}#{curriculumVitaeController.person.stdPersonPK.stdIdPerson}.png"/></span>
+                    <h:outputText  rendered="${not empty curriculumVitaeController.phoneExtention.stdPhone}" value="555-23-34 Ext. #{curriculumVitaeController.phoneExtention.stdPhone}" class="phone"/>
                 </section>
             </section>
 
             <ui:fragment rendered="#{not empty curriculumVitaeController.stdHrAcadBackgr}">
                 <section id="academicBackground">
-                    <h2><h:outputText value="#{bundle.ViewCurriculumVitaeAcadBackgrTitle}"></h:outputText></h2>
+                    <h2><span><h:outputText value="#{bundle.ViewCurriculumVitaeAcadBackgrTitle}" /></span></h2>
                     <h:dataTable value="#{curriculumVitaeController.stdHrAcadBackgr}" var="item" border="0" cellpadding="2" cellspacing="0">                       
                         <h:column>
                             <article class="acadBackground">

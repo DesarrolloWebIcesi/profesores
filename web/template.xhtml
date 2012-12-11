@@ -5,23 +5,31 @@
       xmlns:h="http://java.sun.com/jsf/html">
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title><ui:insert name="title">Default Title</ui:insert></title>
+        <title><ui:insert name="title">Default Title</ui:insert> | Profesores , Universidad Icesi</title>
+        <h:outputStylesheet name="css/normalize.css"/>
         <h:outputStylesheet name="css/jsfcrud.css"/>
         <h:outputStylesheet name="css/styles.css"/>
     </h:head>
 
     <h:body>
         <div id="pageWrapper">
-            <header id="pageHeader"></header>
-            <section id="pageBody">
-                <h1>
-                    <ui:insert name="title">Default Title</ui:insert>
-                </h1>
+            <header id="pageHeader"><img src="#{request.contextPath}/images/header.jpg"/></header>
+            <section id="pageBody">              
                 <section id="PageContent">
                     <ui:insert name="body">Default Body</ui:insert>
                 </section>
             </section>
+            
         </div>
+        <footer>
+            <div id="pageFooter">
+                <span >
+                    <a href="http://www.icesi.edu.co/" target="_blank" title="Universidad Icesi">Universidad Icesi</a>, Calle 18 No. 122-135 Pance, Cali - Colombia | Teléfono: +57 (2) 555 2334 | Fax: +57 (2) 555 1441<br/>
+                    La Universidad Icesi es una Institución de Educación Superior que se encuentra sujeta a inspección y vigilancia por parte del Ministerio de Educación Nacional.<br/>
+                    Copyright © 2012 <a href="http://www.icesi.edu.co/" target="_blank" title="Universidad Icesi">www.icesi.edu.co</a> - <a href="http://www.icesi.edu.co/politica_privacidad.php" title="Política de Privacidad" target="_blank">Política de privacidad</a>
+                </span>
+            </div>
+        </footer>
     </h:body>
 
 </html>
