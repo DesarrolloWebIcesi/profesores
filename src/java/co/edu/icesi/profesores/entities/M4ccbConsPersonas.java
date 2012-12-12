@@ -28,7 +28,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "M4ccbConsPersonas.findByCcbIdPerson", query = "SELECT m FROM M4ccbConsPersonas m WHERE m.m4ccbConsPersonasPK.ccbIdPerson = :ccbIdPerson"),
     @NamedQuery(name = "M4ccbConsPersonas.findByCcbIdWeb", query = "SELECT m FROM M4ccbConsPersonas m WHERE m.m4ccbConsPersonasPK.ccbIdWeb = :ccbIdWeb"),
     @NamedQuery(name = "M4ccbConsPersonas.findByCcbDtStart", query = "SELECT m FROM M4ccbConsPersonas m WHERE m.m4ccbConsPersonasPK.ccbDtStart = :ccbDtStart"),
-    @NamedQuery(name = "M4ccbConsPersonas.findByCcbDtEnd", query = "SELECT m FROM M4ccbConsPersonas m WHERE m.ccbDtEnd = :ccbDtEnd")})
+    @NamedQuery(name = "M4ccbConsPersonas.findByCcbDtEnd", query = "SELECT m FROM M4ccbConsPersonas m WHERE m.ccbDtEnd = :ccbDtEnd"),
+    @NamedQuery(name = "M4ccbConsPersonas.findByCcbIdPersonCcbDtEnd", query = "SELECT m FROM M4ccbConsPersonas m WHERE m.m4ccbConsPersonasPK.ccbIdPerson = :ccbIdPerson and m.ccbDtEnd = :ccbDtEnd")
+})
 public class M4ccbConsPersonas implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId

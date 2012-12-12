@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewFullListTitle}"/>
+        </ui:define>
+
+        <ui:define name="body">            
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+
+            <h1><h:outputText value="#{bundle.ViewFullListTitle}" /></h1>
+            <ui:fragment rendered="${not empty professorListController.fulltimeProfessors}">
+                <section id="fulltimeProfessors" class="list">
+                    <h2><span><h:outputText value="#{bundle.ViewFullListFulltimeProfessorsTitle}" /></span></h2>
+                    <h:dataTable value="#{professorListController.fulltimeProfessors}" var="item" border="0" cellpadding="2" cellspacing="0">
+                        <!--
+                        <h:column>
+                            <h:outputText value="#{item.stdPersonPK.stdIdPerson}"/>
+                        </h:column>
+                        -->
+                        <h:column>
+                            <a href="#{request.contextPath}/cv/#{item.constants.m4ccbConsPersonasPK.ccbIdWeb}"><h:outputText value="#{item.stdNFirstName} #{item.stdNUsualName} #{item.stdNFamName1} #{item.stdNMaidenName}"/></a>
+                        </h:column>
+                    </h:dataTable>
+                </section>
+            </ui:fragment>
+
+            <ui:fragment rendered="${not empty professorListController.cathedraProfessors}">
+                <section id="cathedraProfessors" class="list">
+                    <h2><span><h:outputText value="#{bundle.ViewFullListCatedraProfessorsTitle}" /></span></h2>
+                    <h:dataTable value="#{professorListController.cathedraProfessors}" var="item" border="0" cellpadding="2" cellspacing="0">
+                        <!--
+                        <h:column>
+                            <h:outputText value="#{item.stdPersonPK.stdIdPerson}"/>
+                        </h:column>
+                        -->
+                        <h:column>
+                            <a href="#{request.contextPath}/cv/#{item.constants.m4ccbConsPersonasPK.ccbIdWeb}"><h:outputText value="#{item.stdNFirstName} #{item.stdNUsualName} #{item.stdNFamName1} #{item.stdNMaidenName}"/></a>
+                        </h:column>
+                    </h:dataTable>
+                </section>
+            </ui:fragment>
+        </ui:define>
+    </ui:composition>
+
+</html>

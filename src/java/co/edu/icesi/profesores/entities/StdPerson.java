@@ -75,7 +75,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "StdPerson.findByStdIdGeoPlac1", query = "SELECT s FROM StdPerson s WHERE s.stdIdGeoPlac1 = :stdIdGeoPlac1"),
     @NamedQuery(name = "StdPerson.findByIdApprole", query = "SELECT s FROM StdPerson s WHERE s.idApprole = :idApprole"),
     @NamedQuery(name = "StdPerson.findByIdSecuser", query = "SELECT s FROM StdPerson s WHERE s.idSecuser = :idSecuser"),
-    @NamedQuery(name = "StdPerson.findByDtLastUpdate", query = "SELECT s FROM StdPerson s WHERE s.dtLastUpdate = :dtLastUpdate")})
+    @NamedQuery(name = "StdPerson.findByDtLastUpdate", query = "SELECT s FROM StdPerson s WHERE s.dtLastUpdate = :dtLastUpdate"),
+    @NamedQuery(name = "StdPerson.findProfessors", query = "SELECT s FROM StdPerson s WHERE s.ccbProfesor = '1'")
+})
 public class StdPerson implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
@@ -193,6 +195,8 @@ public class StdPerson implements Serializable {
     @Column(name = "DT_LAST_UPDATE")
     @Temporal(TemporalType.DATE)
     private Date dtLastUpdate;
+    @Transient    
+    private M4ccbConsPersonas constants;
 
     public StdPerson() {
     }
@@ -651,6 +655,14 @@ public class StdPerson implements Serializable {
 
     public void setDtLastUpdate(Date dtLastUpdate) {
         this.dtLastUpdate = dtLastUpdate;
+    }
+
+    public M4ccbConsPersonas getConstants() {
+        return constants;
+    }
+
+    public void setConstants(M4ccbConsPersonas constants) {
+        this.constants = constants;
     }
 
     @Override

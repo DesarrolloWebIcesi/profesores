@@ -11,8 +11,10 @@ package co.edu.icesi.utils;
 public class StringUtils {
 
     public static String capitlize(String string) {
-        String firstLetter = string.substring(0, 1);
-        return firstLetter.toUpperCase()+string.substring(1, string.length()).toLowerCase();
+        if(string!=null){
+            String firstLetter = string.substring(0, 1);
+            return firstLetter.toUpperCase()+string.substring(1, string.length()).toLowerCase();
+        }
+        return null;
     }
-    
 }

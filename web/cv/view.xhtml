@@ -50,7 +50,9 @@
                         </section>
                     </ui:fragment>
                     <h:outputText rendered="${not empty curriculumVitaeController.person.scoHomePage}" value="#{curriculumVitaeController.person.scoHomePage}" class="personal-web-page"/>
-                    <span class="email"><img src="#{request.contextPath}/#{initParam['mailImagePath']}#{curriculumVitaeController.person.stdPersonPK.stdIdPerson}.png"/></span>
+                    <ui:fragment rendered="${not empty curriculumVitaeController.personmail.stdEmail}">
+                        <span class="email"><img src="#{request.contextPath}/#{initParam['mailImagePath']}#{curriculumVitaeController.person.stdPersonPK.stdIdPerson}.png"/></span>
+                    </ui:fragment>
                     <h:outputText  rendered="${not empty curriculumVitaeController.phoneExtention.stdPhone}" value="555-23-34 Ext. #{curriculumVitaeController.phoneExtention.stdPhone}" class="phone"/>
                 </section>
             </section>
@@ -66,9 +68,9 @@
                                 <ui:fragment rendered="${(empty item.stdIdEduSp) or (item.stdIdEduSp eq '999')}">
                                     <span class="acadBackground-major"><h:outputText value=" #{item.ccbOtroEspec} - "/></span>
                                 </ui:fragment>
-                                <ui:fragment rendered="${(not empty item.stdIdEduSp) and (not item.stdIdEduSp eq '999')}">
+                                <ui:fragment rendered="${(not empty item.stdIdEduSp) and (item.stdIdEduSp ne '999')}">
                                     <!-- TODO: Put the correct value -->
-                                    <span class="acadBackground-major"><h:outputText value=" #{item.ccbOtroEspec} - "/></span>
+                                    <span class="acadBackground-major"><h:outputText value=" #{item.stdLuEduSpecial.stdNEduSpesp}"/></span>
                                 </ui:fragment>
                                 
                                 

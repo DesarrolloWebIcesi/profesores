@@ -11,6 +11,8 @@ import co.edu.icesi.profesores.entities.M4ccbConsPersonasPK;
 import co.edu.icesi.profesores.entities.StdHrAcadBackgr;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -69,19 +71,24 @@ public class M4ccbConsPersonasJpaController implements Serializable {
             em.close();
         }
     }
-    
-    public M4ccbConsPersonas findM4ccbConsPersonasByCcbIdWeb (String professorWebId){
+
+    /**
+     * Find the constants registry for a given web id param
+     *
+     * @since 2012-12-06 by damanzano Created;
+     */
+    public M4ccbConsPersonas findM4ccbConsPersonasByCcbIdWeb(String professorWebId) {
         EntityManager em = getEntityManager();
         try {
             TypedQuery<M4ccbConsPersonas> q = em.createNamedQuery("M4ccbConsPersonas.findByCcbIdWeb", M4ccbConsPersonas.class);
             q.setParameter("ccbIdWeb", professorWebId);
             M4ccbConsPersonas personConstants = q.getSingleResult();
-            return personConstants;            
+            return personConstants;
         } catch (NoResultException ex) {
-           return null;
-        }catch (NonUniqueResultException ex){
             return null;
-    }finally {
+        } catch (NonUniqueResultException ex) {
+            return null;
+        } finally {
             em.close();
         }
     }
@@ -98,5 +105,28 @@ public class M4ccbConsPersonasJpaController implements Serializable {
             em.close();
         }
     }
-    
+
+    /**
+     * Find the current constans registry for a person identifyed by the
+     * stdIdPerson param.
+     */
+    public M4ccbConsPersonas findCurrentConstantsByStdId(String stdIdPerson) {        
+        EntityManager em = getEntityManager();
+        try {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(4000, 0, 1);
+            Date worldEnd= calendar.getTime();
+            TypedQuery<M4ccbConsPersonas> q = em.createNamedQuery("M4ccbConsPersonas.findByCcbIdPersonCcbDtEnd", M4ccbConsPersonas.class);
+            q.setParameter("ccbIdPerson", stdIdPerson);
+            q.setParameter("ccbDtEnd", worldEnd);
+            M4ccbConsPersonas personConstants = q.getSingleResult();
+            return personConstants;
+        } catch (NoResultException ex) {
+            return null;
+        } catch (NonUniqueResultException ex) {
+            return null;
+        } finally {
+            em.close();
+        }
+    }
 }

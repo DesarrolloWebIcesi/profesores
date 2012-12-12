@@ -76,7 +76,7 @@ public class CurriculumVitaeController implements Serializable {
                 /**
                  * TODO: redirect to error page
                  */
-                FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath()+"/errors/webid-error.xhtml");
+                FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/errors/webid-error.xhtml");
             } catch (IOException ex) {
                 Logger.getLogger(CurriculumVitaeController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -84,7 +84,7 @@ public class CurriculumVitaeController implements Serializable {
             String professorId = getPeopleNetId(professorWebId);
             if (professorId == null || professorId.equalsIgnoreCase("")) {
                 try {
-                    FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath()+"/errors/webid-error.xhtml");
+                    FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/errors/webid-error.xhtml");
                 } catch (IOException ex) {
                     Logger.getLogger(CurriculumVitaeController.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -290,8 +290,9 @@ public class CurriculumVitaeController implements Serializable {
         }
     }
 
-    /** 
-     * Verify if exist a least 1 registry in the intelleactual contribution tables.
+    /**
+     * Verify if exist a least 1 registry in the intelleactual contribution
+     * tables.
      */
     public boolean isIntellContExist() {
         intellContExist = false;
@@ -348,24 +349,26 @@ public class CurriculumVitaeController implements Serializable {
      * Generates the professor's email image representatation.
      */
     public void generateEmailImage() {
-        try {
-            String rootDeploymentPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/");
-            String mailImagePath = FacesContext.getCurrentInstance().getExternalContext().getInitParameter("mailImagePath");
-            File f = new File(rootDeploymentPath + mailImagePath + this.person.getStdPersonPK().getStdIdPerson() + ".png");
+        if (this.personmail!=null && this.personmail.getStdEmail() != null) {
+            try {
+                String rootDeploymentPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/");
+                String mailImagePath = FacesContext.getCurrentInstance().getExternalContext().getInitParameter("mailImagePath");
+                File f = new File(rootDeploymentPath + mailImagePath + this.person.getStdPersonPK().getStdIdPerson() + ".png");
 
-            BufferedImage img = new BufferedImage(600, 20,
-                    BufferedImage.TRANSLUCENT);
-            Graphics2D g2d = img.createGraphics();
-            g2d.setColor(new Color(255, 255, 255, 0));
-            g2d.fill(new Rectangle(600, 20));
-            g2d.setColor(new Color(51, 102, 153, 255));
-            g2d.setFont(new Font("Arial", Font.PLAIN, 13));
-            g2d.drawString(this.personmail.getStdEmail(), 1, 15);
-            g2d.dispose();
-            ImageIO.write(img, "png", f);
-            /*}*/
-        } catch (IOException exc) {
-            exc.printStackTrace();
+                BufferedImage img = new BufferedImage(600, 20,
+                        BufferedImage.TRANSLUCENT);
+                Graphics2D g2d = img.createGraphics();
+                g2d.setColor(new Color(255, 255, 255, 0));
+                g2d.fill(new Rectangle(600, 20));
+                g2d.setColor(new Color(51, 102, 153, 255));
+                g2d.setFont(new Font("Arial", Font.PLAIN, 13));
+                g2d.drawString(this.personmail.getStdEmail(), 1, 15);
+                g2d.dispose();
+                ImageIO.write(img, "png", f);
+                /*}*/
+            } catch (IOException exc) {
+                exc.printStackTrace();
+            }
         }
     }
 
@@ -373,13 +376,13 @@ public class CurriculumVitaeController implements Serializable {
      * Get the professor's PeopleNet id from the professor's web id
      *
      * @param professorWebId The web identifier for the professor.
-     * @return  The PeopleNet Id for the professor 
-     *          <code>null</code> if there is any professor with the web id passed as param.
+     * @return The PeopleNet Id for the professor <code>null</code> if there is
+     * any professor with the web id passed as param.
      */
-    public String getPeopleNetId(String professorWebId) {        
+    public String getPeopleNetId(String professorWebId) {
         M4ccbConsPersonasJpaController constantsController = new M4ccbConsPersonasJpaController(emf);
         M4ccbConsPersonas professorConstants = constantsController.findM4ccbConsPersonasByCcbIdWeb(professorWebId);
-        if(professorConstants!=null){
+        if (professorConstants != null) {
             return professorConstants.getM4ccbConsPersonasPK().getCcbIdPerson();
         }
         return null;

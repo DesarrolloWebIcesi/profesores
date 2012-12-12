@@ -14,12 +14,12 @@
    <!-- Begin UrlMappings 
       // These are examples of URL mappings, and should be customized for your application.
    -->
-      <!--
+      
       <url-mapping id="home"> 
           <pattern value="/" /> 
-          <view-id value="/faces/index.jsf" />
+          <view-id value="/faces/listados/index.xhtml" />
       </url-mapping>
-      --> 
+       
       
       <url-mapping id="profesor"> 
           <pattern value="/cv/#{professorWebId}" /> 

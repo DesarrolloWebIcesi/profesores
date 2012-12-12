@@ -7,6 +7,8 @@ package co.edu.icesi.profesores.controllers;
 import co.edu.icesi.profesores.entities.StdPerson;
 import co.edu.icesi.profesores.entities.StdPersonPK;
 import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -77,14 +79,15 @@ public class StdPersonJpaController implements Serializable {
             em.close();
         }
     }
-    
-    /** 
+
+    /**
      * Look for a the person with the document id passed as param.
-     * 
-     * @return A StdPerson Object representing the person the document id passed as param.
+     *
+     * @return A StdPerson Object representing the person the document id passed
+     * as param.
      * @param peopleNetId The PeopleNet identifier for the person.
      * @throws NoResultException if there is any registry tha match the param
-     *         NonUniqueResultException if there are more than one registry.
+     * NonUniqueResultException if there are more than one registry.
      * @since 2012-12-05 damanzano
      */
     public StdPerson findStdPersonByStdSsn(String profesorCedula) {
@@ -92,24 +95,25 @@ public class StdPersonJpaController implements Serializable {
         try {
             TypedQuery<StdPerson> q = em.createNamedQuery("StdPerson.findByStdSsn", StdPerson.class);
             q.setParameter("stdSsn", profesorCedula);
-            StdPerson person = (StdPerson)q.getSingleResult();
+            StdPerson person = (StdPerson) q.getSingleResult();
             return person;
         } catch (NoResultException ex) {
             throw ex;
-        }catch (NonUniqueResultException ex){
+        } catch (NonUniqueResultException ex) {
             throw ex;
-    }finally {
+        } finally {
             em.close();
         }
     }
-    
-    /** 
+
+    /**
      * Look for a the person with the PeopleNet id passed as param.
-     * 
-     * @return A StdPerson Object representing the person with peoplenet's id passed as param.
+     *
+     * @return A StdPerson Object representing the person with peoplenet's id
+     * passed as param.
      * @param peopleNetId The PeopleNet identifier for the person.
      * @throws NoResultException if there is any registry tha match the param
-     *         NonUniqueResultException if there are more than one registry.
+     * NonUniqueResultException if there are more than one registry.
      * @since 2012-12-05 damanzano
      */
     public StdPerson findStdPersonByStdIdPerson(String peopleNetId) {
@@ -117,13 +121,48 @@ public class StdPersonJpaController implements Serializable {
         try {
             TypedQuery<StdPerson> q = em.createNamedQuery("StdPerson.findByStdIdPerson", StdPerson.class);
             q.setParameter("stdIdPerson", peopleNetId);
-            StdPerson person = (StdPerson)q.getSingleResult();
+            StdPerson person = (StdPerson) q.getSingleResult();
             return person;
         } catch (NoResultException ex) {
             throw ex;
-        }catch (NonUniqueResultException ex){
+        } catch (NonUniqueResultException ex) {
             throw ex;
-    }finally {
+        } finally {
+            em.close();
+        }
+    }
+
+    /**
+     * Find all ther persons that besides are professors
+     *
+     * @return A List of StdPerson objets representing the professors
+     * @throws NoResultException if there is any registry.
+     * @since 2012-12-11 by damanzano Created
+     */
+    public List<StdPerson> findProfessors() {
+        EntityManager em = getEntityManager();
+        try {
+            Calendar calendar = Calendar.getInstance();
+            Date sysdate = calendar.getTime();
+            calendar.set(4000, 0, 1);
+            Date worldEnd= calendar.getTime();
+            
+            Query q = em.createQuery("SELECT s FROM StdPerson s, StdHrPeriod p,  M4scbHHrContrat c "
+                    + "WHERE s.ccbProfesor = '1' "
+                    + "AND s.stdPersonPK.stdIdPerson = p.stdHrPeriodPK.stdIdHr "
+                    + "AND p.stdDtEnd = :stdDtEnd "
+                    + "AND s.stdPersonPK.stdIdPerson = c.m4scbHHrContratPK.stdIdHr "
+                    + "AND c.scbDtEnd > :scbDtEnd "
+                    + "ORDER BY s.stdNFirstName ASC, s.stdNUsualName, s.stdNFamName1, s.stdNMaidenName");                    
+            q.setParameter("stdDtEnd", worldEnd);
+            q.setParameter("scbDtEnd", sysdate);
+            List<StdPerson> professors = q.getResultList();
+            return professors;
+        } catch (NoResultException ex) {
+            throw ex;
+        } catch (NonUniqueResultException ex) {
+            throw ex;
+        } finally {
             em.close();
         }
     }

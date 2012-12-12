@@ -143,6 +143,13 @@ public class StdHrAcadBackgr implements Serializable {
         @JoinColumn(name = "STD_ID_EDU_CENTER", referencedColumnName = "STD_ID_EXTERN_ORG", updatable=false, insertable=false)
     })
     private StdExternalOrg stdExternalOrg;
+    
+    @ManyToOne(optional=false)
+    @JoinColumns({
+        @JoinColumn(name = "ID_ORGANIZATION", referencedColumnName = "ID_ORGANIZATION", updatable=false, insertable=false),
+        @JoinColumn(name = "STD_ID_EDU_SP", referencedColumnName = "STD_ID_EDU_SP", updatable=false, insertable=false)
+    })
+    private StdLuEduSpecial stdLuEduSpecial;
 
     public StdHrAcadBackgr() {
     }
@@ -409,6 +416,14 @@ public class StdHrAcadBackgr implements Serializable {
 
     public void setStdExternalOrg(StdExternalOrg stdExternalOrg) {
         this.stdExternalOrg = stdExternalOrg;
+    }
+
+    public StdLuEduSpecial getStdLuEduSpecial() {
+        return stdLuEduSpecial;
+    }
+
+    public void setStdLuEduSpecial(StdLuEduSpecial stdLuEduSpecial) {
+        this.stdLuEduSpecial = stdLuEduSpecial;
     }
     
     @Override

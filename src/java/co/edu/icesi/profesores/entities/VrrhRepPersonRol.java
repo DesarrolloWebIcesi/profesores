@@ -70,6 +70,8 @@ public class VrrhRepPersonRol implements Serializable {
     private String descPadreUnidadOrga;
     @Column(name = "TIPO_PADRE_UNI_ORGA")
     private String tipoPadreUnidadOrga;
+    @Column(name = "MODALIDAD")
+    private String modalidad;
 
     public VrrhRepPersonRol() {
     }
@@ -232,6 +234,14 @@ public class VrrhRepPersonRol implements Serializable {
 
     public void setTipoPadreUnidadOrga(String tipoPadreUnidadOrga) {
         this.tipoPadreUnidadOrga = tipoPadreUnidadOrga;
+    }
+
+    public String getModalidad() {
+        return modalidad;
+    }
+
+    public void setModalidad(String modalidad) {
+        this.modalidad = modalidad;
     }
     
     @Override

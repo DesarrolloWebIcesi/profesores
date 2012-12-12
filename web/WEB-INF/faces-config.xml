@@ -17,4 +17,9 @@
         <managed-bean-class>co.edu.icesi.profesores.beans.CurriculumVitaeController</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
+    <managed-bean>
+        <managed-bean-name>professorListController</managed-bean-name>
+        <managed-bean-class>co.edu.icesi.profesores.beans.ProfessorListController</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
 </faces-config>

@@ -33,6 +33,8 @@
     <class>co.edu.icesi.profesores.entities.StdExternalOrg</class>
     <class>co.edu.icesi.profesores.entities.VrrhRepPersonRol</class>
     <class>co.edu.icesi.profesores.entities.StdPhoneFax</class>
+    <class>co.edu.icesi.profesores.entities.StdHrPeriod</class>
+    <class>co.edu.icesi.profesores.entities.M4scbHHrContrat</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@192.168.220.120:1521:ddelfi"/>

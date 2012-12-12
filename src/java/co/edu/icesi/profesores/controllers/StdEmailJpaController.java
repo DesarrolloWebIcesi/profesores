@@ -78,6 +78,9 @@ public class StdEmailJpaController implements Serializable {
         }
     }
 
+    /** 
+     * Find the prefered email for the person identified by the idPerson param
+     */
     public StdEmail findEmailPreferidoByStdHrId(String idPerson) {
         EntityManager em = getEntityManager();
         try {
@@ -95,6 +98,9 @@ public class StdEmailJpaController implements Serializable {
         }
     }
     
+    /** 
+     * Find the institutional email for the person identified by the idPerson param
+     */
     public StdEmail findInstitutionalEmailByStdHrId(String idPerson) {
         EntityManager em = getEntityManager();
         try {
