@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "VrrhRepPersonRol.findAll", query = "SELECT s FROM VrrhCursosProf s"),
-    @NamedQuery(name = "VrrhRepPersonRol.findByStdIdPerson", query = "SELECT s FROM VrrhRepPersonRol s WHERE s.vrrhRepPersonRolPK.stdIdPerson = :stdIdPerson")
+    @NamedQuery(name = "VrrhRepPersonRol.findByStdIdPerson", query = "SELECT DISTINCT s FROM VrrhRepPersonRol s WHERE s.vrrhRepPersonRolPK.stdIdPerson = :stdIdPerson")
 })
 public class VrrhRepPersonRol implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -54,8 +54,6 @@ public class VrrhRepPersonRol implements Serializable {
     private String correoPersonal;
     @Column(name = "ORGANIZACION")
     private String organizacion;
-    @Column(name = "FAMILIA_INTERNA")
-    private String familiaInterna;
     @Column(name = "NOMBRE_FAMILIA_INTERNA")
     private String nombreFamiliaInterna;
     @Column(name = "ROL")
@@ -170,14 +168,6 @@ public class VrrhRepPersonRol implements Serializable {
 
     public void setOrganizacion(String organizacion) {
         this.organizacion = organizacion;
-    }
-
-    public String getFamiliaInterna() {
-        return familiaInterna;
-    }
-
-    public void setFamiliaInterna(String familiaInterna) {
-        this.familiaInterna = familiaInterna;
     }
 
     public String getNombreFamiliaInterna() {

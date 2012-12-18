@@ -10,14 +10,18 @@ import javax.persistence.Embeddable;
 
 /**
  * Identifier of VrrhRepPersonRol Objects
+ *
  * @author David Andrés Manzano Herrera - damanzano
  */
 @Embeddable
-public class VrrhRepPersonRolPK implements Serializable{
+public class VrrhRepPersonRolPK implements Serializable {
+
     @Column(name = "STD_ID_PERSON")
     private String stdIdPerson;
     @Column(name = "UNIDAD_ORGANIZATIVA")
     private String unidadOrganizativa;
+    @Column(name = "FAMILIA_INTERNA")
+    private String familiaInterna;
 
     public VrrhRepPersonRolPK() {
     }
@@ -42,13 +46,21 @@ public class VrrhRepPersonRolPK implements Serializable{
     public void setUnidadOrganizativa(String unidadOrganizativa) {
         this.unidadOrganizativa = unidadOrganizativa;
     }
-    
-    
+
+    public String getFamiliaInterna() {
+        return familiaInterna;
+    }
+
+    public void setFamiliaInterna(String familiaInterna) {
+        this.familiaInterna = familiaInterna;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
         hash += (stdIdPerson != null ? stdIdPerson.hashCode() : 0);
         hash += (unidadOrganizativa != null ? unidadOrganizativa.hashCode() : 0);
+        hash += (familiaInterna != null ? familiaInterna.hashCode() : 0);
         return hash;
     }
 

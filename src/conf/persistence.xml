@@ -36,11 +36,21 @@
     <class>co.edu.icesi.profesores.entities.StdHrPeriod</class>
     <class>co.edu.icesi.profesores.entities.M4scbHHrContrat</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <!-- Development
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@192.168.220.120:1521:ddelfi"/>
       <property name="javax.persistence.jdbc.password" value="Passw0rd"/>
       <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver"/>
       <property name="javax.persistence.jdbc.user" value="ddelfi"/>
     </properties>
+    -->
+    <!-- Test  -->
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@192.168.220.120:1521:ddelfi"/>
+      <property name="javax.persistence.jdbc.password" value="N9O9UOM25t"/>
+      <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver"/>
+      <property name="javax.persistence.jdbc.user" value="cdelfi"/>
+    </properties>
+   
   </persistence-unit>
 </persistence>

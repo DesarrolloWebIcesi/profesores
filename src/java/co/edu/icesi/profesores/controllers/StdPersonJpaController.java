@@ -147,7 +147,7 @@ public class StdPersonJpaController implements Serializable {
             calendar.set(4000, 0, 1);
             Date worldEnd= calendar.getTime();
             
-            Query q = em.createQuery("SELECT s FROM StdPerson s, StdHrPeriod p,  M4scbHHrContrat c "
+            Query q = em.createQuery("SELECT DISTINCT s FROM StdPerson s, StdHrPeriod p,  M4scbHHrContrat c "
                     + "WHERE s.ccbProfesor = '1' "
                     + "AND s.stdPersonPK.stdIdPerson = p.stdHrPeriodPK.stdIdHr "
                     + "AND p.stdDtEnd = :stdDtEnd "
