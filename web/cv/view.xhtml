@@ -15,7 +15,7 @@
             <h:panelGroup id="messagePanel" layout="block">
                 <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
             </h:panelGroup>
-            
+            <a class="back-to-list" href="#{request.contextPath}/"><h:outputText value="#{bundle.ViewCurriculumVitaeBack}"/></a>
             <section id="personalInformation">                
                 <section id="photo">
                     <ui:fragment rendered="${curriculumVitaeController.photoImageExist}">

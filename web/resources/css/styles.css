@@ -67,6 +67,9 @@ footer a{
     padding: 0;
 }
 #pageContent{}
+#personalInformation{
+    clear: both;
+}
 #pageFooter{
     background: #0062BB;
     margin: 0 auto;
@@ -107,6 +110,17 @@ footer a{
 .acadBackground-subject, .acadBackground-thesis, .work-unit-role, .work-unit, .work-unit-parent{
     display: block;
     width: 100%;
+}
+.back-to-list{
+    float: right;
+    clear: both;
+    display: block;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    background: #EBEBEB;
+    padding: 5px;
+    color: #3A4F54;
 }
 .email, .personal-web-page, .phone{
     display: block;
