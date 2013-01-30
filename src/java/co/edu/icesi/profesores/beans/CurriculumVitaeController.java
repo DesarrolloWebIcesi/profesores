@@ -76,7 +76,7 @@ public class CurriculumVitaeController implements Serializable {
                 /**
                  * TODO: redirect to error page
                  */
-                FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/errors/webid-error.xhtml");
+                FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/errors/webid-error");
             } catch (IOException ex) {
                 Logger.getLogger(CurriculumVitaeController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -84,7 +84,7 @@ public class CurriculumVitaeController implements Serializable {
             String professorId = getPeopleNetId(professorWebId);
             if (professorId == null || professorId.equalsIgnoreCase("")) {
                 try {
-                    FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/errors/webid-error.xhtml");
+                    FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/errors/webid-error");
                 } catch (IOException ex) {
                     Logger.getLogger(CurriculumVitaeController.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -122,8 +122,8 @@ public class CurriculumVitaeController implements Serializable {
              * The following controllers that manage the publications issues, so
              * they are not necesary for the first iteration.
              */
-//            VrrhCursosProfJpaController coursesPreController = new VrrhCursosProfJpaController(emf);
-//            VrrhProCursoAsJpaController coursesPosController = new VrrhProCursoAsJpaController(emf);
+            VrrhCursosProfJpaController coursesPreController = new VrrhCursosProfJpaController(emf);
+            VrrhProCursoAsJpaController coursesPosController = new VrrhProCursoAsJpaController(emf);
 //            M4ccbCvArtPubJpaController journalArticlesController = new M4ccbCvArtPubJpaController(emf);
 //            M4ccbCvCapLibJpaController bookChpaterController = new M4ccbCvCapLibJpaController(emf);
 //            M4ccbCvDlloMatJpaController didacticMaterialController = new M4ccbCvDlloMatJpaController(emf);
@@ -141,6 +141,7 @@ public class CurriculumVitaeController implements Serializable {
              */
             //this.person = personController.findStdPersonByStdSsn(profesorId);
             String stdIdPerson = person.getStdPersonPK().getStdIdPerson();
+            String stdSsnPerson= person.getStdSsn();
             this.personPositions = personPositionController.findPersonPositionByScoIdHr(stdIdPerson);
             this.positionDescriptions = positionDescriptionsController.findPositionByM4scoHHrPos(personPositions);
             this.roles = rolesController.findVrrhRepPersonRolByStdIdPerson(stdIdPerson);
@@ -153,10 +154,10 @@ public class CurriculumVitaeController implements Serializable {
              * The following lines manage the publications issues, so they are
              * not necesary for the first iteration.
              */
-//            this.vrrhCursosProfCurrent = coursesPreController.findVrrhCursosProfByProfesorPeriodCurrent(profesorId);
-//            this.vrrhProCursoAsCurrent = coursesPosController.findVrrhCursosProfByProfesorPeriodCurrent(profesorId);
-//            this.coursesPreHis = coursesPreController.findVrrhCursosProfByProfesorPeriodHist(profesorId);
-//            this.coursesPosHis = coursesPosController.findVrrhCursosProfByProfesorPeriodHist(profesorId);
+            this.vrrhCursosProfCurrent = coursesPreController.findVrrhCursosProfByProfesorPeriodCurrent(stdSsnPerson);
+            this.vrrhProCursoAsCurrent = coursesPosController.findVrrhCursosProfByProfesorPeriodCurrent(stdSsnPerson);
+            this.coursesPreHis = coursesPreController.findVrrhCursosProfByProfesorPeriodHist(stdSsnPerson);
+            this.coursesPosHis = coursesPosController.findVrrhCursosProfByProfesorPeriodHist(stdSsnPerson);
 //            this.bookChapters = bookChpaterController.findM4ccbCvCapLibByStdIdHr(stdIdPerson);
 //            this.books = booksController.findM4ccbCvLibroByStdIdHr(stdIdPerson);
 //            this.didacticMaterial = didacticMaterialController.findM4ccbCvDlloMatByStdIdHr(stdIdPerson);

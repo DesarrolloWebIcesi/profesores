@@ -126,6 +126,7 @@ footer a{
 .email, .personal-web-page, .phone{
     display: block;
     /*height: 20px;*/
+    min-height: 20px !important;
     padding-left: 20px
 }
 .email{
@@ -139,6 +140,7 @@ footer a{
     margin-left:0;
 }
 .list tr{
-    display: inline-block;
+    display: block;
+    float: left;
     width: 49%;
 }

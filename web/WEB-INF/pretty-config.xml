@@ -24,7 +24,12 @@
       <url-mapping id="profesor"> 
           <pattern value="/cv/#{professorWebId}" /> 
           <view-id value="/faces/cv/view.xhtml" />
-      </url-mapping> 
+      </url-mapping>
+      
+       <url-mapping id="webid-error"> 
+          <pattern value="/errors/webid-error" /> 
+          <view-id value="/faces/errors/webid-error.xhtml" />
+      </url-mapping>  
       
       <!--
       <url-mapping id="viewCategory">

@@ -112,7 +112,24 @@ public class VrrhProCursoAsJpaController implements Serializable {
             q.setParameter("periodoAcad", periodoAcad);
             q.setParameter("periodoConsecutivo", periodoConsecutivo);
             List<VrrhProCursoAs> courses = q.getResultList();
-            return courses;
+            List<VrrhProCursoAs> filteredCourses = new ArrayList<VrrhProCursoAs>();
+            String nombre = null;
+            
+            for (int i=0;i<courses.size();i++){
+                nombre = courses.get(i).getNombreMateria();
+                boolean exist=false;
+                for(int j=0;j<filteredCourses.size();j++){
+                    if (nombre.equalsIgnoreCase(filteredCourses.get(j).getNombreMateria())){
+                        exist=true;
+                        break;
+                    }
+                }
+                if(!exist){
+                    filteredCourses.add(courses.get(i));
+                }
+            }
+            
+            return filteredCourses;
         } catch (NoResultException ex) {
             throw ex;
         } finally {
@@ -161,6 +178,9 @@ public class VrrhProCursoAsJpaController implements Serializable {
      * @param activityId The ActivityInsight is for the activity.
      *
      * @since 2012-09-14 by damanzano
+     * @since 2013-01-29 by damanzano
+     * The way courses with the same name are filtered was replaced and rewritten because the aproach used befored
+     * was wrong and allowed repeated items.
      */
     public List<VrrhProCursoAs> findVrrhCursosProfByProfesorPeriodHist(String profesorCedula) {
         EntityManager em = getEntityManager();
@@ -186,22 +206,35 @@ public class VrrhProCursoAsJpaController implements Serializable {
             q.setParameter("profesorCedula", profesorCedula);
             q.setParameter("periodoAcad", periodoAcad);
             /*q.setParameter("periodoConsecutivo", periodoConsecutivo);*/
-             
-            System.out.println(q.toString());
-            System.out.println(q.getParameters().toString());
-            System.out.println(q.getResultList().get(0));
 
             List<VrrhProCursoAs> courses = q.getResultList(); 
+            List<VrrhProCursoAs> filteredCourses = new ArrayList<VrrhProCursoAs>();
             String nombre = null;
+            
             for (int i=0;i<courses.size();i++){
                 nombre = courses.get(i).getNombreMateria();
-                for(int c=i+1;c<courses.size();c++){
-                    if (nombre.equalsIgnoreCase(courses.get(c).getNombreMateria())){
-                        courses.remove(c);
+                boolean exist=false;
+                for(int j=0;j<filteredCourses.size();j++){
+                    if (nombre.equalsIgnoreCase(filteredCourses.get(j).getNombreMateria())){
+                        exist=true;
+                        break;
                     }
                 }
+                if(!exist){
+                    filteredCourses.add(courses.get(i));
+                }
             }
-            return courses;
+           
+//            for (int i=0;i<courses.size();i++){
+//                nombre = courses.get(i).getNombreMateria();
+//                for(int c=i+1;c<courses.size();c++){
+//                    if (nombre.equalsIgnoreCase(courses.get(c).getNombreMateria())){
+//                        courses.remove(c);
+//                    }
+//                }
+//            }
+            
+            return filteredCourses;
         } catch (NoResultException ex) {
             throw ex;
         } catch (NumberFormatException ex){

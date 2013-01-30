@@ -4,14 +4,14 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--><html class="no-js" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:h="http://java.sun.com/jsf/html"><!--<![endif]-->
+                            xmlns:ui="http://java.sun.com/jsf/facelets"
+                            xmlns:h="http://java.sun.com/jsf/html"><!--<![endif]-->
     <h:head>
         <!--
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         -->
         <meta charset="utf-8"/>
-        
+
         <title><ui:insert name="title">Default Title</ui:insert> | Profesores , Universidad Icesi</title>
         <link href="#{request.contextPath}/favicon.ico" rel="icon" type="image/x-icon" />
         <h:outputStylesheet name="css/normalize.css"/>
@@ -21,10 +21,10 @@
     </h:head>
 
     <h:body>
-         <!--[if lt IE 7]>
-            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
-        <![endif]-->
-         
+        <!--[if lt IE 7]>
+           <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+       <![endif]-->
+
         <div id="pageWrapper">
             <header id="pageHeader"><img src="#{request.contextPath}/images/header.jpg"/></header>
             <section id="pageBody">              
@@ -32,7 +32,7 @@
                     <ui:insert name="body">Default Body</ui:insert>
                 </section>
             </section>
-            
+
         </div>
         <footer>
             <div id="pageFooter">
@@ -43,6 +43,17 @@
                 </span>
             </div>
         </footer>
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-35657225-19']);
+            _gaq.push(['_trackPageview']);
+ 
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+ 
+        </script>
     </h:body>
-
 </html>

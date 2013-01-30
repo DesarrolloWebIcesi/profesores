@@ -102,50 +102,47 @@
             <ui:fragment rendered="#{(not empty curriculumVitaeController.vrrhCursosProfCurrent) or (not empty curriculumVitaeController.vrrhProCursoAsCurrent)}">
                 <section id="currentCourses">
                     <h2><h:outputText value="#{bundle.ViewCurriculumVitaeCurrentCoursesTitle}"></h:outputText></h2>
-                    <ui:fragment rendered="#{not empty curriculumVitaeController.vrrhCursosProfCurrent}">
-                        <h3><h:outputText value="#{bundle.ViewCurriculumVitaeUndergraduatedCurrentCoursesTitle}"></h:outputText></h3>
-                        <h:dataTable value="#{curriculumVitaeController.vrrhCursosProfCurrent}" var="coursesPre" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all">                       
-                            <h:column>
-
-                                <h:outputText value="#{coursesPre.vrrhCursosProfPK.materiaCodigo} - #{coursesPre.materiaNombre}"/>
-
-                            </h:column> 
-                        </h:dataTable>
-                    </ui:fragment>
 
                     <ui:fragment rendered="#{not empty curriculumVitaeController.vrrhProCursoAsCurrent}">
                         <h3><h:outputText value="#{bundle.ViewCurriculumVitaePostgraduatedCurrentCoursesTitle}"></h:outputText></h3>
-                        <h:dataTable value="#{curriculumVitaeController.vrrhProCursoAsCurrent}" var="coursesPos" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all">                       
+                        <h:dataTable value="#{curriculumVitaeController.vrrhProCursoAsCurrent}" var="coursesPos" border="0" cellpadding="2" cellspacing="0">                       
                             <h:column>
-
-                                <h:outputText value="#{coursesPos.vrrhProCursoAsPK.materiaCodigo} - #{coursesPos.nombreMateria}"/>
-
+                                <h:outputText value="#{coursesPos.nombreMateria}"/>
                             </h:column> 
                         </h:dataTable>
                     </ui:fragment>
-                </section>
-            </ui:fragment>
-
-            <ui:fragment rendered="#{not empty curriculumVitaeController.coursesPreHis}">
-                <section id="undergraduatedCoursesHist">
-                    <h2><h:outputText value="#{bundle.ViewCurriculumVitaeUndergraduatedCoursesHistTitle}"></h:outputText></h2>
-                    <h:dataTable value="#{curriculumVitaeController.coursesPreHis}" var="coursesPreHis" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all">                       
-                        <h:column>
-
-                            <h:outputText value="#{coursesPreHis.vrrhCursosProfPK.materiaCodigo} - #{coursesPreHis.materiaNombre}"/>
-
-                        </h:column> 
-                    </h:dataTable>
+                    
+                    <ui:fragment rendered="#{not empty curriculumVitaeController.vrrhCursosProfCurrent}">
+                        <h3><h:outputText value="#{bundle.ViewCurriculumVitaeUndergraduatedCurrentCoursesTitle}"></h:outputText></h3>
+                        <h:dataTable value="#{curriculumVitaeController.vrrhCursosProfCurrent}" var="coursesPre" border="0" cellpadding="2" cellspacing="0">                       
+                            <h:column>
+                                <h:outputText value="#{coursesPre.materiaNombre}"/>
+                            </h:column> 
+                        </h:dataTable>
+                    </ui:fragment>
                 </section>
             </ui:fragment>
 
             <ui:fragment rendered="#{not empty curriculumVitaeController.coursesPosHis}">
                 <section id="postgraduatedCoursesHist">
                     <h2><h:outputText value="#{bundle.ViewCurriculumVitaePostgraduatedCoursesHistTitle}"></h:outputText></h2>
-                    <h:dataTable value="#{curriculumVitaeController.coursesPosHis}" var="coursesPosHis" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all">                       
+                    <h:dataTable value="#{curriculumVitaeController.coursesPosHis}" var="coursesPosHis" border="0" cellpadding="2" cellspacing="0">                       
                         <h:column>
 
-                            <h:outputText value="#{coursesPosHis.vrrhProCursoAsPK.materiaCodigo} - #{coursesPosHis.nombreMateria}"/>
+                            <h:outputText value="#{coursesPosHis.nombreMateria}"/>
+
+                        </h:column> 
+                    </h:dataTable>
+                </section>
+            </ui:fragment>
+            
+            <ui:fragment rendered="#{not empty curriculumVitaeController.coursesPreHis}">
+                <section id="undergraduatedCoursesHist">
+                    <h2><h:outputText value="#{bundle.ViewCurriculumVitaeUndergraduatedCoursesHistTitle}"></h:outputText></h2>
+                    <h:dataTable value="#{curriculumVitaeController.coursesPreHis}" var="coursesPreHis" border="0" cellpadding="2" cellspacing="0">                       
+                        <h:column>
+
+                            <h:outputText value="#{coursesPreHis.materiaNombre}"/>
 
                         </h:column> 
                     </h:dataTable>
