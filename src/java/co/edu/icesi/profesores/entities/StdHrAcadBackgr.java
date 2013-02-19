@@ -13,12 +13,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  *
  * @author David Andrés Manzano Herrera - damanzano
- * 
- * @since 2012-12-04 damanzano
- * Al the code lines relato to  the field CCB_CARGUE_ACT were commented, because they are not necesary for
- * display purposes and were generating runtime errors. The erros have presented
- * because in development enviroment the table STD_HR_ACAD_BACKGR loss the CCB_CARGUE_ACT
- * field in a backup process.
+ *
+ * @since 2013-02-19 damanzano The compareTo() method was added to this class in
+ * order to fix the sorting issues in the cv display.
+ *
+ * @since 2012-12-04 damanzano Al the code lines relato to the field
+ * CCB_CARGUE_ACT were commented, because they are not necesary for display
+ * purposes and were generating runtime errors. The erros have presented because
+ * in development enviroment the table STD_HR_ACAD_BACKGR loss the
+ * CCB_CARGUE_ACT field in a backup process.
  */
 @Entity
 @Table(name = "STD_HR_ACAD_BACKGR")
@@ -55,9 +58,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "StdHrAcadBackgr.findByStdIdGeoPlace", query = "SELECT s FROM StdHrAcadBackgr s WHERE s.stdIdGeoPlace = :stdIdGeoPlace"),
     @NamedQuery(name = "StdHrAcadBackgr.findByIdApprole", query = "SELECT s FROM StdHrAcadBackgr s WHERE s.idApprole = :idApprole"),
     @NamedQuery(name = "StdHrAcadBackgr.findByIdSecuser", query = "SELECT s FROM StdHrAcadBackgr s WHERE s.idSecuser = :idSecuser"),
-    @NamedQuery(name = "StdHrAcadBackgr.findByDtLastUpdate", query = "SELECT s FROM StdHrAcadBackgr s WHERE s.dtLastUpdate = :dtLastUpdate")    
-    /*@NamedQuery(name = "StdHrAcadBackgr.findByCcbCargueAct", query = "SELECT s FROM StdHrAcadBackgr s WHERE s.ccbCargueAct = :ccbCargueAct")*/})
-public class StdHrAcadBackgr implements Serializable {
+    @NamedQuery(name = "StdHrAcadBackgr.findByDtLastUpdate", query = "SELECT s FROM StdHrAcadBackgr s WHERE s.dtLastUpdate = :dtLastUpdate")
+/*@NamedQuery(name = "StdHrAcadBackgr.findByCcbCargueAct", query = "SELECT s FROM StdHrAcadBackgr s WHERE s.ccbCargueAct = :ccbCargueAct")*/
+})
+public class StdHrAcadBackgr implements Serializable, Comparable {
+
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected StdHrAcadBackgrPK stdHrAcadBackgrPK;
@@ -120,34 +125,31 @@ public class StdHrAcadBackgr implements Serializable {
     @Column(name = "DT_LAST_UPDATE")
     @Temporal(TemporalType.DATE)
     private Date dtLastUpdate;
-    /** 
-     * @since 2012-12-04 damanzano
-     * the following attribustes were commented, because they are not necesary for
-     * display purposes and were generating runtime errors. The erros have presented
-     * because in development enviroment the table STD_HR_ACAD_BACKGR loss the CCB_CARGUE_ACT
-     * field in a backup process.
+    /**
+     * @since 2012-12-04 damanzano the following attribustes were commented,
+     * because they are not necesary for display purposes and were generating
+     * runtime errors. The erros have presented because in development
+     * enviroment the table STD_HR_ACAD_BACKGR loss the CCB_CARGUE_ACT field in
+     * a backup process.
      */
 //    @Column(name = "CCB_CARGUE_ACT")
 //    private String ccbCargueAct;
-    
     @ManyToOne(optional = false)
     @JoinColumns({
-        @JoinColumn(name = "ID_ORGANIZATION", referencedColumnName = "ID_ORGANIZATION", updatable=false, insertable=false),
-        @JoinColumn(name = "STD_ID_DIPLOMA", referencedColumnName = "STD_ID_DIPLOMA", updatable=false, insertable=false)
+        @JoinColumn(name = "ID_ORGANIZATION", referencedColumnName = "ID_ORGANIZATION", updatable = false, insertable = false),
+        @JoinColumn(name = "STD_ID_DIPLOMA", referencedColumnName = "STD_ID_DIPLOMA", updatable = false, insertable = false)
     })
     private StdLuEduDiploma stdLuEduDiploma;
-    
     @ManyToOne(optional = false)
     @JoinColumns({
-        @JoinColumn(name = "ID_ORGANIZATION", referencedColumnName = "ID_ORGANIZATION", updatable=false, insertable=false),
-        @JoinColumn(name = "STD_ID_EDU_CENTER", referencedColumnName = "STD_ID_EXTERN_ORG", updatable=false, insertable=false)
+        @JoinColumn(name = "ID_ORGANIZATION", referencedColumnName = "ID_ORGANIZATION", updatable = false, insertable = false),
+        @JoinColumn(name = "STD_ID_EDU_CENTER", referencedColumnName = "STD_ID_EXTERN_ORG", updatable = false, insertable = false)
     })
     private StdExternalOrg stdExternalOrg;
-    
-    @ManyToOne(optional=false)
+    @ManyToOne(optional = false)
     @JoinColumns({
-        @JoinColumn(name = "ID_ORGANIZATION", referencedColumnName = "ID_ORGANIZATION", updatable=false, insertable=false),
-        @JoinColumn(name = "STD_ID_EDU_SP", referencedColumnName = "STD_ID_EDU_SP", updatable=false, insertable=false)
+        @JoinColumn(name = "ID_ORGANIZATION", referencedColumnName = "ID_ORGANIZATION", updatable = false, insertable = false),
+        @JoinColumn(name = "STD_ID_EDU_SP", referencedColumnName = "STD_ID_EDU_SP", updatable = false, insertable = false)
     })
     private StdLuEduSpecial stdLuEduSpecial;
 
@@ -401,11 +403,10 @@ public class StdHrAcadBackgr implements Serializable {
 //    public void setCcbCargueAct(String ccbCargueAct) {
 //        this.ccbCargueAct = ccbCargueAct;
 //    }
-
     public StdLuEduDiploma getStdLuEduDiploma() {
         return stdLuEduDiploma;
     }
-   
+
     public void setStdLuEduDiploma(StdLuEduDiploma stdLuEduDiploma) {
         this.stdLuEduDiploma = stdLuEduDiploma;
     }
@@ -425,7 +426,7 @@ public class StdHrAcadBackgr implements Serializable {
     public void setStdLuEduSpecial(StdLuEduSpecial stdLuEduSpecial) {
         this.stdLuEduSpecial = stdLuEduSpecial;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -450,5 +451,38 @@ public class StdHrAcadBackgr implements Serializable {
     public String toString() {
         return "co.edu.icesi.profesores.entities.StdHrAcadBackgr[ stdHrAcadBackgrPK=" + stdHrAcadBackgrPK + " ]";
     }
-    
+
+    /**
+     * This method is used to compare StdHrAcadBackgr objects in sorting
+     * operations. The professors' academic background items are sorted by
+     * completion date in descendant way, the item without completion date are
+     * assumed as the more recent.
+     */
+    @Override
+    public int compareTo(Object object) {
+        StdHrAcadBackgr other = (StdHrAcadBackgr) object;
+        if (this.ccbYearTerm == null && other.ccbYearTerm == null) {
+            return 0;
+        } else if (this.ccbYearTerm == null && other.ccbYearTerm != null) {
+            return 1;
+        } else if (this.ccbYearTerm != null && other.ccbYearTerm == null) {
+            return -1;
+        } else {
+            if (this.ccbYearTerm.equals(other.ccbYearTerm)) {
+                return 0;
+            } else {
+                //ccbYearTerm is sotored in database as string so it's necesary casting to int first.
+                int thisCbbYearTerm = Integer.parseInt(this.ccbYearTerm);
+                int otherCbbYearTerm = Integer.parseInt(other.ccbYearTerm);
+
+                if (thisCbbYearTerm == otherCbbYearTerm) {
+                    return 0;
+                } else if (thisCbbYearTerm > otherCbbYearTerm) {
+                    return 1;
+                } else {
+                    return -1;
+                }
+            }
+        }
+    }
 }

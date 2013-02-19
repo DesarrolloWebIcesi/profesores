@@ -16,7 +16,9 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Collections;
 import java.util.List;
+import java.util.SortedSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
@@ -141,7 +143,7 @@ public class CurriculumVitaeController implements Serializable {
              */
             //this.person = personController.findStdPersonByStdSsn(profesorId);
             String stdIdPerson = person.getStdPersonPK().getStdIdPerson();
-            String stdSsnPerson= person.getStdSsn();
+            String stdSsnPerson = person.getStdSsn();
             this.personPositions = personPositionController.findPersonPositionByScoIdHr(stdIdPerson);
             this.positionDescriptions = positionDescriptionsController.findPositionByM4scoHHrPos(personPositions);
             this.roles = rolesController.findVrrhRepPersonRolByStdIdPerson(stdIdPerson);
@@ -149,6 +151,8 @@ public class CurriculumVitaeController implements Serializable {
             generateEmailImage();
             this.phoneExtention = phonesController.findInstitutionalPhoneByStdIdPerson(stdIdPerson);
             this.stdHrAcadBackgr = acadController.findStdHrAcadBackgrByStdHrId(stdIdPerson);
+            Collections.sort(this.stdHrAcadBackgr);
+            Collections.reverse(this.stdHrAcadBackgr);
 
             /**
              * The following lines manage the publications issues, so they are
@@ -350,7 +354,7 @@ public class CurriculumVitaeController implements Serializable {
      * Generates the professor's email image representatation.
      */
     public void generateEmailImage() {
-        if (this.personmail!=null && this.personmail.getStdEmail() != null) {
+        if (this.personmail != null && this.personmail.getStdEmail() != null) {
             try {
                 String rootDeploymentPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/");
                 String mailImagePath = FacesContext.getCurrentInstance().getExternalContext().getInitParameter("mailImagePath");
