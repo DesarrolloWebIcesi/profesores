@@ -16,7 +16,7 @@
                 <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
             </h:panelGroup>
             <a class="back-to-list" href="#{request.contextPath}/"><h:outputText value="#{bundle.ViewCurriculumVitaeBack}"/></a>
-            
+
             <!-- Personal Information -->
             <section id="personalInformation">                
                 <section id="photo">
@@ -81,11 +81,11 @@
                                     <span class="acadBackground-center"><h:outputText value="#{item.stdDescEduCenter}, "/></span>
                                 </ui:fragment>
                                 <ui:fragment rendered="${(not empty item.stdIdEduCenter) and (not (item.stdIdEduCenter eq '000'))}">
-                                    <span class="acadBackground-center"><h:outputText value="#{item.stdExternalOrg.stdNExtOrgesp}, "/></span>
+                                    <span class="acadBackground-center"><h:outputText value="#{item.stdExternalOrg.stdNExtOrgesp}"/></span>
                                 </ui:fragment>
 
                                 <ui:fragment rendered="${not empty item.ccbYearTerm}">
-                                    <span class="acadBackground-year"><h:outputText value="#{item.ccbYearTerm}"/></span>
+                                    <span class="acadBackground-year"><h:outputText value=", #{item.ccbYearTerm}"/></span>
                                 </ui:fragment>
 
                                 <ui:fragment rendered="${not empty item.ccbOtroTForm}">
@@ -107,49 +107,59 @@
                 <section id="courses">
                     <h2><h:outputText value="#{bundle.ViewCurriculumVitaeCoursesTitle}"></h:outputText></h2>
 
-                    <ui:fragment rendered="#{not empty curriculumVitaeController.vrrhProCursoAsCurrent}">
-                        <section id="undergraduatedCurrentCourses">
-                            <h3><h:outputText value="#{bundle.ViewCurriculumVitaePostgraduatedCurrentCoursesTitle}"></h:outputText></h3>
-                            <h:dataTable value="#{curriculumVitaeController.vrrhProCursoAsCurrent}" var="coursesPos" border="0" cellpadding="2" cellspacing="0">                       
-                                <h:column>
-                                    <h:outputText value="#{coursesPos.nombreMateria}"/>
-                                </h:column> 
-                            </h:dataTable>
-                        </section>
-                    </ui:fragment>
+                    <div class="collapsibleGroup">
+                        <ui:fragment rendered="#{not empty curriculumVitaeController.vrrhProCursoAsCurrent}">
+                            <section id="undergraduatedCurrentCourses" class="collapsiblePanel">
+                                <h3><h:outputText value="#{bundle.ViewCurriculumVitaePostgraduatedCurrentCoursesTitle}"></h:outputText></h3>
+                                <article class="accordion-content">
+                                    <h:dataTable value="#{curriculumVitaeController.vrrhProCursoAsCurrent}" var="coursesPos" border="0" cellpadding="2" cellspacing="0">                       
+                                        <h:column>
+                                            <h:outputText value="#{coursesPos.nombreMateria}"/>
+                                        </h:column> 
+                                    </h:dataTable>
+                                </article>
+                            </section>
+                        </ui:fragment>
 
-                    <ui:fragment rendered="#{not empty curriculumVitaeController.vrrhCursosProfCurrent}">
-                        <section id="postgraduatedCurrentCourses">
-                            <h3><h:outputText value="#{bundle.ViewCurriculumVitaeUndergraduatedCurrentCoursesTitle}"></h:outputText></h3>
-                            <h:dataTable value="#{curriculumVitaeController.vrrhCursosProfCurrent}" var="coursesPre" border="0" cellpadding="2" cellspacing="0">                       
-                                <h:column>
-                                    <h:outputText value="#{coursesPre.materiaNombre}"/>
-                                </h:column> 
-                            </h:dataTable>
-                        </section>
-                    </ui:fragment>
+                        <ui:fragment rendered="#{not empty curriculumVitaeController.vrrhCursosProfCurrent}">
+                            <section id="postgraduatedCurrentCourses" class="collapsiblePanel">
+                                <h3><h:outputText value="#{bundle.ViewCurriculumVitaeUndergraduatedCurrentCoursesTitle}"></h:outputText></h3>
+                                <article class="accordion-content">
+                                    <h:dataTable value="#{curriculumVitaeController.vrrhCursosProfCurrent}" var="coursesPre" border="0" cellpadding="2" cellspacing="0">                       
+                                        <h:column>
+                                            <h:outputText value="#{coursesPre.materiaNombre}"/>
+                                        </h:column> 
+                                    </h:dataTable>
+                                </article>
+                            </section>
+                        </ui:fragment>
 
-                    <ui:fragment rendered="#{not empty curriculumVitaeController.coursesPosHis}">
-                        <section id="postgraduatedCoursesHist">
-                            <h3><h:outputText value="#{bundle.ViewCurriculumVitaePostgraduatedCoursesHistTitle}"></h:outputText></h3>
-                            <h:dataTable value="#{curriculumVitaeController.coursesPosHis}" var="coursesPosHis" border="0" cellpadding="2" cellspacing="0">                       
-                                <h:column>
-                                    <h:outputText value="#{coursesPosHis.nombreMateria}"/>
-                                </h:column> 
-                            </h:dataTable>
-                        </section>
-                    </ui:fragment>
+                        <ui:fragment rendered="#{not empty curriculumVitaeController.coursesPosHis}">
+                            <section id="postgraduatedCoursesHist" class="collapsiblePanel">
+                                <h3><h:outputText value="#{bundle.ViewCurriculumVitaePostgraduatedCoursesHistTitle}"></h:outputText></h3>
+                                <article class="accordion-content">
+                                    <h:dataTable value="#{curriculumVitaeController.coursesPosHis}" var="coursesPosHis" border="0" cellpadding="2" cellspacing="0">                       
+                                        <h:column> 
+                                            <h:outputText value="#{coursesPosHis.nombreMateria}"/>
+                                        </h:column> 
+                                    </h:dataTable>
+                                </article>
+                            </section>
+                        </ui:fragment>
 
-                    <ui:fragment rendered="#{not empty curriculumVitaeController.coursesPreHis}">
-                        <section id="undergraduatedCoursesHist">
-                            <h3><h:outputText value="#{bundle.ViewCurriculumVitaeUndergraduatedCoursesHistTitle}"></h:outputText></h3>
-                            <h:dataTable value="#{curriculumVitaeController.coursesPreHis}" var="coursesPreHis" border="0" cellpadding="2" cellspacing="0">                       
-                                <h:column>
-                                    <h:outputText value="#{coursesPreHis.materiaNombre}"/>
-                                </h:column> 
-                            </h:dataTable>
-                        </section>
-                    </ui:fragment>
+                        <ui:fragment rendered="#{not empty curriculumVitaeController.coursesPreHis}">
+                            <section id="undergraduatedCoursesHist" class="collapsiblePanel">
+                                <h3><h:outputText value="#{bundle.ViewCurriculumVitaeUndergraduatedCoursesHistTitle}"></h:outputText></h3>
+                                <article class="accordion-content">
+                                    <h:dataTable value="#{curriculumVitaeController.coursesPreHis}" var="coursesPreHis" border="0" cellpadding="2" cellspacing="0">                       
+                                        <h:column>
+                                            <h:outputText value="#{coursesPreHis.materiaNombre}"/>
+                                        </h:column> 
+                                    </h:dataTable>
+                                </article>
+                            </section>
+                        </ui:fragment>
+                    </div>
 
                 </section>
             </ui:fragment>

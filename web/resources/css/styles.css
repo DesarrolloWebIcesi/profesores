@@ -31,10 +31,6 @@ h2 span{
     
 }
 
-h3:before{
-    content: "-"
-}
-
 section table{
     width: 100%;
     margin-left: 5px
@@ -96,7 +92,7 @@ footer a{
 }
 #academicBackground h2{
     background: url(../../images/education.png) no-repeat center left;
-    padding-left: 30px;    
+    padding-left: 35px;    
 }
 
 .name{
