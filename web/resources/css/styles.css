@@ -95,6 +95,10 @@ footer a{
     padding-left: 35px;    
 }
 
+#oldIE8{
+    display:none;
+}
+
 .name{
     margin:0;
 }
@@ -139,4 +143,14 @@ footer a{
     display: block;
     float: left;
     width: 49%;
+}
+
+
+/*IE Exceptions*/
+.lt-ie9 #oldIE8{
+    color: #fff;
+    background: #00B100;
+    display: block;
+    margin-bottom: 5px; 
+    padding: 5px;
 }
