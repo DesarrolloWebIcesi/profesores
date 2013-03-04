@@ -94,6 +94,10 @@ footer a{
     background: url(../../images/education.png) no-repeat center left;
     padding-left: 35px;    
 }
+#courses h2{
+    background: url(../../images/courses.png) no-repeat center left;
+    padding-left: 35px;    
+}
 
 #oldIE8{
     display:none;
