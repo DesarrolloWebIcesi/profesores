@@ -75,13 +75,24 @@ public class M4ccbConsPersonasJpaController implements Serializable {
     /**
      * Find the constants registry for a given web id param
      *
+     * @param professorWebId The web identifier for a professor.
+     *
      * @since 2012-12-06 by damanzano Created;
+     * 
+     * @since 2013-03-07 by damanzano The query was changed to retrieve the
+     * person with the professorWebId param that has not ended yet. Otherwise
+     * the query could retrieve several records for a professorWebId.
      */
     public M4ccbConsPersonas findM4ccbConsPersonasByCcbIdWeb(String professorWebId) {
         EntityManager em = getEntityManager();
         try {
-            TypedQuery<M4ccbConsPersonas> q = em.createNamedQuery("M4ccbConsPersonas.findByCcbIdWeb", M4ccbConsPersonas.class);
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(4000, 0, 1);
+            Date worldEnd = calendar.getTime();
+
+            TypedQuery<M4ccbConsPersonas> q = em.createNamedQuery("M4ccbConsPersonas.findByCcbIdWebCcbDtEnd", M4ccbConsPersonas.class);
             q.setParameter("ccbIdWeb", professorWebId);
+            q.setParameter("ccbDtEnd", worldEnd);
             M4ccbConsPersonas personConstants = q.getSingleResult();
             return personConstants;
         } catch (NoResultException ex) {
@@ -110,12 +121,13 @@ public class M4ccbConsPersonasJpaController implements Serializable {
      * Find the current constans registry for a person identifyed by the
      * stdIdPerson param.
      */
-    public M4ccbConsPersonas findCurrentConstantsByStdId(String stdIdPerson) {        
+    public M4ccbConsPersonas findCurrentConstantsByStdId(String stdIdPerson) {
         EntityManager em = getEntityManager();
         try {
             Calendar calendar = Calendar.getInstance();
             calendar.set(4000, 0, 1);
-            Date worldEnd= calendar.getTime();
+            Date worldEnd = calendar.getTime();
+            
             TypedQuery<M4ccbConsPersonas> q = em.createNamedQuery("M4ccbConsPersonas.findByCcbIdPersonCcbDtEnd", M4ccbConsPersonas.class);
             q.setParameter("ccbIdPerson", stdIdPerson);
             q.setParameter("ccbDtEnd", worldEnd);
