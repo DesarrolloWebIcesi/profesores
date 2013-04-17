@@ -1,64 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
-  <persistence-unit name="profesoresPU" transaction-type="RESOURCE_LOCAL">
-    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <class>co.edu.icesi.profesores.entities.M4ccbCvEdicionR</class>
-    <class>co.edu.icesi.profesores.entities.M4ccbCvSoftReg</class>
-    <class>co.edu.icesi.profesores.entities.StdEmail</class>
-    <class>co.edu.icesi.profesores.entities.M4ccbCvTrabTecn</class>
-    <class>co.edu.icesi.profesores.entities.StdHrAcadBackgr</class>
-    <class>co.edu.icesi.profesores.entities.M4scoPosition</class>
-    <class>co.edu.icesi.profesores.entities.M4ccbCvPrefEpil</class>
-    <class>co.edu.icesi.profesores.entities.StdPerson</class>
-    <class>co.edu.icesi.profesores.entities.M4ccbCvLibro</class>
-    <class>co.edu.icesi.profesores.entities.M4ccbCvCapLib</class>
-    <class>co.edu.icesi.profesores.entities.StdHrLangTrans</class>
-    <class>co.edu.icesi.profesores.entities.StdHrPrevJobs</class>
-    <class>co.edu.icesi.profesores.entities.M4scoHHrPos</class>
-    <class>co.edu.icesi.profesores.entities.M4ccbCvDocTrab</class>
-    <class>co.edu.icesi.profesores.entities.M4ccbCvArtPub</class>
-    <class>co.edu.icesi.profesores.entities.M4ccbCvDlloMat</class>
-    <class>co.edu.icesi.profesores.entities.VrrhCursosProf</class>
-    <class>co.edu.icesi.profesores.entities.VrrhProCursoAs</class>
-    <class>co.edu.icesi.profesores.entities.M4ccbCvProdTec</class>
-    <class>co.edu.icesi.profesores.entities.M4ccbCvPresentac</class>
-    <class>co.edu.icesi.profesores.entities.StdWorkUnit</class>
-    <class>co.edu.icesi.profesores.entities.StdLuWuType</class>
-    <class>co.edu.icesi.profesores.entities.M4ccbConsPersonas</class>
-    <class>co.edu.icesi.profesores.entities.M4scoHHrWunit</class>
-    <class>co.edu.icesi.profesores.entities.StdRelWorkUnit</class>
-    <class>co.edu.icesi.profesores.entities.StdLuEduType</class>
-    <class>co.edu.icesi.profesores.entities.StdLuEduDiploma</class>
-    <class>co.edu.icesi.profesores.entities.StdLuEduSpecial</class>
-    <class>co.edu.icesi.profesores.entities.StdExternalOrg</class>
-    <class>co.edu.icesi.profesores.entities.VrrhRepPersonRol</class>
-    <class>co.edu.icesi.profesores.entities.StdPhoneFax</class>
-    <class>co.edu.icesi.profesores.entities.StdHrPeriod</class>
-    <class>co.edu.icesi.profesores.entities.M4scbHHrContrat</class>
-    <exclude-unlisted-classes>false</exclude-unlisted-classes>
-    <!-- Development
-    <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@192.168.220.120:1521:ddelfi"/>
-      <property name="javax.persistence.jdbc.password" value="Passw0rd"/>
-      <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver"/>
-      <property name="javax.persistence.jdbc.user" value="ddelfi"/>
-    </properties>
-    -->
-    <!-- Test  
-    <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@192.168.220.120:1521:ddelfi"/>
-      <property name="javax.persistence.jdbc.password" value="N9O9UOM25t"/>
-      <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver"/>
-      <property name="javax.persistence.jdbc.user" value="cdelfi"/>
-    </properties>
-    -->
-    <!-- Test 2 -->
-    <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@192.168.220.120:1521:ddelfi"/>
-      <property name="javax.persistence.jdbc.password" value="consultahvprof"/>
-      <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver"/>
-      <property name="javax.persistence.jdbc.user" value="consultahvprof"/>
-    </properties>
-   
-  </persistence-unit>
+    <persistence-unit name="profesoresPU" transaction-type="RESOURCE_LOCAL">
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+        <class>co.edu.icesi.profesores.entities.M4ccbCvEdicionR</class>
+        <class>co.edu.icesi.profesores.entities.M4ccbCvSoftReg</class>
+        <class>co.edu.icesi.profesores.entities.StdEmail</class>
+        <class>co.edu.icesi.profesores.entities.M4ccbCvTrabTecn</class>
+        <class>co.edu.icesi.profesores.entities.StdHrAcadBackgr</class>
+        <class>co.edu.icesi.profesores.entities.M4scoPosition</class>
+        <class>co.edu.icesi.profesores.entities.M4ccbCvPrefEpil</class>
+        <class>co.edu.icesi.profesores.entities.StdPerson</class>
+        <class>co.edu.icesi.profesores.entities.M4ccbCvLibro</class>
+        <class>co.edu.icesi.profesores.entities.M4ccbCvCapLib</class>
+        <class>co.edu.icesi.profesores.entities.StdHrLangTrans</class>
+        <class>co.edu.icesi.profesores.entities.StdHrPrevJobs</class>
+        <class>co.edu.icesi.profesores.entities.M4scoHHrPos</class>
+        <class>co.edu.icesi.profesores.entities.M4ccbCvDocTrab</class>
+        <class>co.edu.icesi.profesores.entities.M4ccbCvArtPub</class>
+        <class>co.edu.icesi.profesores.entities.M4ccbCvDlloMat</class>
+        <class>co.edu.icesi.profesores.entities.VrrhCursosProf</class>
+        <class>co.edu.icesi.profesores.entities.VrrhProCursoAs</class>
+        <class>co.edu.icesi.profesores.entities.M4ccbCvProdTec</class>
+        <class>co.edu.icesi.profesores.entities.M4ccbCvPresentac</class>
+        <class>co.edu.icesi.profesores.entities.StdWorkUnit</class>
+        <class>co.edu.icesi.profesores.entities.StdLuWuType</class>
+        <class>co.edu.icesi.profesores.entities.M4ccbConsPersonas</class>
+        <class>co.edu.icesi.profesores.entities.M4scoHHrWunit</class>
+        <class>co.edu.icesi.profesores.entities.StdRelWorkUnit</class>
+        <class>co.edu.icesi.profesores.entities.StdLuEduType</class>
+        <class>co.edu.icesi.profesores.entities.StdLuEduDiploma</class>
+        <class>co.edu.icesi.profesores.entities.StdLuEduSpecial</class>
+        <class>co.edu.icesi.profesores.entities.StdExternalOrg</class>
+        <class>co.edu.icesi.profesores.entities.VrrhRepPersonRol</class>
+        <class>co.edu.icesi.profesores.entities.StdPhoneFax</class>
+        <class>co.edu.icesi.profesores.entities.StdHrPeriod</class>
+        <class>co.edu.icesi.profesores.entities.M4scbHHrContrat</class>
+        <exclude-unlisted-classes>false</exclude-unlisted-classes>
+        <!-- Development
+        <properties>
+          <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@192.168.220.120:1521:ddelfi"/>
+          <property name="javax.persistence.jdbc.password" value="Passw0rd"/>
+          <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver"/>
+          <property name="javax.persistence.jdbc.user" value="ddelfi"/>
+        </properties>
+        -->
+        <!-- Test  
+        <properties>
+          <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@192.168.220.120:1521:ddelfi"/>
+          <property name="javax.persistence.jdbc.password" value="N9O9UOM25t"/>
+          <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver"/>
+          <property name="javax.persistence.jdbc.user" value="cdelfi"/>
+        </properties>
+        -->
+        <!-- Test 2
+        <properties>
+            <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@192.168.220.120:1521:ddelfi"/>
+            <property name="javax.persistence.jdbc.password" value="consultahvprof"/>
+            <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver"/>
+            <property name="javax.persistence.jdbc.user" value="consultahvprof"/>
+        </properties>
+        -->
+        <!-- Production  
+        <properties>
+            <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@200.3.192.45:1521:delfi"/>
+            <property name="javax.persistence.jdbc.password" value="BqdC14vU9n528ce"/>
+            <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver"/>
+            <property name="javax.persistence.jdbc.user" value="consultahvprof"/>
+        </properties>
+        -->
+    </persistence-unit>
 </persistence>
