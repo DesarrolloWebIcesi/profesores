@@ -52,14 +52,14 @@
           <property name="javax.persistence.jdbc.user" value="cdelfi"/>
         </properties>
         -->
-        <!-- Test 2
+        <!-- Test 2 -->
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@192.168.220.120:1521:ddelfi"/>
             <property name="javax.persistence.jdbc.password" value="consultahvprof"/>
             <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver"/>
             <property name="javax.persistence.jdbc.user" value="consultahvprof"/>
         </properties>
-        -->
+        
         <!-- Production  
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@200.3.192.45:1521:delfi"/>

@@ -66,7 +66,12 @@
                     <h:dataTable value="#{curriculumVitaeController.stdHrAcadBackgr}" var="item" border="0" cellpadding="2" cellspacing="0">                       
                         <h:column>
                             <article class="acadBackground">
-                                <span class="acadBackground-degree"><h:outputText value="#{item.stdLuEduDiploma.stdNDiplomaesp}"/></span>
+                                <ui:fragment rendered="${(empty item.stdIdDiploma) or (item.stdIdDiploma eq '000')}">
+                                    <span class="acadBackground-degree"><h:outputText value="#{item.ccbOtroTitul}"/></span>
+                                </ui:fragment>
+                                <ui:fragment rendered="${(not empty item.stdIdDiploma) and (item.stdIdDiploma ne '000')}">
+                                    <span class="acadBackground-degree"><h:outputText value="#{item.stdLuEduDiploma.stdNDiplomaesp}"/></span>
+                                </ui:fragment>
 
                                 <ui:fragment rendered="${(empty item.stdIdEduSp) or (item.stdIdEduSp eq '999')}">
                                     <span class="acadBackground-major"><h:outputText value=" #{item.ccbOtroEspec} - "/></span>
@@ -78,7 +83,7 @@
 
 
                                 <ui:fragment rendered="${(empty item.stdIdEduCenter) or (item.stdIdEduCenter eq '000')}">
-                                    <span class="acadBackground-center"><h:outputText value="#{item.stdDescEduCenter}, "/></span>
+                                    <span class="acadBackground-center"><h:outputText value="#{item.stdDescEduCenter} "/></span>
                                 </ui:fragment>
                                 <ui:fragment rendered="${(not empty item.stdIdEduCenter) and (not (item.stdIdEduCenter eq '000'))}">
                                     <span class="acadBackground-center"><h:outputText value="#{item.stdExternalOrg.stdNExtOrgesp}"/></span>
