@@ -5,65 +5,79 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--><html class="no-js" xmlns="http://www.w3.org/1999/xhtml"
                             xmlns:ui="http://java.sun.com/jsf/facelets"
-                            xmlns:h="http://java.sun.com/jsf/html"><!--<![endif]-->
-    <h:head>
-        <!--
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        -->
-        <meta charset="utf-8"/>
+                            xmlns:h="http://java.sun.com/jsf/html"
+                            xmlns:f="http://java.sun.com/jsf/core"><!--<![endif]-->
+    <f:view locale="#{language.currentLocale}">
+        <h:head>
+            <!--
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            -->
+            <meta charset="utf-8"/>
 
-        <title><ui:insert name="title">Default Title</ui:insert> | Profesores , Universidad Icesi</title>
-        <link href="#{request.contextPath}/favicon.ico" rel="icon" type="image/x-icon" />
-        <h:outputStylesheet name="css/normalize.css"/>
-        <h:outputStylesheet name="css/jsfcrud.css"/>
-        <h:outputStylesheet name="css/styles.css"/>
-        <h:outputStylesheet name="css/smoothness/jquery-ui-1.10.1.custom.min.css"/>
-        <h:outputScript name="js/vendor/modernizr-2.6.2.min.js"/> 
-    </h:head>
+            <title><ui:insert name="title">Default Title</ui:insert> | Profesores , Universidad Icesi</title>
+            <link href="#{request.contextPath}/favicon.ico" rel="icon" type="image/x-icon" />
+            <h:outputStylesheet name="css/normalize.css"/>
+            <h:outputStylesheet name="css/jsfcrud.css"/>
+            <h:outputStylesheet name="css/styles.css"/>
+            <h:outputStylesheet name="css/smoothness/jquery-ui-1.10.1.custom.min.css"/>
+            <h:outputScript name="js/vendor/modernizr-2.6.2.min.js"/> 
+        </h:head>
 
-    <h:body>
-        <!--[if lt IE 7]>
-           <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
-       <![endif]-->
+        <h:body>
+            <!--[if lt IE 7]>
+               <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+           <![endif]-->
 
-        <div id="pageWrapper">
-            <header id="pageHeader"><img src="#{request.contextPath}/images/header.jpg"/></header>
-            <section id="pageBody">              
-                <section id="PageContent">
-                    <section id="oldIE8"><h:outputText value="#{bundle.ViewGeneralOldIESupport}"/></section>
-                    <ui:insert name="body">Default Body</ui:insert>
+            <div id="pageWrapper">
+                <header id="pageHeader"><img src="#{request.contextPath}/images/header.jpg"/></header>
+                <section id="pageBody">              
+                    <section id="PageContent">
+                        <section id="oldIE8"><h:outputText value="#{bundle.ViewGeneralOldIESupport}"/></section>
+                        <h:panelGroup id="languageSelector" layout="block">
+                            <h:form>
+                                <h:outputText value="#{bundle.ViewGeneralChooseLanguage} " />
+                                <h:selectOneMenu value="#{language.localeCode}" onchange="submit()" valueChangeListener="#{language.languageChanged}">
+                                    <f:selectItems value="#{language.supportedLocalesInMap}" /> 
+                                </h:selectOneMenu>
+                            </h:form>
+                        </h:panelGroup>
+                        <ui:insert name="body">Default Body</ui:insert>
+                    </section>
                 </section>
-            </section>
 
-        </div>
-        <footer>
-            <div id="pageFooter">
-                <span >
-                    <a href="http://www.icesi.edu.co/" target="_blank" title="Universidad Icesi">Universidad Icesi</a>, Calle 18 No. 122-135 Pance, Cali - Colombia | Teléfono: +57 (2) 555 2334 | Fax: +57 (2) 555 1441<br/>
-                    La Universidad Icesi es una Institución de Educación Superior que se encuentra sujeta a inspección y vigilancia por parte del Ministerio de Educación Nacional.<br/>
-                    Copyright © 2012 <a href="http://www.icesi.edu.co/" target="_blank" title="Universidad Icesi">www.icesi.edu.co</a> - <a href="http://www.icesi.edu.co/politica_privacidad.php" title="Política de Privacidad" target="_blank">Política de privacidad</a>
-                </span>
             </div>
-        </footer>
-        
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-        <script src="//code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
-        <script>window.jQuery || document.write("&lt;script src='/profesores/faces/javax.faces.resource/js/vendor/jquery-1.9.0.min.js' &gt; &lt;\/script &gt; &lt;script src='/profesores/faces/javax.faces.resource/js/libs/jquery-ui-1.10.1.custom.min' &gt; &lt;\/script&gt;");</script>
-        
-        <h:outputScript name="js/plugins.js" />
-        <h:outputScript name="js/main.js"/>
-        
-        <script type="text/javascript">
-            var _gaq = _gaq || [];
-            _gaq.push(['_setAccount', 'UA-35657225-19']);
-            _gaq.push(['_trackPageview']);
- 
-            (function() {
-                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-            })();
- 
-        </script>
-    </h:body>
+            <footer>
+                <div id="pageFooter">
+                    <span >
+                        <a href="http://www.icesi.edu.co/" target="_blank" title="Universidad Icesi">Universidad Icesi</a>, Calle 18 No. 122-135 Pance, Cali - Colombia | Teléfono: +57 (2) 555 2334 | Fax: +57 (2) 555 1441<br/>
+                        La Universidad Icesi es una Institución de Educación Superior que se encuentra sujeta a inspección y vigilancia por parte del Ministerio de Educación Nacional.<br/>
+                        Copyright © 2012 <a href="http://www.icesi.edu.co/" target="_blank" title="Universidad Icesi">www.icesi.edu.co</a> - <a href="http://www.icesi.edu.co/politica_privacidad.php" title="Política de Privacidad" target="_blank">Política de privacidad</a>
+                    </span>
+                </div>
+            </footer>
+
+            <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+            <script src="//code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+            <script>window.jQuery || document.write("&lt;script src='/profesores/faces/javax.faces.resource/js/vendor/jquery-1.9.0.min.js' &gt; &lt;\/script &gt; &lt;script src='/profesores/faces/javax.faces.resource/js/libs/jquery-ui-1.10.1.custom.min' &gt; &lt;\/script&gt;");</script>
+
+            <h:outputScript name="js/plugins.js" />
+            <h:outputScript name="js/main.js"/>
+
+            <script type="text/javascript">
+                var _gaq = _gaq || [];
+                _gaq.push(['_setAccount', 'UA-35657225-19']);
+                _gaq.push(['_trackPageview']);
+
+                (function() {
+                    var ga = document.createElement('script');
+                    ga.type = 'text/javascript';
+                    ga.async = true;
+                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                    var s = document.getElementsByTagName('script')[0];
+                    s.parentNode.insertBefore(ga, s);
+                })();
+
+            </script>
+        </h:body>
+    </f:view>
 </html>

@@ -7,6 +7,11 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd">
     <application>
+        <locale-config>
+            <default-locale>es</default-locale>
+            <supported-locale>es</supported-locale>
+            <supported-locale>en</supported-locale>
+        </locale-config>
         <resource-bundle>
             <base-name>/Bundle</base-name>
             <var>bundle</var>
@@ -20,6 +25,12 @@
     <managed-bean>
         <managed-bean-name>professorListController</managed-bean-name>
         <managed-bean-class>co.edu.icesi.profesores.beans.ProfessorListController</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <description>This bean provide language selection list , and a value change event listener to change the locale programmatically.</description>
+        <managed-bean-name>languageBean</managed-bean-name>
+        <managed-bean-class>co.edu.icesi.profesores.beans.LanguageBean</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
 </faces-config>

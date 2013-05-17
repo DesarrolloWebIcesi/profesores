@@ -36,6 +36,7 @@ import javax.servlet.http.HttpServletRequest;
  * @since 2012-12-04 damanzano All the funcionalities not related to the
  * iteration 1 of Hoja de vida Profesores web's project were commented in
  * loadProfessorData() method.
+ * @since 2013-04-01 Funcionalities related to iteration 2 of Hoja de vida Profesores web's prject were uncommented.
  */
 @ManagedBean(name = "curriculumvitae")
 @SessionScoped
