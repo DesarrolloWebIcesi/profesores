@@ -30,9 +30,13 @@ public class LanguageBean implements Serializable {
     static {
         supportedLocales = new LinkedHashMap<String, Object>();
         Iterator<Locale> contextLocales = FacesContext.getCurrentInstance().getApplication().getSupportedLocales();
+        Locale defaultContextLocale=FacesContext.getCurrentInstance().getApplication().getDefaultLocale();
+        supportedLocales.put(defaultContextLocale.getDisplayLanguage(), defaultContextLocale);
         while (contextLocales.hasNext()) {
             Locale supportedLocale = contextLocales.next();
-            supportedLocales.put(supportedLocale.getDisplayLanguage(), supportedLocale);
+            if(!supportedLocale.equals(defaultContextLocale)){
+                supportedLocales.put(supportedLocale.getDisplayLanguage(), supportedLocale);
+            }
         }
     }
 
