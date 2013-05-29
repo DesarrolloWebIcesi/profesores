@@ -18,12 +18,14 @@
       <url-mapping id="home"> 
           <pattern value="/" /> 
           <view-id value="/faces/listados/index.xhtml" />
+          <!--<query-param name="locale">#{language.localeCode}</query-param>-->
       </url-mapping>
        
       
       <url-mapping id="profesor"> 
           <pattern value="/cv/#{professorWebId}" /> 
           <view-id value="/faces/cv/view.xhtml" />
+          <!--<query-param name="locale">#{language.localeCode}</query-param>-->
       </url-mapping>
       
        <url-mapping id="webid-error"> 

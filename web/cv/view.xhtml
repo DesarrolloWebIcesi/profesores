@@ -28,7 +28,8 @@
                     </ui:fragment><!--<img src ="/94378897.jpg" height="100" width="100"/>-->
                 </section>
                 <section id="info">
-                    <h1 class="name"><h:outputText value="#{curriculumVitaeController.person.stdNFirstName} #{curriculumVitaeController.person.stdNUsualName} #{curriculumVitaeController.person.stdNFamName1} #{curriculumVitaeController.person.stdNMaidenName}"/></h1>
+                    <ui:param name="usedName" value="#{curriculumVitaeController.person.stdNFirstName} #{curriculumVitaeController.person.stdNUsualName} #{curriculumVitaeController.person.stdNFamName1} #{curriculumVitaeController.person.stdNMaidenName}"/>
+                    <h1 class="name"><h:outputText value="#{usedName}"/></h1>
                     <!--
                     <ui:fragment rendered="#{not empty curriculumVitaeController.positionDescriptions}">
                         <section class="positions">
@@ -51,7 +52,9 @@
                             </h:dataTable>
                         </section>
                     </ui:fragment>
-                    <h:outputText rendered="${not empty curriculumVitaeController.person.scoHomePage}" value="#{curriculumVitaeController.person.scoHomePage}" class="personal-web-page"/>
+                    <h:outputLink  title="#{bundle.ViewCurriculumVitaeWebpageLinkTitle} #{usedName}" rendered="${not empty curriculumVitaeController.person.scoHomePage}" value="#{curriculumVitaeController.person.scoHomePage}" class="personal-web-page">
+                        <h:outputText value="#{curriculumVitaeController.person.scoHomePage}" />
+                    </h:outputLink>                      
                     <ui:fragment rendered="${not empty curriculumVitaeController.personmail.stdEmail}">
                         <span class="email"><img src="#{request.contextPath}/#{initParam['mailImagePath']}#{curriculumVitaeController.person.stdPersonPK.stdIdPerson}.png"/></span>
                     </ui:fragment>
@@ -70,7 +73,10 @@
                                     <span class="acadBackground-degree"><h:outputText value="#{item.ccbOtroTitul}"/></span>
                                 </ui:fragment>
                                 <ui:fragment rendered="${(not empty item.stdIdDiploma) and (item.stdIdDiploma ne '000')}">
-                                    <span class="acadBackground-degree"><h:outputText value="#{item.stdLuEduDiploma.stdNDiplomaesp}"/></span>
+                                    <span class="acadBackground-degree">
+                                        <h:outputText rendered="#{language.currentLocale.language eq 'es'}" value="#{item.stdLuEduDiploma.stdNDiplomaesp}"/>
+                                        <h:outputText rendered="#{language.currentLocale.language eq 'en'}" value="#{item.stdLuEduDiploma.stdNDiplomaeng}"/>
+                                    </span>
                                 </ui:fragment>
 
                                 <ui:fragment rendered="${(empty item.stdIdEduSp) or (item.stdIdEduSp eq '999')}">
@@ -113,52 +119,60 @@
                     <h2><h:outputText value="#{bundle.ViewCurriculumVitaeCoursesTitle}"></h:outputText></h2>
 
                     <div class="collapsibleGroup">
+                        <!-- current graduate courses-->
                         <ui:fragment rendered="#{not empty curriculumVitaeController.vrrhProCursoAsCurrent}">
                             <section id="undergraduatedCurrentCourses" class="collapsiblePanel">
                                 <h3><h:outputText value="#{bundle.ViewCurriculumVitaePostgraduatedCurrentCoursesTitle}"></h:outputText></h3>
                                 <article class="accordion-content">
                                     <h:dataTable value="#{curriculumVitaeController.vrrhProCursoAsCurrent}" var="coursesPos" border="0" cellpadding="2" cellspacing="0">                       
                                         <h:column>
-                                            <h:outputText value="#{coursesPos.nombreMateria}"/>
+                                            <h:outputText rendered="#{language.currentLocale.language eq 'es'}" value="#{coursesPos.nombreMateria}"/>
+                                            <h:outputText rendered="#{language.currentLocale.language eq 'en'}" value="#{coursesPos.matNEng}"/>
                                         </h:column> 
                                     </h:dataTable>
                                 </article>
                             </section>
                         </ui:fragment>
 
+                        <!-- current undergraduate courses -->
                         <ui:fragment rendered="#{not empty curriculumVitaeController.vrrhCursosProfCurrent}">
                             <section id="postgraduatedCurrentCourses" class="collapsiblePanel">
                                 <h3><h:outputText value="#{bundle.ViewCurriculumVitaeUndergraduatedCurrentCoursesTitle}"></h:outputText></h3>
                                 <article class="accordion-content">
                                     <h:dataTable value="#{curriculumVitaeController.vrrhCursosProfCurrent}" var="coursesPre" border="0" cellpadding="2" cellspacing="0">                       
                                         <h:column>
-                                            <h:outputText value="#{coursesPre.materiaNombre}"/>
+                                            <h:outputText rendered="#{language.currentLocale.language eq 'es'}" value="#{coursesPre.materiaNombre}"/>
+                                            <h:outputText rendered="#{language.currentLocale.language eq 'en'}" value="#{coursesPre.matNEng}"/>
                                         </h:column> 
                                     </h:dataTable>
                                 </article>
                             </section>
                         </ui:fragment>
 
+                        <!-- graduate courses records -->
                         <ui:fragment rendered="#{not empty curriculumVitaeController.coursesPosHis}">
                             <section id="postgraduatedCoursesHist" class="collapsiblePanel">
                                 <h3><h:outputText value="#{bundle.ViewCurriculumVitaePostgraduatedCoursesHistTitle}"></h:outputText></h3>
                                 <article class="accordion-content">
                                     <h:dataTable value="#{curriculumVitaeController.coursesPosHis}" var="coursesPosHis" border="0" cellpadding="2" cellspacing="0">                       
-                                        <h:column> 
-                                            <h:outputText value="#{coursesPosHis.nombreMateria}"/>
+                                        <h:column>
+                                            <h:outputText rendered="#{language.currentLocale.language eq 'es'}" value="#{coursesPosHis.nombreMateria}"/>
+                                            <h:outputText rendered="#{language.currentLocale.language eq 'en'}" value="#{coursesPosHis.matNEng}"/>
                                         </h:column> 
                                     </h:dataTable>
                                 </article>
                             </section>
                         </ui:fragment>
 
+                        <!-- undergraduate courses record-->
                         <ui:fragment rendered="#{not empty curriculumVitaeController.coursesPreHis}">
                             <section id="undergraduatedCoursesHist" class="collapsiblePanel">
                                 <h3><h:outputText value="#{bundle.ViewCurriculumVitaeUndergraduatedCoursesHistTitle}"></h:outputText></h3>
                                 <article class="accordion-content">
                                     <h:dataTable value="#{curriculumVitaeController.coursesPreHis}" var="coursesPreHis" border="0" cellpadding="2" cellspacing="0">                       
                                         <h:column>
-                                            <h:outputText value="#{coursesPreHis.materiaNombre}"/>
+                                            <h:outputText rendered="#{language.currentLocale.language eq 'es'}" value="#{coursesPreHis.materiaNombre}"/>
+                                            <h:outputText rendered="#{language.currentLocale.language eq 'en'}" value="#{coursesPreHis.matNEng}"/>
                                         </h:column> 
                                     </h:dataTable>
                                 </article>

@@ -16,7 +16,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author 1130619373
+ * @author David Andrés Manzano Herrera - damanzano
+ *
+ * @version v2 2013-05-22 by damanzano. Include the attribute matNEng that
+ * represent the course's name in english.
  */
 @Entity
 @Table(name = "VRRH_CURSOS_PROF")
@@ -33,16 +36,17 @@ public class VrrhCursosProf implements Serializable {
     @EmbeddedId
     protected VrrhCursosProfPK vrrhCursosProfPK;
     @Column(name = "STD_ID_PERSON")
-    private String stdIdPerson; 
+    private String stdIdPerson;
     @Column(name = "MATERIA_NOMBRE")
     private String materiaNombre;
-    
+    @Column(name = "MAT_N_ENG")
+    private String matNEng;
 
     public VrrhCursosProf() {
     }
-    
+
     public VrrhCursosProf(VrrhCursosProfPK vrrhCursosProfPK) {
-        this.vrrhCursosProfPK=vrrhCursosProfPK;
+        this.vrrhCursosProfPK = vrrhCursosProfPK;
     }
 
     public VrrhCursosProfPK getVrrhCursosProfPK() {
@@ -52,7 +56,7 @@ public class VrrhCursosProf implements Serializable {
     public void setVrrhCursosProfPK(VrrhCursosProfPK vrrhCursosProfPK) {
         this.vrrhCursosProfPK = vrrhCursosProfPK;
     }
-    
+
     public String getMateriaNombre() {
         return materiaNombre;
     }
@@ -67,5 +71,22 @@ public class VrrhCursosProf implements Serializable {
 
     public void setStdIdPerson(String stdIdPerson) {
         this.stdIdPerson = stdIdPerson;
+    }
+
+   /** 
+    * Get the course's name in english 
+    * @since v2
+    */
+    public String getMatNEng() {
+        return matNEng;
+    }
+
+    /** 
+     * Set the matNEng attribute
+     * @param matNEng A string representing the course's name in english.
+     * @since v2
+     */
+    public void setMatNEng(String matNEng) {
+        this.matNEng = matNEng;
     }
 }

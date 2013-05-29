@@ -15,7 +15,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author 14620701
+ * @author Juan Manuel Lozano - jlozano
+ * 
+ * @version v2 2013-05-22 by damanzano. Include the attribute matNEng that
+ * represent the course's name in english.
  */
 @Entity
 @Table(name = "VRRH_PRO_CURSO_AS")
@@ -34,6 +37,8 @@ public class VrrhProCursoAs implements Serializable {
     private String nombreMateria;
     @Column (name = "ACTIVIDAD")
     private String actividad;
+    @Column(name = "MAT_N_ENG")
+    private String matNEng;
 
     public VrrhProCursoAs() {
     }
@@ -61,6 +66,21 @@ public class VrrhProCursoAs implements Serializable {
     public void setActividad(String actividad) {
         this.actividad = actividad;
     }
-    
-    
+
+    /** 
+    * Get the course's name in english 
+    * @since v2
+    */
+    public String getMatNEng() {
+        return matNEng;
+    }
+
+    /** 
+     * Set the matNEng attribute
+     * @param matNEng A string representing the course's name in english.
+     * @since v2
+     */
+    public void setMatNEng(String matNEng) {
+        this.matNEng = matNEng;
+    }
 }
