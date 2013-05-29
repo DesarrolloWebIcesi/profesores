@@ -6,7 +6,8 @@ $(document).ready(function(){
     $(".collapsiblePanel").accordion({
         active: false,
         collapsible: true,        
-        icons:accordionIcons
+        icons:accordionIcons,
+        heightStyle:'content'
     });
 });  
 

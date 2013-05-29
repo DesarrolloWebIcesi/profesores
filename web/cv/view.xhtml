@@ -127,7 +127,8 @@
                                     <h:dataTable value="#{curriculumVitaeController.vrrhProCursoAsCurrent}" var="coursesPos" border="0" cellpadding="2" cellspacing="0">                       
                                         <h:column>
                                             <h:outputText rendered="#{language.currentLocale.language eq 'es'}" value="#{coursesPos.nombreMateria}"/>
-                                            <h:outputText rendered="#{language.currentLocale.language eq 'en'}" value="#{coursesPos.matNEng}"/>
+                                            <h:outputText rendered="#{(language.currentLocale.language eq 'en') and (not empty coursesPos.matNEng) and (coursesPos.matNEng ne '')}" value="#{coursesPos.matNEng}"/>
+                                            <h:outputText rendered="#{(language.currentLocale.language eq 'en') and (empty coursesPos.matNEng or coursesPos.matNEng eq '')}" value="#{coursesPos.nombreMateria}"/>
                                         </h:column> 
                                     </h:dataTable>
                                 </article>
@@ -142,7 +143,8 @@
                                     <h:dataTable value="#{curriculumVitaeController.vrrhCursosProfCurrent}" var="coursesPre" border="0" cellpadding="2" cellspacing="0">                       
                                         <h:column>
                                             <h:outputText rendered="#{language.currentLocale.language eq 'es'}" value="#{coursesPre.materiaNombre}"/>
-                                            <h:outputText rendered="#{language.currentLocale.language eq 'en'}" value="#{coursesPre.matNEng}"/>
+                                            <h:outputText rendered="#{(language.currentLocale.language eq 'en') and (not empty coursesPre.matNEng) and (coursesPre.matNEng ne '')}" value="#{coursesPre.matNEng}"/>
+                                            <h:outputText rendered="#{(language.currentLocale.language eq 'en') and (empty coursesPre.matNEng or coursesPre.matNEng eq '')}" value="#{coursesPre.nombreMateria}"/>
                                         </h:column> 
                                     </h:dataTable>
                                 </article>
@@ -157,7 +159,8 @@
                                     <h:dataTable value="#{curriculumVitaeController.coursesPosHis}" var="coursesPosHis" border="0" cellpadding="2" cellspacing="0">                       
                                         <h:column>
                                             <h:outputText rendered="#{language.currentLocale.language eq 'es'}" value="#{coursesPosHis.nombreMateria}"/>
-                                            <h:outputText rendered="#{language.currentLocale.language eq 'en'}" value="#{coursesPosHis.matNEng}"/>
+                                            <h:outputText rendered="#{(language.currentLocale.language eq 'en') and (not empty coursesPosHis.matNEng) and (coursesPosHis.matNEng ne '')}" value="#{coursesPosHis.matNEng}"/>
+                                            <h:outputText rendered="#{(language.currentLocale.language eq 'en') and (empty coursesPosHis.matNEng or coursesPosHis.matNEng eq '')}" value="#{coursesPosHis.nombreMateria}"/>
                                         </h:column> 
                                     </h:dataTable>
                                 </article>
@@ -172,7 +175,8 @@
                                     <h:dataTable value="#{curriculumVitaeController.coursesPreHis}" var="coursesPreHis" border="0" cellpadding="2" cellspacing="0">                       
                                         <h:column>
                                             <h:outputText rendered="#{language.currentLocale.language eq 'es'}" value="#{coursesPreHis.materiaNombre}"/>
-                                            <h:outputText rendered="#{language.currentLocale.language eq 'en'}" value="#{coursesPreHis.matNEng}"/>
+                                            <h:outputText rendered="#{(language.currentLocale.language eq 'en') and (not empty coursesPreHis.matNEng) and (coursesPreHis.matNEng ne '')}" value="#{coursesPreHis.matNEng}"/>
+                                            <h:outputText rendered="#{(language.currentLocale.language eq 'en') and (empty coursesPreHis.matNEng or coursesPreHis.matNEng eq '')}" value="#{coursesPreHis.nombreMateria}"/>
                                         </h:column> 
                                     </h:dataTable>
                                 </article>
