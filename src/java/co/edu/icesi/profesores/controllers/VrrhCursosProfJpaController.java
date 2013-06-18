@@ -58,7 +58,7 @@ public class VrrhCursosProfJpaController implements Serializable {
      *
      * @return An VrrhCursosProf object that represents the database registry.
      *          <code>null</null> otherwise.
-     * @param activityId The ActivityInsight is for the activity.
+     * @param profesorCedula  The professor's identifier.
      *
      * @since 2012-09-14 by damanzano
      */
@@ -82,7 +82,9 @@ public class VrrhCursosProfJpaController implements Serializable {
      *
      * @return An VrrhCursosProf object that represents the database registry.
      *          <code>null</null> otherwise.
-     * @param activityId The ActivityInsight is for the activity.
+     * @param profesorCedula  The professor's identifier.
+     * @param periodoAcad The academic period.
+     * @param periodoConsecutivo The consecutive period.
      *
      * @since 2012-09-14 by damanzano
      */
@@ -124,7 +126,7 @@ public class VrrhCursosProfJpaController implements Serializable {
      *
      * @return An VrrhCursosProf object that represents the database registry.
      *          <code>null</null> otherwise.
-     * @param activityId The ActivityInsight is for the activity.
+     * @param profesorCedula  The professor's identifier.
      *
      * @since 2012-09-14 by damanzano
      */
@@ -153,11 +155,11 @@ public class VrrhCursosProfJpaController implements Serializable {
      *
      * @return An VrrhCursosProf object that represents the database registry.
      *          <code>null</null> otherwise.
-     * @param activityId The ActivityInsight is for the activity.
+     * @param profesorCedula The professor's identifier.
      *
      * @since 2012-09-14 by damanzano
      * @since 2013-01-29 by damanzano
-     * The way courses with the same name are filtered was replaced and rewritten because the aproach used befored
+     * The way courses with the same name are filtered was replaced and rewritten because the aproach used before
      * was wrong and allowed repeated items.
      */
     public List<VrrhCursosProf> findVrrhCursosProfByProfesorPeriodHist(String profesorCedula) {

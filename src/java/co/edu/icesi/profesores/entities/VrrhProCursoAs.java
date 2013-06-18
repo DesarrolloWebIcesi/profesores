@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "VrrhProCursoAs.findAll", query = "SELECT s FROM VrrhProCursoAs s"),
     @NamedQuery(name = "VrrhProCursoAs.findByProfesorCedula", query = "SELECT s FROM VrrhProCursoAs s WHERE s.vrrhProCursoAsPK.profesorCedula = :profesorCedula"),
-    @NamedQuery(name = "VrrhProCursoAs.findByProfesorPeriod", query = "SELECT DISTINCT s FROM VrrhProCursoAs s WHERE s.vrrhProCursoAsPK.profesorCedula = :profesorCedula AND s.vrrhProCursoAsPK.periodoAcad=:periodoAcad AND s.vrrhProCursoAsPK.periodoConsecutivo=:periodoConsecutivo"),
+    @NamedQuery(name = "VrrhProCursoAs.findByProfesorPeriod", query = "SELECT DISTINCT s FROM VrrhProCursoAs s WHERE s.vrrhProCursoAsPK.profesorCedula = :profesorCedula AND s.vrrhProCursoAsPK.periodoAcad=:periodoAcad AND s.vrrhProCursoAsPK.periodoConsecutivo=:periodoConsecutivo order by 1"),
     @NamedQuery(name = "VrrhProCursoAs.findByProfesorPeriodHist", query = "SELECT DISTINCT s FROM VrrhProCursoAs s WHERE s.vrrhProCursoAsPK.profesorCedula = :profesorCedula AND s.vrrhProCursoAsPK.periodoAcad <> :periodoAcad order by 1")
 })
 public class VrrhProCursoAs implements Serializable {

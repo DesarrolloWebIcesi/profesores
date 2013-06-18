@@ -85,7 +85,7 @@ public class StdPersonJpaController implements Serializable {
      *
      * @return A StdPerson Object representing the person the document id passed
      * as param.
-     * @param peopleNetId The PeopleNet identifier for the person.
+     * @param profesorCedula The identifier for the person.
      * @throws NoResultException if there is any registry tha match the param
      * NonUniqueResultException if there are more than one registry.
      * @since 2012-12-05 damanzano

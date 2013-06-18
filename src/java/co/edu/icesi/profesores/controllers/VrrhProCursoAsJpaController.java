@@ -76,7 +76,7 @@ public class VrrhProCursoAsJpaController implements Serializable {
      *
      * @return An VrrhCursosProf object that represents the database registry.
      *          <code>null</null> otherwise.
-     * @param activityId The ActivityInsight is for the activity.
+     * @param profesorCedula  The professor's identifier.
      *
      * @since 2012-09-14 by damanzano
      */
@@ -100,7 +100,9 @@ public class VrrhProCursoAsJpaController implements Serializable {
      *
      * @return An VrrhCursosProf object that represents the database registry.
      *          <code>null</null> otherwise.
-     * @param activityId The ActivityInsight is for the activity.
+     * @param profesorCedula  The professor's identifier.
+     * @param periodoAcad The academic period.
+     * @param periodoConsecutivo The consecutive period.
      *
      * @since 2012-09-14 by damanzano
      */
@@ -143,7 +145,7 @@ public class VrrhProCursoAsJpaController implements Serializable {
      *
      * @return An VrrhCursosProf object that represents the database registry.
      *          <code>null</null> otherwise.
-     * @param activityId The ActivityInsight is for the activity.
+     * @param profesorCedula The professor's identifier.
      *
      * @since 2012-09-14 by damanzano
      */
@@ -175,7 +177,7 @@ public class VrrhProCursoAsJpaController implements Serializable {
      *
      * @return An VrrhCursosProf object that represents the database registry.
      *          <code>null</null> otherwise.
-     * @param activityId The ActivityInsight is for the activity.
+     * @param profesorCedula The professor's identifier.
      *
      * @since 2012-09-14 by damanzano
      * @since 2013-01-29 by damanzano

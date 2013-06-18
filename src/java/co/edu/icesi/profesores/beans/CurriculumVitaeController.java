@@ -14,11 +14,14 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
-import java.util.SortedSet;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
@@ -36,7 +39,8 @@ import javax.servlet.http.HttpServletRequest;
  * @since 2012-12-04 damanzano All the funcionalities not related to the
  * iteration 1 of Hoja de vida Profesores web's project were commented in
  * loadProfessorData() method.
- * @since 2013-04-01 Funcionalities related to iteration 2 of Hoja de vida Profesores web's prject were uncommented.
+ * @since 2013-04-01 Funcionalities related to iteration 2 of Hoja de vida
+ * Profesores web's prject were uncommented.
  */
 @ManagedBean(name = "curriculumvitae")
 @SessionScoped
@@ -68,6 +72,7 @@ public class CurriculumVitaeController implements Serializable {
     private boolean photoImageExist;
     private boolean intellContExist;
     private EntityManagerFactory emf = Persistence.createEntityManagerFactory("profesoresPU");
+    private LanguageBean languageBean;
 
     /**
      * Creates a new instance of CurriculumVitaeController
@@ -84,6 +89,7 @@ public class CurriculumVitaeController implements Serializable {
                 Logger.getLogger(CurriculumVitaeController.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
+
             String professorId = getPeopleNetId(professorWebId);
             if (professorId == null || professorId.equalsIgnoreCase("")) {
                 try {
@@ -155,14 +161,16 @@ public class CurriculumVitaeController implements Serializable {
             Collections.sort(this.stdHrAcadBackgr);
             Collections.reverse(this.stdHrAcadBackgr);
 
-            /**
-             * The following lines manage the publications issues, so they are
-             * not necesary for the first iteration.
-             */
+            // Getting current courses and record courses
             this.vrrhCursosProfCurrent = coursesPreController.findVrrhCursosProfByProfesorPeriodCurrent(stdSsnPerson);
             this.vrrhProCursoAsCurrent = coursesPosController.findVrrhCursosProfByProfesorPeriodCurrent(stdSsnPerson);
             this.coursesPreHis = coursesPreController.findVrrhCursosProfByProfesorPeriodHist(stdSsnPerson);
             this.coursesPosHis = coursesPosController.findVrrhCursosProfByProfesorPeriodHist(stdSsnPerson);
+
+            /**
+             * The following lines manage the publications issues, so they are
+             * not necesary for the first iteration.
+             */
 //            this.bookChapters = bookChpaterController.findM4ccbCvCapLibByStdIdHr(stdIdPerson);
 //            this.books = booksController.findM4ccbCvLibroByStdIdHr(stdIdPerson);
 //            this.didacticMaterial = didacticMaterialController.findM4ccbCvDlloMatByStdIdHr(stdIdPerson);
@@ -198,18 +206,22 @@ public class CurriculumVitaeController implements Serializable {
     }
 
     public List<VrrhCursosProf> getVrrhCursosProfCurrent() {
+        sortList(vrrhCursosProfCurrent, "VrrhCursosProf");
         return vrrhCursosProfCurrent;
     }
 
     public List<VrrhProCursoAs> getVrrhProCursoAsCurrent() {
+        sortList(vrrhProCursoAsCurrent, "VrrhProCursoAs");
         return vrrhProCursoAsCurrent;
     }
 
     public List<VrrhCursosProf> getCoursesPreHis() {
+        sortList(coursesPreHis, "VrrhCursosProf");
         return coursesPreHis;
     }
 
     public List<VrrhProCursoAs> getCoursesPosHis() {
+        sortList(coursesPosHis, "VrrhProCursoAs");
         return coursesPosHis;
     }
 
@@ -392,5 +404,46 @@ public class CurriculumVitaeController implements Serializable {
             return professorConstants.getM4ccbConsPersonasPK().getCcbIdPerson();
         }
         return null;
+    }
+
+    
+    /**
+     * Sorts a list, depending on the language defined in session. An
+     * appropriate comparator for the objectType class must exist in the
+     * co.edu.icesi.profesores.entities.comparators package. The convention for
+     * comparators is ClassNameComparator.
+     *
+     * @param list the list to sort
+     * @param objectType The class of objects saved in the list.
+     */
+    private void sortList(List list, String objectType) {
+        Locale currentLocale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
+        String comparatorName = "co.edu.icesi.profesores.entities.comparators." + objectType + "Comparator";
+
+        try {
+            //Get the comparator for objectType
+            Class<?> comparatorClass = Class.forName(comparatorName);
+            Constructor<?> comparatorConstructor = comparatorClass.getConstructor(Locale.class);
+            Object comparatorObject = comparatorConstructor.newInstance(currentLocale);
+
+            Collections.sort(list, (Comparator) comparatorObject);
+
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(CurriculumVitaeController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchMethodException ex) {
+            Logger.getLogger(CurriculumVitaeController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SecurityException ex) {
+            Logger.getLogger(CurriculumVitaeController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(CurriculumVitaeController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(CurriculumVitaeController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalArgumentException ex) {
+            Logger.getLogger(CurriculumVitaeController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvocationTargetException ex) {
+            Logger.getLogger(CurriculumVitaeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
     }
 }
