@@ -53,7 +53,10 @@
                         </section>
                     </ui:fragment>
                     <h:outputLink  title="#{bundle.ViewCurriculumVitaeWebpageLinkTitle} #{usedName}" rendered="${not empty curriculumVitaeController.person.scoHomePage}" value="#{curriculumVitaeController.person.scoHomePage}" class="personal-web-page">
-                        <h:outputText value="#{curriculumVitaeController.person.scoHomePage}" />
+                        <!-- TODO: This should be done with the internationalization bundles instead of conditional task, it was done this way for a fast publishing process -->
+                        <h:outputText rendered="#{language.currentLocale.language eq 'es'}" value="Hoja de vida detallada"/>
+                        <h:outputText rendered="#{language.currentLocale.language eq 'en'}" value="Detailed resume"/>
+                        <ui:remove><h:outputText value="#{curriculumVitaeController.person.scoHomePage}" /></ui:remove>
                     </h:outputLink>                      
                     <ui:fragment rendered="${not empty curriculumVitaeController.personmail.stdEmail}">
                         <span class="email"><img src="#{request.contextPath}/#{initParam['mailImagePath']}#{curriculumVitaeController.person.stdPersonPK.stdIdPerson}.png"/></span>
@@ -150,8 +153,13 @@
                                 </article>
                             </section>
                         </ui:fragment>
-
+                        
                         <!-- graduate courses records -->
+                        <!-- 
+                        This sección was removed responding to the Julio Cesar Alonso's request for the international acreditation proccess.
+                        The change was aproved by Liliana Franco.
+                        -->
+                        <ui:remove>
                         <ui:fragment rendered="#{not empty curriculumVitaeController.coursesPosHis}">
                             <section id="postgraduatedCoursesHist" class="collapsiblePanel">
                                 <h3><h:outputText value="#{bundle.ViewCurriculumVitaePostgraduatedCoursesHistTitle}"></h:outputText></h3>
@@ -182,11 +190,12 @@
                                 </article>
                             </section>
                         </ui:fragment>
+                        </ui:remove>
                     </div>
 
                 </section>
             </ui:fragment>
-
+                
             <ui:fragment rendered="#{curriculumVitaeController.intellContExist}">
                 <section id="intellectualContributions">
                     <h2><h:outputText value="#{bundle.ViewCurriculumVitaeIntellContTitle}"></h:outputText></h2>
