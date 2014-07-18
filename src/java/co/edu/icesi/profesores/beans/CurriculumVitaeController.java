@@ -155,6 +155,11 @@ public class CurriculumVitaeController implements Serializable {
             this.positionDescriptions = positionDescriptionsController.findPositionByM4scoHHrPos(personPositions);
             this.roles = rolesController.findVrrhRepPersonRolByStdIdPerson(stdIdPerson);
             this.personmail = emailController.findInstitutionalEmailByStdHrId(stdIdPerson);
+            
+            // If the professor doesn't have institutional email look for LiveEdu email.
+            if(this.personmail== null){
+                this.personmail = emailController.findLiveEduEmailByStdHrId(stdIdPerson);
+            }
             generateEmailImage();
             this.phoneExtention = phonesController.findInstitutionalPhoneByStdIdPerson(stdIdPerson);
             this.stdHrAcadBackgr = acadController.findStdHrAcadBackgrByStdHrId(stdIdPerson);
