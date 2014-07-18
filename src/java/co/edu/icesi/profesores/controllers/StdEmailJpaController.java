@@ -7,6 +7,8 @@ package co.edu.icesi.profesores.controllers;
 import co.edu.icesi.profesores.entities.StdEmail;
 import co.edu.icesi.profesores.entities.StdEmailPK;
 import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -84,9 +86,14 @@ public class StdEmailJpaController implements Serializable {
     public StdEmail findEmailPreferidoByStdHrId(String idPerson) {
         EntityManager em = getEntityManager();
         try {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(4000, 0, 1);
+            Date worldEnd = calendar.getTime();
+            
             TypedQuery<StdEmail> q = em.createNamedQuery("StdEmail.findByStdIdPersonCcbPreferido", StdEmail.class);
             q.setParameter("stdIdPerson", idPerson);
             q.setParameter("ccbPreferido", "1");
+            q.setParameter("stdDtEnd", worldEnd);
             StdEmail person = (StdEmail) q.getSingleResult();
             return person;
         } catch (NoResultException ex) {
@@ -107,6 +114,28 @@ public class StdEmailJpaController implements Serializable {
             TypedQuery<StdEmail> q = em.createNamedQuery("StdEmail.findByStdIdPersonStdIdLocatType", StdEmail.class);
             q.setParameter("stdIdPerson", idPerson);
             q.setParameter("stdIdLocatType", "I");
+            StdEmail person = (StdEmail) q.getSingleResult();
+            return person;
+        } catch (NoResultException ex) {
+            return null;
+        } catch (NonUniqueResultException ex) {
+            return null;
+        } finally {
+            em.close();
+        }
+    }
+
+    public StdEmail findLiveEduEmailByStdHrId(String idPerson) {
+        EntityManager em = getEntityManager();
+        try {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(4000, 0, 1);
+            Date worldEnd = calendar.getTime();
+            
+            TypedQuery<StdEmail> q = em.createNamedQuery("StdEmail.findByActiveStdIdPersonStdIdLocatType", StdEmail.class);
+            q.setParameter("stdIdPerson", idPerson);
+            q.setParameter("stdIdLocatType", "L");
+            q.setParameter("stdDtEnd", worldEnd);
             StdEmail person = (StdEmail) q.getSingleResult();
             return person;
         } catch (NoResultException ex) {
