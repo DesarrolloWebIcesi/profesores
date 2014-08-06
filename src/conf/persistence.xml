@@ -60,7 +60,7 @@
             <property name="javax.persistence.jdbc.user" value="consultahvprof"/>
         </properties>
         -->
-        <!-- Production  -->
+        <!-- Production  -->  
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@200.3.192.45:1521:delfi"/>
             <property name="javax.persistence.jdbc.password" value="BqdC14vU9n528ce"/>
