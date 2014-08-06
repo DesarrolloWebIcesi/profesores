@@ -20,8 +20,9 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 /**
- *
- * @author 1130619373
+ * This class control data access to de std_person table
+ * 
+ * @author David Andrés Manzano
  */
 public class StdPersonJpaController implements Serializable {
 
@@ -144,17 +145,17 @@ public class StdPersonJpaController implements Serializable {
         try {
             Calendar calendar = Calendar.getInstance();
             Date sysdate = calendar.getTime();
-            calendar.set(4000, 0, 1);
-            Date worldEnd= calendar.getTime();
+            //calendar.set(4000, 0, 1);
+            //Date worldEnd= calendar.getTime();
             
             Query q = em.createQuery("SELECT DISTINCT s FROM StdPerson s, StdHrPeriod p,  M4scbHHrContrat c "
                     + "WHERE s.ccbProfesor = '1' "
                     + "AND s.stdPersonPK.stdIdPerson = p.stdHrPeriodPK.stdIdHr "
-                    + "AND p.stdDtEnd = :stdDtEnd "
+                    + "AND p.stdDtEnd > :stdDtEnd "
                     + "AND s.stdPersonPK.stdIdPerson = c.m4scbHHrContratPK.stdIdHr "
-                    + "AND c.scbDtEnd > :scbDtEnd "
+                    + "AND ((c.scbDtEnd > :scbDtEnd) OR c.scbDtVencimiento > :scbDtEnd) "
                     + "ORDER BY s.stdNFirstName ASC, s.stdNUsualName, s.stdNFamName1, s.stdNMaidenName");                    
-            q.setParameter("stdDtEnd", worldEnd);
+            q.setParameter("stdDtEnd", sysdate);
             q.setParameter("scbDtEnd", sysdate);
             List<StdPerson> professors = q.getResultList();
             return professors;
