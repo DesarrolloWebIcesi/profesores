@@ -155,3 +155,6 @@ nb-configuration.xml
 META-INF/
 !/web/META-INF/
 /src/conf/persistence-examples.xml
+
+/web/images/email/*
+!/web/images/email/
